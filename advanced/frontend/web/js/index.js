@@ -68,13 +68,15 @@ function playBarHide(){
 }
 
 function playListShow(){
-	$("#g-playlist").show();
+	$("#g_playlist").show();
 	listShow=true;
 }
 function playListHide(){
-	$("#g-playlist").hide();
+	$("#g_playlist").hide();
 	listShow=false;
 }
+
+
 //===================================================================================
 function addUserInfoEvent(){
 	swfobject.addDomLoadEvent(function () {
@@ -339,7 +341,258 @@ $(function(){
 		});
 		return false;
 	});
-	
+	$("#play_list_btn").click(function(){
+			if(listShow){
+				playListHide();
+			}else{
+				playListShow();
+			}
+			return false;
+	});
+	$("#g_playlist .close").click(function(){
+		playListHide();
+	});
+	var playType = new Array();
+	playType[0] = 'icn-one';
+	playType[1] = 'icn-loop';
+	playType[2] = 'icn-shuffle';
+	var playTypeTitle = new Array();
+	playTypeTitle[0] = '单曲循环';
+	playTypeTitle[1] = '循环';
+	playTypeTitle[2] = '随机';
+	var pti = 0;
+	$("#play_type_btn").click(function(){
+		pti++;
+		pti = pti % 3;
+		$("#play_type_btn").attr("class",'icn '+playType[pti]);
+		$("#play_type_btn").attr("title",playTypeTitle[pti]);
+	});
+	function loadSong(id){
+		$.ajax({
+			type:'get',
+			url:'http://f.music.com/song/getinfo',
+			dataType:'json',
+			data:{id:id},
+			success:function(data){
+				if(data.code == 1){
+					$("audio").attr('src',data.data.src);
+					if($("#play_pause").hasClass('pas')){
+						$("audio")[0].load();
+						$("audio")[0].play();
+					}
+				}
+			}
+		});
+	}
+	function prevSong(){
+		switch(pti){
+			case 0:{
+				$("audio")[0].play();
+
+			}break;
+			case 1:{
+
+				var index = 0;
+				$("#playlistul li").each(function(i){
+					if($(this).hasClass('z-sel')){
+						index = i;
+					}
+				});
+				var count = $("#playlistul li").length;
+				index = (--index+count)%count;
+				console.log(index);
+				$("#playlistul li").removeClass('z-sel');
+				$("#playlistul li").eq(index).addClass('z-sel');
+				var sid = $("#playlistul li").eq(index).attr('data-id');
+				loadSong(sid);
+
+			}break;
+			case 2:{
+
+				var count = $("#playlistul li").length;
+				var index = Math.floor(Math.random()*count);
+				console.log(index);
+				$("#playlistul li").removeClass('z-sel');
+				$("#playlistul li").eq(index).addClass('z-sel');
+				var sid = $("#playlistul li").eq(index).attr('data-id');
+				loadSong(sid);
+
+			}break;
+		}
+	}
+	function nextSong(){
+		switch(pti){
+			case 0:{
+				$("audio")[0].play();
+			}break;
+			case 1:{
+				var index = 0;
+				$("#playlistul li").each(function(i){
+					if($(this).hasClass('z-sel')){
+						index = i;
+					}
+				});
+				var count = $("#playlistul li").length;
+				index = (++index)%count;
+				console.log(index);
+				$("#playlistul li").removeClass('z-sel');
+				$("#playlistul li").eq(index).addClass('z-sel');
+				var sid = $("#playlistul li").eq(index).attr('data-id');
+				loadSong(sid);
+
+
+			}break;
+			case 2:{
+				var count = $("#playlistul li").length;
+				var index = Math.floor(Math.random()*count);
+				console.log(index);
+				$("#playlistul li").removeClass('z-sel');
+				$("#playlistul li").eq(index).addClass('z-sel');
+				var sid = $("#playlistul li").eq(index).attr('data-id');
+				loadSong(sid);
+
+
+			}break;
+		}
+	}
+	$("#prev_btn").click(function(){
+		prevSong();
+	});
+	$("#next_btn").click(function(){
+		nextSong();
+	});
+	var volShow = false;
+	$("#vol_btn").click(function(){
+		if(volShow){
+			$(".m-vol").hide();
+			volShow = false;
+		}else{
+			$(".m-vol").show();
+			volShow = true;
+		}
+		return false;
+	});
+	$(".m-vol .vbg").click(function(e){
+		var diffY = e.pageY -$(".m-vol .vbg").offset().top;
+		var top = diffY - 6;
+		var h = 93 - diffY;
+		if(h<0){
+			h=0;
+		}
+		if(h>93){
+			h=93;
+		}
+		if(top<0){
+			top=0;
+		}
+		if(top>81){
+			top=81;
+		}
+		$(".m-vol .curr").css('height', h+'px');
+		$("#change_vol").css('top', top+'px');
+		$("audio").get(0).volume=h/93;
+	});
+	$("#change_vol").on("mousedown", function(e){
+
+		$('.m-vol').on("mousemove",function(em){
+			var diffY = em.pageY -$(".m-vol .vbg").offset().top;
+			var top = diffY - 6;
+			var h = 93 - diffY;
+			if(h<0){
+				h=0;
+			}
+			if(h>93){
+				h=93;
+			}
+			if(top<0){
+				top=0;
+			}
+			if(top>81){
+				top=81;
+			}
+			$(".m-vol .curr").css('height', h+'px');
+			$("#change_vol").css('top', top+'px');
+			$("audio").get(0).volume=h/93;
+		});
+	});
+
+	$('.m-vol,body').on("mouseup",function(){
+		$(".m-vol").off("mousemove");
+	});
+	function setPlayPosition(percent){
+		var player=$("audio")[0];
+		player.currentTime = player.duration * percent;
+	}
+	var t;
+	function movePlayPosition(){
+		var player=$("audio")[0];
+		if(!player.paused){
+			var curTime = player.currentTime;
+			var percent = curTime / player.duration;
+			var min = parseInt(curTime/60);
+			var cer = parseInt(curTime%60);
+			if(min<10){
+				min = '0'+min;
+			}
+			if(cer<10){
+				cer = '0'+cer;
+			}
+			var w = percent * 100;
+			$(".m-pbar .cur").css('width', w+'%');
+			$("#curTime").text(min+':'+cer);
+		}
+	}
+	function togglePlayAndPause(){
+		var pp=$("#play_pause");
+		var player=$("audio")[0];
+		if(player.paused){
+			player.play();
+			pp.addClass('pas');
+			t = window.setInterval(movePlayPosition, 1000);
+		}else{
+			player.pause();
+			pp.removeClass('pas');
+			window.clearInterval(t);
+		}
+	}
+	$("#play_pause").click(function(){
+		togglePlayAndPause();
+	});
+	$("audio").on("ended", function(){
+		nextSong();
+	});
+	$(".m-pbar .barbg").click(function(e){
+		var diffX = e.pageX -$(".m-pbar .barbg").offset().left;
+		var w = diffX / 455 * 100;
+		if(w<0){
+			w=0;
+		}
+		if(w>100){
+			w=100;
+		}
+		setPlayPosition(w/100);
+		console.log(diffX);
+		$(".m-pbar .cur").css('width', w+'%');
+	});
+
+	$(".m-pbar .barbg").on("mousedown", function(e){
+
+		$('.m-pbar .barbg').on("mousemove",function(em){
+			var diffX = em.pageX -$(".m-pbar .barbg").offset().left;
+			var w = diffX / 455  * 100;
+			if(w<0){
+				w=0;
+			}
+			if(w>100){
+				w=100;
+			}
+
+			$(".m-pbar .cur").css('width', w+'%');
+		});
+	});
+	$('.m-pbar,body').on("mouseup",function(){
+		$(".m-pbar .barbg").off("mousemove");
+	});
 });
 
 	

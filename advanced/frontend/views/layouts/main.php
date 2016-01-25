@@ -392,9 +392,9 @@ use yii\helpers\Url;
         <div class="hand" title="展开播放条"></div>
         <div class="wrap" id="g_player">
             <div class="btns">
-                <a href="javascript:;" hidefocus="true" data-action="prev" class="prv" title="上一首(ctrl+←)">上一首</a>
-                <a href="javascript:;" hidefocus="true" data-action="play" class="ply j-flag" title="播放/暂停(p)">播放/暂停</a>
-                <a href="javascript:;" hidefocus="true" data-action="next" class="nxt" title="下一首(ctrl+→)">下一首</a></div>
+                <a href="javascript:;" hidefocus="true" data-action="prev" class="prv" title="上一首(ctrl+←)" id="prev_btn">上一首</a>
+                <a href="javascript:;" hidefocus="true" data-action="play" class="ply j-flag" title="播放/暂停(p)" id="play_pause">播放/暂停</a>
+                <a href="javascript:;" hidefocus="true" data-action="next" class="nxt" title="下一首(ctrl+→)" id="next_btn">下一首</a></div>
             <div class="head j-flag">
                 <img src="./css/3398590442421534.jpg" />
                 <a href="http://music.163.com/song?id=31789096" hidefocus="true" class="mask"></a></div>
@@ -417,29 +417,33 @@ use yii\helpers\Url;
                         </div>
                     </div>
               <span class="j-flag time">
-              <em>00:00</em> / 00:00</span>
+              <em id="curTime">00:00</em> / <em id="totalTime">00:00</em>
+              </span>
                 </div>
             </div>
             <div class="oper f-fl">
                 <a href="javascript:;" hidefocus="true" data-action="like" class="icn icn-add j-flag" title="收藏">收藏</a>
                 <a href="javascript:;" hidefocus="true" data-action="share" class="icn icn-share" title="分享">分享</a></div>
             <div class="ctrl f-fl f-pr j-flag">
-                <div class="m-vol" style="visibility:hidden;" id="auto-id-AksQTK79DWewlTMH">
+                <div class="m-vol" style="display:none;" id="auto-id-AksQTK79DWewlTMH">
                     <div class="barbg"></div>
                     <div class="vbg j-t" id="auto-id-QX0rZMKtpqbhlyd3">
                         <div class="curr j-t" style="height: 93px;"></div>
+                        <span class="btn f-alpha j-t" style="top: 0px;" id="change_vol"></span>
                     </div>
                 </div>
-                <a href="javascript:;" hidefocus="true" data-action="volume" class="icn icn-vol"></a>
-                <a href="javascript:;" hidefocus="true" data-action="mode" class="icn icn-loop" title="循环"></a>
-          <span class="add f-pr">
-          <span class="tip" style="display:none;">已添加到播放列表</span>
-          <a href="javascript:;" title="播放列表" hidefocus="true" data-action="panel"
-             class="icn icn-list s-fc3">176</a></span>
-                <div class="tip tip-1" style="display:none;">循环</div></div>
+                <a href="javascript:;" hidefocus="true" data-action="volume" class="icn icn-vol" id="vol_btn"></a>
+                <a href="javascript:;" hidefocus="true" data-action="mode" class="icn icn-one" title="单曲循环" id="play_type_btn"></a>
+                <span class="add f-pr">
+                      <span class="tip" style="display:none;">已添加到播放列表</span>
+                      <a href="javascript:;" title="播放列表" hidefocus="true" data-action="panel" id="play_list_btn"
+                         class="icn icn-list s-fc3">176</a>
+                </span>
+                <div class="tip tip-1" style="display:none;">循环</div>
+            </div>
         </div>
 
-        <div class="list" id="g_playlist">
+        <div class="list" id="g_playlist" style="display:none">
             <div class="listhd">
                 <div class="listhdc">
                     <h4>播放列表(
@@ -454,8 +458,8 @@ use yii\helpers\Url;
                      style="top: -360px;" />
                 <div class="msk"></div>
                 <div class="listbdc j-flag" id="auto-id-FwTi8Dk41WAeTLoN">
-                    <ul class="f-cb">
-                        <li class="z-sel" data-id="34077763" data-action="play">
+                    <ul class="f-cb" id="playlistul">
+                        <li class="z-sel" data-id="100000" data-action="play">
                             <div class="col col-1">
                                 <div class="playicn"></div>
                             </div>
@@ -469,9 +473,57 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                             <div class="col col-4">
-            <span title="多田葵">
-              <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
-            </span>
+                                <span title="多田葵">
+                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
+                                </span>
+                            </div>
+                            <div class="col col-5">05:15</div>
+                            <div class="col col-6">
+                                <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
+                                   data-action="link">来源</a>
+                            </div>
+                        </li>
+                        <li data-id="100001" data-action="play">
+                            <div class="col col-1">
+                                <div class="playicn"></div>
+                            </div>
+                            <div class="col col-2">灼け落ちない翼</div>
+                            <div class="col col-3">
+                                <div class="icns">
+                                    <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
+                                    <i class="ico ico-dl" title="下载" data-id="34077763" data-action="download">下载</i>
+                                    <i class="ico ico-share" title="分享" data-id="34077763" data-action="share">分享</i>
+                                    <i class="j-t ico ico-add" title="收藏" data-id="34077763" data-action="like">收藏</i>
+                                </div>
+                            </div>
+                            <div class="col col-4">
+                                <span title="多田葵">
+                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
+                                </span>
+                            </div>
+                            <div class="col col-5">05:15</div>
+                            <div class="col col-6">
+                                <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
+                                   data-action="link">来源</a>
+                            </div>
+                        </li>
+                        <li data-id="100002" data-action="play">
+                            <div class="col col-1">
+                                <div class="playicn"></div>
+                            </div>
+                            <div class="col col-2">灼け落ちない翼</div>
+                            <div class="col col-3">
+                                <div class="icns">
+                                    <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
+                                    <i class="ico ico-dl" title="下载" data-id="34077763" data-action="download">下载</i>
+                                    <i class="ico ico-share" title="分享" data-id="34077763" data-action="share">分享</i>
+                                    <i class="j-t ico ico-add" title="收藏" data-id="34077763" data-action="like">收藏</i>
+                                </div>
+                            </div>
+                            <div class="col col-4">
+                                <span title="多田葵">
+                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
+                                </span>
                             </div>
                             <div class="col col-5">05:15</div>
                             <div class="col col-6">
@@ -531,7 +583,7 @@ use yii\helpers\Url;
 </div>
 <audio id=""
        src="http://p2.music.126.net/dl4o55BujeXger3kwXN1EA==/7730666255475657.mp3"
-       style="display: none;" autoplay=true></audio>
+       style="display: none;"></audio>
 <div class="m-layer z-show" style="top: 56px; left: 418px;display:none">
     <div class="zbar" id="auto-id-hsFcqWD8UErCyz9N">
         <div class="zttl">登录</div>

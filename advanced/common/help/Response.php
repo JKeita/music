@@ -12,14 +12,14 @@ namespace common\help;
 class Response
 {
     public static function returnInfo($code, $msg = '', $data = null){
-        if(!empty($code)){
+        if(!empty($code) || $code == 0){
             if(empty($data)&&empty($msg)){
                 return ['code' => $code];
             }
-            if(!empty($msg)){
+            if(empty($data)){
                 return ['code' => $code, 'msg' => $msg];
             }
-            if(!empty($data)){
+            if(empty($msg)){
                 return ['code' => $code, 'data' => $data];
             }
             return ['code' => $code, 'msg' => $msg, 'data' => $data];

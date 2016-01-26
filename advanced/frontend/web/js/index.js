@@ -1,3 +1,13 @@
+var t;
+var playType = new Array();
+playType[0] = 'icn-one';
+playType[1] = 'icn-loop';
+playType[2] = 'icn-shuffle';
+var playTypeTitle = new Array();
+playTypeTitle[0] = '单曲循环';
+playTypeTitle[1] = '循环';
+playTypeTitle[2] = '随机';
+var pti = 0;
 function closeBar(){
 	$(".m-mask").hide();
 	$(".z-show").hide();
@@ -75,8 +85,209 @@ function playListHide(){
 	$("#g_playlist").hide();
 	listShow=false;
 }
+//加载音乐信息
+function loadSong(id){
+	$.ajax({
+		type:'get',
+		url:'http://f.music.com/song/getinfo',
+		dataType:'json',
+		data:{id:id},
+		success:function(data){
+			if(data.code == 1){
+
+				$("audio").attr('src',data.data.src);
+				$("#song_img img").attr('src', data.data.cover);
+				$("#songinfo a.name").attr('title', data.data.name);
+				$("#songinfo a.name").text(data.data.name);
+				$("#song_author").attr('title', data.data.author);
+				$("#song_author a").text(data.data.author);
+				$("#mCSB_1_container").html(data.data.lyric);
+				$("#g_playlist .listhdc p.lytit").text(data.data.name);
+
+				var duration = data.data.duration/1000;
+				var min = parseInt(duration/60);
+				var cer = parseInt(duration%60);
+				if(min<10){
+					min = '0'+min;
+				}
+				if(cer<10){
+					cer = '0'+cer;
+				}
+				$("#totalTime").text(min+':'+cer);
+
+				$("#curTime").text('00:00');
+				$(".m-pbar .cur").css('width', '0%');
+				if($("#play_pause").hasClass('pas')){
+					$("audio")[0].load();
+					$("audio")[0].play();
+					console.log($("audio").prop('duration'));
+				}
+			}
+		}
+	});
+}
+function playSong(){
+	var id = $(this).attr('data-res-id');
+	loadSongLi(id);
+	$("#playlistul li").removeClass('z-sel');
+	$("#playlistul li[data-id='"+id+"']").addClass('z-sel');
+	loadSong(id);
+	var pp=$("#play_pause");
+	var player=$("audio")[0];
+	player.play();
+	pp.addClass('pas');
+	window.clearInterval(t);
+	t = window.setInterval(movePlayPosition, 1000);
+}
+function playSongLi(){
+	var id = $(this).attr('data-id');
+	$("#playlistul li").removeClass('z-sel');
+	$(this).addClass('z-sel');
+	loadSong(id);
+	var pp=$("#play_pause");
+	var player=$("audio")[0];
+	player.play();
+	pp.addClass('pas');
+	window.clearInterval(t);
+	t = window.setInterval(movePlayPosition, 1000);
+}
+
+function loadSongLi(id){
+	if($("#playlistul li[data-id='"+id+"']").length > 0){
+		return false;
+	}
+	$.ajax({
+		type:'post',
+		url:'http://f.music.com/song/getsongli',
+		dataType:'text',
+		data:{ids:id},
+		success:function(data){
+			$("#playlistul").append($(data));
+			$("#playlistul li").off('dblclick');
+			$("#playlistul li").on('dblclick', playSongLi);
+		}
+
+	});
+	return false;
+}
+function prevSong(){
+	switch(pti){
+		case 0:{
+			$("audio")[0].play();
+
+		}break;
+		case 1:{
+
+			var index = 0;
+			$("#playlistul li").each(function(i){
+				if($(this).hasClass('z-sel')){
+					index = i;
+				}
+			});
+			var count = $("#playlistul li").length;
+			index = (--index+count)%count;
+			console.log(index);
+			$("#playlistul li").removeClass('z-sel');
+			$("#playlistul li").eq(index).addClass('z-sel');
+			var sid = $("#playlistul li").eq(index).attr('data-id');
+			loadSong(sid);
+
+		}break;
+		case 2:{
+
+			var count = $("#playlistul li").length;
+			var index = Math.floor(Math.random()*count);
+			console.log(index);
+			$("#playlistul li").removeClass('z-sel');
+			$("#playlistul li").eq(index).addClass('z-sel');
+			var sid = $("#playlistul li").eq(index).attr('data-id');
+			loadSong(sid);
+
+		}break;
+	}
+}
+function nextSong(){
+	switch(pti){
+		case 0:{
+			$("audio")[0].play();
+		}break;
+		case 1:{
+			var index = 0;
+			$("#playlistul li").each(function(i){
+				if($(this).hasClass('z-sel')){
+					index = i;
+				}
+			});
+			var count = $("#playlistul li").length;
+			index = (++index)%count;
+			console.log(index);
+			$("#playlistul li").removeClass('z-sel');
+			$("#playlistul li").eq(index).addClass('z-sel');
+			var sid = $("#playlistul li").eq(index).attr('data-id');
+			loadSong(sid);
 
 
+		}break;
+		case 2:{
+			var count = $("#playlistul li").length;
+			var index = Math.floor(Math.random()*count);
+			console.log(index);
+			$("#playlistul li").removeClass('z-sel');
+			$("#playlistul li").eq(index).addClass('z-sel');
+			var sid = $("#playlistul li").eq(index).attr('data-id');
+			loadSong(sid);
+
+
+		}break;
+	}
+}
+function setPlayPosition(percent){
+	var player=$("audio")[0];
+	var curTime = player.duration * percent;
+	player.currentTime = curTime;
+	var min = parseInt(curTime/60);
+	var cer = parseInt(curTime%60);
+	if(min<10){
+		min = '0'+min;
+	}
+	if(cer<10){
+		cer = '0'+cer;
+	}
+	var w = percent * 100;
+	$("#curTime").text(min+':'+cer);
+}
+
+function movePlayPosition(){
+	var player=$("audio")[0];
+	if(!player.paused){
+		var curTime = player.currentTime;
+		var percent = curTime / player.duration;
+		var min = parseInt(curTime/60);
+		var cer = parseInt(curTime%60);
+		if(min<10){
+			min = '0'+min;
+		}
+		if(cer<10){
+			cer = '0'+cer;
+		}
+		var w = percent * 100;
+		$(".m-pbar .cur").css('width', w+'%');
+		$("#curTime").text(min+':'+cer);
+	}
+}
+function togglePlayAndPause(){
+	var pp=$("#play_pause");
+	var player=$("audio")[0];
+	if(player.paused){
+		player.play();
+		pp.addClass('pas');
+		t = window.setInterval(movePlayPosition, 1000);
+	}else{
+		player.pause();
+		pp.removeClass('pas');
+		window.clearInterval(t);
+	}
+}
 //===================================================================================
 function addUserInfoEvent(){
 	swfobject.addDomLoadEvent(function () {
@@ -216,6 +427,12 @@ function addSongInfoEvent(){
 			lyricShow = false;
 		}
 	});
+
+	$("#content-operation a.u-btni-addply").click(playSong);
+	$("#content-operation a.u-btni-add").click(function(){
+		var id = $(this).attr('data-res-id');
+		loadSongLi(id);
+	});
 }
 //===============================================================================================
 $(function(){
@@ -352,109 +569,19 @@ $(function(){
 	$("#g_playlist .close").click(function(){
 		playListHide();
 	});
-	var playType = new Array();
-	playType[0] = 'icn-one';
-	playType[1] = 'icn-loop';
-	playType[2] = 'icn-shuffle';
-	var playTypeTitle = new Array();
-	playTypeTitle[0] = '单曲循环';
-	playTypeTitle[1] = '循环';
-	playTypeTitle[2] = '随机';
-	var pti = 0;
+
 	$("#play_type_btn").click(function(){
 		pti++;
 		pti = pti % 3;
 		$("#play_type_btn").attr("class",'icn '+playType[pti]);
 		$("#play_type_btn").attr("title",playTypeTitle[pti]);
 	});
-	function loadSong(id){
-		$.ajax({
-			type:'get',
-			url:'http://f.music.com/song/getinfo',
-			dataType:'json',
-			data:{id:id},
-			success:function(data){
-				if(data.code == 1){
-					$("audio").attr('src',data.data.src);
-					if($("#play_pause").hasClass('pas')){
-						$("audio")[0].load();
-						$("audio")[0].play();
-					}
-				}
-			}
-		});
-	}
-	function prevSong(){
-		switch(pti){
-			case 0:{
-				$("audio")[0].play();
-
-			}break;
-			case 1:{
-
-				var index = 0;
-				$("#playlistul li").each(function(i){
-					if($(this).hasClass('z-sel')){
-						index = i;
-					}
-				});
-				var count = $("#playlistul li").length;
-				index = (--index+count)%count;
-				console.log(index);
-				$("#playlistul li").removeClass('z-sel');
-				$("#playlistul li").eq(index).addClass('z-sel');
-				var sid = $("#playlistul li").eq(index).attr('data-id');
-				loadSong(sid);
-
-			}break;
-			case 2:{
-
-				var count = $("#playlistul li").length;
-				var index = Math.floor(Math.random()*count);
-				console.log(index);
-				$("#playlistul li").removeClass('z-sel');
-				$("#playlistul li").eq(index).addClass('z-sel');
-				var sid = $("#playlistul li").eq(index).attr('data-id');
-				loadSong(sid);
-
-			}break;
-		}
-	}
-	function nextSong(){
-		switch(pti){
-			case 0:{
-				$("audio")[0].play();
-			}break;
-			case 1:{
-				var index = 0;
-				$("#playlistul li").each(function(i){
-					if($(this).hasClass('z-sel')){
-						index = i;
-					}
-				});
-				var count = $("#playlistul li").length;
-				index = (++index)%count;
-				console.log(index);
-				$("#playlistul li").removeClass('z-sel');
-				$("#playlistul li").eq(index).addClass('z-sel');
-				var sid = $("#playlistul li").eq(index).attr('data-id');
-				loadSong(sid);
 
 
-			}break;
-			case 2:{
-				var count = $("#playlistul li").length;
-				var index = Math.floor(Math.random()*count);
-				console.log(index);
-				$("#playlistul li").removeClass('z-sel');
-				$("#playlistul li").eq(index).addClass('z-sel');
-				var sid = $("#playlistul li").eq(index).attr('data-id');
-				loadSong(sid);
+	//点击播放音乐
+	$("#playlistul li").on('dblclick', playSongLi);
 
 
-			}break;
-		}
-	}
 	$("#prev_btn").click(function(){
 		prevSong();
 	});
@@ -519,42 +646,7 @@ $(function(){
 	$('.m-vol,body').on("mouseup",function(){
 		$(".m-vol").off("mousemove");
 	});
-	function setPlayPosition(percent){
-		var player=$("audio")[0];
-		player.currentTime = player.duration * percent;
-	}
-	var t;
-	function movePlayPosition(){
-		var player=$("audio")[0];
-		if(!player.paused){
-			var curTime = player.currentTime;
-			var percent = curTime / player.duration;
-			var min = parseInt(curTime/60);
-			var cer = parseInt(curTime%60);
-			if(min<10){
-				min = '0'+min;
-			}
-			if(cer<10){
-				cer = '0'+cer;
-			}
-			var w = percent * 100;
-			$(".m-pbar .cur").css('width', w+'%');
-			$("#curTime").text(min+':'+cer);
-		}
-	}
-	function togglePlayAndPause(){
-		var pp=$("#play_pause");
-		var player=$("audio")[0];
-		if(player.paused){
-			player.play();
-			pp.addClass('pas');
-			t = window.setInterval(movePlayPosition, 1000);
-		}else{
-			player.pause();
-			pp.removeClass('pas');
-			window.clearInterval(t);
-		}
-	}
+
 	$("#play_pause").click(function(){
 		togglePlayAndPause();
 	});

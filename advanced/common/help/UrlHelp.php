@@ -9,11 +9,17 @@
 namespace common\help;
 class UrlHelp
 {
-    public static function getImgUrl($path){
+    public static function getImgUrl($path, $default = 'head.jpg'){
         $host = 'http://img.music.com/';
         $path = trim($path, '/');
         if(empty($path)){
-            return $host.'head.jpg';
+            if(stripos($default, 'http://') === 0){
+                return $default;
+            }
+            return $host.$default;
+        }
+        if(stripos($path, 'http://') === 0){
+            return $path;
         }
         return $host.$path;
     }

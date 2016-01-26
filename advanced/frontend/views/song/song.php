@@ -17,7 +17,7 @@
                         <div class="f-cb">
                             <div class="cvrwrap f-cb f-pr">
                                 <div class="u-cover u-cover-6 f-fl">
-                                    <img src="http://p3.music.126.net/YBkqgGqCN9sMH4DjOXllyQ==/801543976702518.jpg?param=130y130" class="j-img" data-src="http://p3.music.126.net/YBkqgGqCN9sMH4DjOXllyQ==/801543976702518.jpg">
+                                    <img src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>" class="j-img" data-src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>">
                                     <span class="msk f-alpha"></span>
                                 </div>
                             </div>
@@ -25,27 +25,27 @@
                                 <div class="hd">
                                     <i class="lab u-icn u-icn-37"></i>
                                     <div class="tit">
-                                        <em class="f-ff2">Waiting Game</em>
+                                        <em class="f-ff2"><?=$songInfo['name']?></em>
                                     </div>
                                 </div>
                                 <p class="des s-fc4">歌手：
                                     <span title="Whiskey Priest">
-                                        <a class="s-fc7" href="/artist?id=45849">Whiskey Priest</a>
+                                        <a class="s-fc7" href=""><?=$songInfo['author']?></a>
                                     </span>
                                 </p>
                                 <div class="m-info">
-                                    <div id="content-operation" class="btns f-cb" data-rid="2081274" data-type="18">
-                                        <a data-res-action="play" data-res-id="2081274" data-res-type="18" href="javascript:;" class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true" title="播放">
+                                    <div id="content-operation" class="btns f-cb" data-rid="<?=$songInfo['id']?>" data-type="18">
+                                        <a data-res-action="play" data-res-id="<?=$songInfo['id']?>" data-res-type="18" href="javascript:;" class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true" title="播放">
                                             <i><em class="ply"></em>播放</i>
                                         </a>
-                                        <a data-res-action="addto" data-res-id="2081274" data-res-type="18" href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
-                                        <a data-res-id="2081274" data-res-type="18" data-count="-1" data-fee="0" data-payed="0" data-pl="320000" data-dl="320000" data-cp="1" data-res-action="fav" class="u-btni u-btni-fav " href="javascript:;">
+                                        <a data-res-action="addto" data-res-id="<?=$songInfo['id']?>" data-res-type="18" href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
+                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-count="-1" data-fee="0" data-payed="0" data-pl="320000" data-dl="320000" data-cp="1" data-res-action="fav" class="u-btni u-btni-fav " href="javascript:;">
                                             <i>收藏</i>
                                         </a>
-                                        <a data-res-id="2081274" data-res-type="18" data-count="-1" data-res-action="share" data-res-pic="" class="u-btni u-btni-share " href="javascript:;">
+                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-count="-1" data-res-action="share" data-res-pic="" class="u-btni u-btni-share " href="javascript:;">
                                             <i>分享</i>
                                         </a>
-                                        <a data-res-id="2081274" data-res-type="18" data-res-action="download" class="u-btni u-btni-dl " href="javascript:;">
+                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-res-action="download" class="u-btni u-btni-dl " href="javascript:;">
                                             <i>下载</i>
                                         </a>
                                         <a data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt ">
@@ -53,50 +53,37 @@
                                         </a>
                                     </div>
                                 </div>
+
                                 <div id="lyric-content" class="bd bd-open f-brk f-ib" data-song-id="2081274" data-third-copy="false" ,="" copy-from="">
-                                    baby it’s my cross<br>
-                                    宝贝我为你付出真心<br>
-                                    to find it every time<br>
-                                    有你我就能感受到爱<br>
-                                    to expect the words<br>
-                                    言语却无法将此表白<br>
-                                    to leave bless behind<br>
-                                    抛下曾祝你幸福的话语<br>
-                                    baby it’s my lose<br>
-                                    过去是我的错<br>
-                                    to end it all in lies<br>
-                                    谎言让爱情终止<br>
-                                    <div id="flag_more" class="f-hide">
-                                        to spend my lifes<br>
-                                        我虚度了生命光阴<br>
-                                        counselation (plies)<br>
-                                        万分懊悔<br>
-                                        to be playing a waiting game<br>
-                                        我一直在伺机等候<br>
-                                        it’s not a real good time<br>
-                                        但现在时机不成熟<br>
-                                        to make things change<br>
-                                        我想改变现状<br>
-                                        i am playing a waiting game<br>
-                                        我一直在伺机等候<br>
-                                        it’s not a real good time<br>
-                                        但现在时机不成熟<br>
-                                        to make things change<br>
-                                        我想改变现状<br>
-                                        it’s not like i’ve tried<br>
-                                        我不会再像从前<br>
-                                        to find a better life<br>
-                                        只是企盼美好生活<br>
-                                        i can (by with jar how’s the wide)<br>
-                                        我学会了包容<br>
-                                        but sometimes i wonder<br>
-                                    </div>
-                                    <div class="crl">
-                                        <a id="flag_ctrl" href="javascript:void(0)" class="s-fc7">
-                                            展开
-                                        </a>
-                                        <i class="u-icn u-icn-69"></i>
-                                    </div>
+                                    <?php
+                                        $lyrArr = \common\help\Lyric::parseLyric($songInfo['lyric']);
+                                        if(!empty($lyrArr)){
+                                            $i = 0;
+                                            foreach($lyrArr as $key => $value){
+                                                $i++;
+                                                if($i == 13){
+                                                    echo '<div id="flag_more" class="f-hide">';
+                                                }
+                                                echo $value.'<br>';
+
+                                            }
+                                            if($i >= 13){
+                                    ?>
+                                                </div>
+                                                <div class="crl">
+                                                    <a id="flag_ctrl" href="javascript:void(0)" class="s-fc7">
+                                                        展开
+                                                    </a>
+                                                    <i class="u-icn u-icn-69"></i>
+                                                </div>
+                                    <?php
+
+
+                                            }
+                                        }
+                                    ?>
+
+
                                 </div>
                             </div>
                         </div>

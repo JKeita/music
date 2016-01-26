@@ -395,20 +395,22 @@ use yii\helpers\Url;
                 <a href="javascript:;" hidefocus="true" data-action="prev" class="prv" title="上一首(ctrl+←)" id="prev_btn">上一首</a>
                 <a href="javascript:;" hidefocus="true" data-action="play" class="ply j-flag" title="播放/暂停(p)" id="play_pause">播放/暂停</a>
                 <a href="javascript:;" hidefocus="true" data-action="next" class="nxt" title="下一首(ctrl+→)" id="next_btn">下一首</a></div>
-            <div class="head j-flag">
-                <img src="./css/3398590442421534.jpg" />
-                <a href="http://music.163.com/song?id=31789096" hidefocus="true" class="mask"></a></div>
+            <div class="head j-flag" id="song_img">
+                <img src="./css/3398590442421534.jpg"/>
+                <a href="http://music.163.com/song?id=31789096" hidefocus="true" class="mask"></a>
+            </div>
             <div class="play">
-                <div class="j-flag words">
+                <div class="j-flag words" id="songinfo">
                     <a hidefocus="true" href="http://music.163.com/song?id=31789096" class="f-thide name fc1 f-fl"
                        title="格斗宝贝">格斗宝贝</a>
-            <span class="by f-thide f-fl">
-              <span title="祈Inory/流月">
-              <a class="" href="http://music.163.com/artist?id=189577" hidefocus="true">祈Inory</a>/
-              <a class="" href="http://music.163.com/artist?id=8739" hidefocus="true">流月</a></span>
-            </span>
-                    <a href="http://music.163.com/playlist?id=30588557&amp;_hash=songlist-31789096" class="src"
-                       title="来自歌单"></a></div>
+                    <span class="by f-thide f-fl">
+                          <span title="祈Inory/流月" id="song_author">
+                            <a class="" href="http://music.163.com/artist?id=189577" hidefocus="true">祈Inory</a>
+                          </span>
+                    </span>
+                  <a href="http://music.163.com/playlist?id=30588557&amp;_hash=songlist-31789096" class="src"
+                       title="来自歌单"></a>
+                </div>
                 <div class="m-pbar" data-action="noop">
                     <div class="barbg j-flag" id="auto-id-wdO8Hb8Ttpcb0518">
                         <div class="rdy" style="width: 0%;"></div>
@@ -460,30 +462,6 @@ use yii\helpers\Url;
                 <div class="listbdc j-flag" id="auto-id-FwTi8Dk41WAeTLoN">
                     <ul class="f-cb" id="playlistul">
                         <li class="z-sel" data-id="100000" data-action="play">
-                            <div class="col col-1">
-                                <div class="playicn"></div>
-                            </div>
-                            <div class="col col-2">灼け落ちない翼</div>
-                            <div class="col col-3">
-                                <div class="icns">
-                                    <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
-                                    <i class="ico ico-dl" title="下载" data-id="34077763" data-action="download">下载</i>
-                                    <i class="ico ico-share" title="分享" data-id="34077763" data-action="share">分享</i>
-                                    <i class="j-t ico ico-add" title="收藏" data-id="34077763" data-action="like">收藏</i>
-                                </div>
-                            </div>
-                            <div class="col col-4">
-                                <span title="多田葵">
-                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
-                                </span>
-                            </div>
-                            <div class="col col-5">05:15</div>
-                            <div class="col col-6">
-                                <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
-                                   data-action="link">来源</a>
-                            </div>
-                        </li>
-                        <li data-id="100001" data-action="play">
                             <div class="col col-1">
                                 <div class="playicn"></div>
                             </div>

@@ -10,10 +10,13 @@ use yii\helpers\Url;
     <link rel="shortcut icon" href="http://s1.music.126.net/music.ico?v1" />
     <link href="<?=Yii::$app -> homeUrl?>css/core.css" type="text/css" rel="stylesheet" />
     <link href="<?=Yii::$app -> homeUrl?>css/pt_frame.css" type="text/css" rel="stylesheet" />
+
     <script src="<?=Yii::$app -> homeUrl?>js/jquery-1.12.0.js" ></script>
     <script src="<?=Yii::$app -> homeUrl?>js/index.js"></script>
     <script type="text/javascript" src="/plugin/fullAvatarEditor-2.3/scripts/swfobject.js"></script>
     <script type="text/javascript" src="/plugin/fullAvatarEditor-2.3/scripts/fullAvatarEditor.js"></script>
+    <script type="text/javascript" src="/plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="/plugin/layer/extend/layer.ext.js"></script>
     <style type="text/css">
         object,embed {
             -webkit-animation-duration:.001s;
@@ -303,6 +306,29 @@ use yii\helpers\Url;
             width:400px;
             right:0px;
         }
+        .select select {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 60px;
+            border: 10px solid #00aec7;
+            text-indent: 5px;
+        }
+        .select:after {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            content: "";
+            border: 8px solid transparent;
+            border-top-color: #00aec7;
+        }
+        [class^="icon-"]:before {
+            font-family: 'icomoon';
+            speak: none;
+            font-weight: normal;
+            -webkit-font-smoothing: antialiased;
+            font-size: 18px;
+            color: #fff;
+        }
     </style>
     <link href="<?=Yii::$app -> homeUrl?>plugin/scrollbar/scrollbar.css" type="text/css" rel="stylesheet" />
     <script src="<?=Yii::$app -> homeUrl?>plugin/scrollbar/scrollbar.js" ></script>
@@ -319,7 +345,7 @@ use yii\helpers\Url;
               <span>
                 <a hidefocus="true" href="<?=Url::to(['site/index'])?>" data-module="discover" class="z-slt single">
                     <em>发现音乐</em>
-                    <sub class="cor">�</sub></a>
+                    <sub class="cor"></sub></a>
               </span>
                 </li>
                 <li>
@@ -355,7 +381,8 @@ use yii\helpers\Url;
     <div class="m-subnav m-subnav-up f-pr j-tflag f-hide">
         <div class="shadow">�</div>
     </div>
-    <div id="g_nav2" class="m-subnav j-tflag">
+
+<!--    <div id="g_nav2" class="m-subnav j-tflag">
         <div class="wrap f-pr">
             <ul class="nav">
                 <li>
@@ -375,9 +402,9 @@ use yii\helpers\Url;
                 </li>
             </ul>
         </div>
-    </div>
+    </div>-->
 </div>
-
+<div class="clear" style="clear:both;"></div>
 <?= $content ?>
 
 <div class="g-btmbar">
@@ -662,19 +689,26 @@ use yii\helpers\Url;
     window.LoadTopHeadUrl = "<?=Url::to(['user/tophead'])?>";
     window.LogoutUrl = "<?=Url::to(['user/logout'])?>";
     function addNewObjEvent(){
-        $(".container a.single").on('click', function(){
-            history.pushState({ path: this.path }, '', this.href);
-            $.get(this.href, function(data) {
+        $(".container .single").on('click', function(){
+            history.pushState({ path: this.path }, '', $(this).attr('href'));
+            $.get($(this).attr('href'), function(data) {
                 $('.container').get(0).outerHTML=data;
                 addNewObjEvent();
             });
             return false;
         });
-        addUserInfoEvent();
+        if(document.location.href.indexOf('userinfo')>=0){
+            addUserInfoEvent();
+        }
+        addSongInfoEvent();
+        addMySongEvent();
+        if(document.location.href.indexOf('editcover')>=0){
+            addEditCoverEvent();
+        }
     }
-    $(' a.single').on('click',function() {
-        history.pushState({ path: this.path }, '', this.href);
-        $.get(this.href, function(data) {
+    $('.single').on('click',function() {
+        history.pushState({ path: this.path }, '', $(this).attr('href'));
+        $.get($(this).attr('href'), function(data) {
             $('.container').get(0).outerHTML=data;
             addNewObjEvent();
         });
@@ -682,12 +716,16 @@ use yii\helpers\Url;
         return false;
     });
     $(window).on('popstate', function() {
-        $.get(location.pathname, function(data) {
+        $.get(location.href, function(data) {
             $('.container').get(0).outerHTML=data;
             addNewObjEvent();
         });
 
     });
 
+</script>
+<script>
+    window.ADD_PLAYLIST_URL = '<?=Url::to(['playlist/add'])?>';
+    window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
 </script>
 </html>

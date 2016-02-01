@@ -15,7 +15,7 @@ use Yii;
  * @property string $sharenum
  * @property integer $state
  */
-class PlayList extends \yii\db\ActiveRecord
+class Playlist extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,8 +31,8 @@ class PlayList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'uid'], 'required'],
-            [['id', 'uid', 'collectnum', 'sharenum', 'state'], 'integer'],
+            [['name', 'uid'], 'required'],
+            [['uid', 'collectnum', 'sharenum', 'state'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['cover'], 'string', 'max' => 100]
         ];

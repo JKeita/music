@@ -28,8 +28,8 @@ class Likes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'uid', 'psid'], 'required'],
-            [['id', 'uid', 'psid', 'type'], 'integer']
+            [['uid', 'psid'], 'required'],
+            [['uid', 'psid', 'type'], 'integer']
         ];
     }
 

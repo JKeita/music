@@ -7,8 +7,12 @@
  */
 
 ?>
-
-<div class="container">
+<style>
+    .container{
+        padding-top:70px !important;
+    }
+</style>
+<div class="container" >
     <div class="g-bd4 f-cb">
         <div class="g-mn4">
             <div class="g-mn4c">
@@ -39,7 +43,7 @@
                                             <i><em class="ply"></em>播放</i>
                                         </a>
                                         <a data-res-action="addto" data-res-id="<?=$songInfo['id']?>" data-res-type="18" href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
-                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-count="-1" data-fee="0" data-payed="0" data-pl="320000" data-dl="320000" data-cp="1" data-res-action="fav" class="u-btni u-btni-fav " href="javascript:;">
+                                        <a data-res-id="<?=$songInfo['id']?>" id="collectBtn" data-res-type="18" data-count="-1" data-fee="0" data-payed="0" data-pl="320000" data-dl="320000" data-cp="1" data-res-action="fav" class="u-btni u-btni-fav " href="javascript:;">
                                             <i>收藏</i>
                                         </a>
                                         <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-count="-1" data-res-action="share" data-res-pic="" class="u-btni u-btni-share " href="javascript:;">

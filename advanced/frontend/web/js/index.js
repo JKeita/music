@@ -433,8 +433,128 @@ function addSongInfoEvent(){
 		var id = $(this).attr('data-res-id');
 		loadSongLi(id);
 	});
+	$("#collectBtn").click(function(){
+		var sid = $(this).attr('data-res-id');
+		$.ajax({
+			type:'get',
+			dataType:'text',
+			url:'http://f.music.com/playlist/select',
+			success:function(data){
+				layer.open({
+					type: 1,
+					area:['400px','300px'],
+					title:'收藏',
+					skin: 'layui-layer-molv',
+					content: data, //这里content是一个普通的String
+					btn:['确定', '新建'],
+					btn1:function(){
+						var pid = $("#play_list_select select").val();
+						if(pid == ''){
+							layer.alert('请选择歌单或新建歌单', function(index){
+								layer.close(index);
+							});
+							return false;
+						}
+						$.ajax({
+							type:'post',
+							url:window.COLLECT_SONG_URL,
+							dataType:'json',
+							data:{pid:pid,sid:sid},
+							success:function(data){
+								layer.alert(data.msg, function(index){
+									layer.close(index);
+								});
+							},
+							error:function(){
+								layer.alert('收藏失败', function(index){
+									layer.close(index);
+								});
+							}
+
+						});
+					},
+					btn2:function(index){
+						layer.prompt({
+							title: '新建歌单'
+						},function(value, index, elem){
+							$.ajax({
+								type:'post',
+								url:window.ADD_PLAYLIST_URL,
+								dataType:'json',
+								data:{name:value,sid:sid},
+								success:function(data){
+									layer.alert(data.msg, function(index){
+										layer.close(index);
+									});
+								},
+								error:function(){
+									layer.alert('创建失败', function(index){
+										layer.close(index);
+									});
+								}
+
+							});
+							layer.close(index);
+						});
+					}
+				});
+			}
+		});
+
+		$("#testAdd").click(function(){
+			alert('ok');
+		});
+	});
 }
 //===============================================================================================
+function addMySongEvent(){
+	$("li.j-iflag").on("mouseover",function(){
+		$(this).addClass("z-hover");
+		$(this).find(".hshow").show();
+	});
+	$("li.j-iflag").on("mouseout",function(){
+		$(this).removeClass("z-hover");
+		$(this).find(".hshow").hide();
+	});
+}
+//=======================================================
+function addEditCoverEvent(){
+	swfobject.addDomLoadEvent(function () {
+		var swf = new fullAvatarEditor("/plugin/fullAvatarEditor-2.3/fullAvatarEditor.swf", "/plugin/fullAvatarEditor-2.3/expressInstall.swf", "swfContainerCover", {
+				id : 'swf',
+				upload_url : '/user/uploadcover',	//上传接口
+				method : 'post',	//传递到上传接口中的查询参数的提交方式。更改该值时，请注意更改上传接口中的查询参数的接收方式
+				src_upload : 0,		//是否上传原图片的选项，有以下值：0-不上传；1-上传；2-显示复选框由用户选择
+				avatar_box_border_width : 0,
+				avatar_field_names:'headimg',
+				avatar_sizes : '200*200',
+				avatar_sizes_desc : '200*200像素',
+				tab_active:'upload',
+				tab_visible:'false',
+			}, function (msg) {
+				console.log(msg);
+				switch(msg.code)
+				{
+					case 1 : break;
+					case 2 :
+						document.getElementById("upload").style.display = "inline";
+						break;
+					case 3 :
+						break;
+					case 5 :
+						if(msg.type == 0)
+						{
+						}
+						break;
+				}
+			}
+		);
+		document.getElementById("upload").onclick=function(){
+			swf.call("upload");
+		};
+	});
+}
+//===========================================================
 $(function(){
 	$(".zbar").on("mousedown",function(ed){
 		var diffX = ed.pageX - $(".z-show").offset().left;

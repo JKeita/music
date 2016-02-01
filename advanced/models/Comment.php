@@ -32,8 +32,8 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'psid', 'uid'], 'required'],
-            [['id', 'psid', 'type', 'uid', 'tid', 'state'], 'integer'],
+            [['psid', 'uid'], 'required'],
+            [['psid', 'type', 'uid', 'tid', 'state'], 'integer'],
             [['ctime'], 'safe'],
             [['content'], 'string', 'max' => 500]
         ];

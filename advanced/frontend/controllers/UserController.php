@@ -10,12 +10,14 @@ namespace frontend\controllers;
 
 use common\help\Request;
 use common\models\LoginForm;
+use logic\PlayListLogicImp;
 use logic\UserLogicImp;
 use models\User;
 use Yii;
 use frontend\models\SignupForm;
 use yii\base\Exception;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class UserController extends Controller{
@@ -153,5 +155,72 @@ class UserController extends Controller{
         $userLogic = new UserLogicImp();
         $result = $userLogic -> resetPwd($oldpwd, $pwd, $repwd);
         return json_encode($result);
+    }
+
+    /**
+     * 我的音乐页面
+     */
+    public function actionMysong(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $id = Request::getQueryValue('id');
+        $params = [
+          'id' => $id,
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("mysong", $params);
+        }else{
+            return $this -> render("mysong", $params);
+        }
+    }
+
+    /**
+     * 编辑歌单页面
+     * @return string
+     */
+    public function actionEditplaylist(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $pid = Request::getQueryValue('id');
+        $uid = Yii::$app -> getUser() -> getId();
+        $playListLogic = new PlayListLogicImp();
+        if($playListLogic -> isUserPlayList($uid, $pid)){
+            $model = $playListLogic -> getPlayListById($pid);
+            if(empty($model)){
+                throw new NotFoundHttpException();
+            }
+            $params = [
+              'model' => $model,
+            ];
+        }else{
+            throw new NotFoundHttpException();
+        }
+
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("editplaylist",$params);
+        }else{
+            return $this -> render("editplaylist",$params);
+        }
+    }
+
+    /**
+     * 编辑歌单封面页面
+     * @return string
+     */
+    public function actionEditcover(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $id = Request::getQueryValue('id');
+        $params = [
+            'id' => $id,
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("editcover",$params);
+        }else{
+            return $this -> render("editcover",$params);
+        }
     }
 }

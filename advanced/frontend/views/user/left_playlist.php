@@ -14,7 +14,7 @@ $playList = $playListLogic -> getUserPlayListByUid($uid);
         <div class="n-minelst n-minelst-1">
             <h2 class="f-ff1">
                 <a hidefocus="true" href="javascript:void(0);" class="u-btn u-btn-crt f-fr j-flag" id="auto-id-wM05WHrGGAebXix7">
-                    <i>新建</i>
+                    <i class="createPlayList">新建</i>
                 </a>
             <span class="rtitle" id="auto-id-ggT4hzXUd3UIN6s4">创建的歌单(
             <span class="j-flag">4</span>)</span></h2>
@@ -37,7 +37,7 @@ $playList = $playListLogic -> getUserPlayListByUid($uid);
                                 </div>
                                 <span class="oper hshow" style="display: none;">
                                   <a hidefocus="true" title="编辑" href="<?=\yii\helpers\Url::to(['user/editplaylist', 'id' => $item['id']])?>" class="u-icn u-icn-10 single"></a>
-                                  <a data-action="delete" hidefocus="true" title="删除" href="javascript:void(0);" class="u-icn u-icn-11"></a>
+                                  <a data-action="delete" hidefocus="true" title="删除" href="javascript:void(0);" class="u-icn u-icn-11 delPlayList" data-id="<?=$item['id']?>"></a>
                                 </span>
                         </li>
 
@@ -89,6 +89,11 @@ $playList = $playListLogic -> getUserPlayListByUid($uid);
                 </li>
             </ul>
         </div>
-        <div style="height:100px;"></div>
+        <div style="height:200px;"></div>
+        <script>
+            $(function(){
+                leftPlayListEvent();
+            });
+        </script>
     </div>
 </div>

@@ -18,7 +18,7 @@
                 <div class="g-wrap">
                     <div>
                         <div class="u-bread1">
-                            <a href="" class="s-fc7"><?=$model['name']?></a>
+                            <a href="<?=\yii\helpers\Url::to(['user/mysong', 'id' => $id])?>" class="s-fc7 single"><?=$model['name']?></a>
                             <span class="arr s-fc4">&gt;</span>
                             <span class="f-fw1">编辑歌单</span>
                         </div>

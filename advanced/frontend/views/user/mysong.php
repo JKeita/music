@@ -5,6 +5,7 @@
  * Date: 2016/1/29
  * Time: 20:22
  */
+$user = Yii::$app -> user -> identity;
 ?>
 
 <div class="container">
@@ -21,22 +22,22 @@
                         <div class="g-wrap">
                             <div class="m-info f-cb">
                                 <div class="cover u-cover u-cover-dj">
-                                    <img id="flag_cover" src="http://p3.music.126.net/SOnKukiZEBzme9KolQs3FQ==/859818092966144.jpg?param=200y200" />
+                                    <img id="flag_cover" src="<?=\common\help\UrlHelp::getImgUrl($model['cover'])?>" />
                                 </div>
                                 <div class="cnt">
                                     <div class="cntc m-info">
                                         <div class="hd f-cb">
-                                            <a href="/my/#/music/edit?id=160729863" class="edit s-fc7">编辑</a>
-                                            <h2 class="f-ff2 f-thide">123</h2>
+                                            <a href="<?=\yii\helpers\Url::to(['user/editplaylist', 'id'=>$id])?>" class="edit s-fc7 single">编辑</a>
+                                            <h2 class="f-ff2 f-thide"><?=$model['name']?></h2>
                                         </div>
                                         <div class="user f-cb">
-                                            <a class="face" href="/user/home?id=37889558">
-                                                <img src="http://p4.music.126.net/0pZwSIb90hSALWk6BGDF0g==/6637751697611512.jpg?param=200y200" />
+                                            <a class="face" href="">
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl( $user -> headimg)?>" />
                                             </a>
                       <span class="name f-thide">
-                        <a href="/user/home?id=37889558" class="s-fc7" title="Keita霖">Keita霖</a>
+                        <a href="/user/home?id=37889558" class="s-fc7" title="<?=$user -> username?>"><?=$user -> username?></a>
                       </span>
-                                            <span class="time s-fc4">2016-01-27eț建</span>
+                                            <span class="time s-fc4"><?=substr($model['created'],0,10)?>创建</span>
                                         </div>
                                         <div class="btns f-cb">
                                             <a id="flag_play" href="javascript:;" class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true"
@@ -75,6 +76,9 @@
                                 <strong id="flag_playCount" class="s-fc6">0</strong>次</div>
                         </div>
                     </div>
+                    <?php
+                        if(!empty($songList)){
+                    ?>
                     <div class="j-flag">
                         <div id="auto-id-c9GlFibmgNc0Ft2J">
                             <div class="j-flag" id="auto-id-xJrQGnHZq62qEUCb">
@@ -93,65 +97,100 @@
                                         <th class="w3">
                                             <div class="wp">歌手</div>
                                         </th>
-                                        <th class="w4">
+                                    <!--    <th class="w4">
                                             <div class="wp">专辑</div>
-                                        </th>
+                                        </th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr id="41529891454070084172" class="even">
-                                        <td class="left">
-                                            <div class="hd">
-                          <span data-res-id="4152989" data-res-type="18" data-res-action="play" data-res-from="13"
-                                data-res-data="160729863" class="ply"></span>
-                                                <span class="num">1</span>
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            <div class="f-cb">
-                                                <div class="tt">
-                                                    <div class="ttc">
-                              <span class="txt">
-                                <a href="/song?id=4152989">
-                                    <b title="EverybodyKnowsILoveYou">EverybodyKnowsILoveYou</b>
-                                </a>
-                              </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class=" s-fc3">
-                                            <span class="u-dur candel">03:22</span>
-                                            <div class="opt hshow">
-                                                <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true"
-                                                   data-res-type="18" data-res-id="4152989" data-res-action="addto" data-res-from="13"
-                                                   data-res-data="160729863"></a>
-                          <span data-res-id="4152989" data-res-type="18" data-res-action="share"
-                                data-res-pic="http://p3.music.126.net/SOnKukiZEBzme9KolQs3FQ==/859818092966144.jpg" class="icn icn-share"
-                                title="分享">分享</span>
-                          <span data-res-id="4152989" data-res-type="18" data-res-action="delete" class="icn icn-del"
-                                title="删除">删除</span>
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            <div class="text" title="Lovebugs">
-                          <span title="Lovebugs">
-                            <a class="" href="/artist?id=95442" hidefocus="true">Lovebugs</a>
-                          </span>
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            <div class="text">
-                                                <a href="/album?id=419836" title="Naked">Naked</a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                            $i = 0;
+                                            foreach($songList as $song){
+                                                $i++;
+                                    ?>
+                                                <tr id="" class="even">
+                                                    <td class="left">
+                                                        <div class="hd">
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="play" data-res-from="13" data-res-data="" class="ply"></span>
+                                                            <span class="num"><?=$i?></span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="f-cb">
+                                                            <div class="tt">
+                                                                <div class="ttc">
+                                                                  <span class="txt">
+                                                                    <a href="<?=\yii\helpers\Url::to(['song/info', 'id' => $song['id']])?>">
+                                                                        <b title="<?=$song['name']?>"><?=$song['name']?></b>
+                                                                    </a>
+                                                                  </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class=" s-fc3">
+                                                        <?php
+                                                            if($song['duration']>1000){
+                                                                $duration = $song['duration'] / 1000;
+                                                            }else{
+                                                                $duration = $song['duration'];
+                                                            }
+                                                        ?>
+                                                        <span class="u-dur candel"><?=date('i:s', $duration)?></span>
+                                                        <div class="opt hshow">
+                                                            <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="13" data-res-data="42097082"></a>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="download" class="icn icn-dl" title="下载"></span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="delete" class="icn icn-del" title="删除">删除</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="text" title="Lovebugs">
+                                                          <span title="Lovebugs">
+                                                            <a class="" href="/artist?id=95442" hidefocus="true"><?=$song['author']?></a>
+                                                          </span>
+                                                        </div>
+                                                    </td>
+                                    <!--                <td class="">
+                                                        <div class="text">
+                                                            <a href="/album?id=419836" title="Naked">Naked</a>
+                                                        </div>
+                                                    </td>-->
+                                                </tr>
+                                    <?php
+                                            }
+
+                                    ?>
+
+
                                     </tbody>
                                 </table>
                             </div>
                             <div class="j-flag"></div>
                         </div>
                     </div>
+                    <?php
+                        } else {
+                    ?>
+                    <!--无音乐-->
+                    <div class="j-flag">
+                        <div id="auto-id-85JGwsu7611MamZy">
+                            <div class="j-flag" id="auto-id-XtMkqDl1txTUbK8l">
+                                <div class="n-nmusic">
+                                    <h3 class="f-ff2">暂无音乐！</h3>
+                                    <p class="txt s-fc4">即可将你喜欢的音乐收藏到“我的音乐”&nbsp;&nbsp;&nbsp;&nbsp;马上去
+                                        <a href="#" class="s-fc7">发现音乐</a></p>
+                                </div>
+                            </div>
+                            <div class="j-flag"></div>
+                        </div>
+                    </div>
+
+                    <?php
+                        }
+                    ?>
+
                     <div class="j-flag f-mgt40">
                         <div id="auto-id-5aEJBOu9etRDPolU">
                             <div class="u-title u-title-1">

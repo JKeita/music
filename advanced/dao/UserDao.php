@@ -5,6 +5,7 @@
  * Date: 2016/1/16
  * Time: 15:25
  */
+namespace dao;
 use models\User;
 
 

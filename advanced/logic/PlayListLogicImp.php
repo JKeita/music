@@ -10,6 +10,7 @@ namespace logic;
 
 
 use common\help\Response;
+use dao\PlayListDao;
 use models\PlayList;
 use models\SongCollect;
 
@@ -107,5 +108,41 @@ class PlayListLogicImp implements PlayListLogic
         }
         return null;
     }
+
+    /**
+     * 通过ID删除歌单
+     * @param $pid
+     * @return mixed
+     */
+    public function del($pid)
+    {
+        if(empty($pid)){
+            return Response::returnInfo(0, '删除失败:参数出错');
+        }
+        $model  = PlayList::findOne($pid);
+        if(empty($model)){
+            return Response::returnInfo(0, '删除失败:未找到数据');
+        }
+        $result = $model -> delete();
+        if($result){
+            return Response::returnInfo(1, '删除成功');
+        }
+        return Response::returnInfo(0,'删除失败');
+    }
+
+    /**
+     * 获取歌单歌曲
+     * @param $id
+     * @return mixed
+     */
+    public function getPlayListSongById($id)
+    {
+        if(empty($id)){
+            return [];
+        }
+        $playListDao = new PlayListDao();
+        return $playListDao -> getPlayListSong($id);
+    }
+
 
 }

@@ -58,4 +58,18 @@ interface PlayListLogic
      * @return mixed
      */
     public function getPlayListById($id);
+
+    /**
+     * 通过ID删除歌单
+     * @param $pid
+     * @return mixed
+     */
+    public function del($pid);
+
+    /**
+     * 获取歌单歌曲
+     * @param $id
+     * @return mixed
+     */
+    public function getPlayListSongById($id);
 }

@@ -14,6 +14,8 @@ use Yii;
  * @property string $collectnum
  * @property string $sharenum
  * @property integer $state
+ * @property string $profile
+ * @property string $created
  */
 class Playlist extends \yii\db\ActiveRecord
 {
@@ -33,8 +35,9 @@ class Playlist extends \yii\db\ActiveRecord
         return [
             [['name', 'uid'], 'required'],
             [['uid', 'collectnum', 'sharenum', 'state'], 'integer'],
+            [['created'], 'safe'],
             [['name'], 'string', 'max' => 50],
-            [['cover'], 'string', 'max' => 100]
+            [['cover', 'profile'], 'string', 'max' => 100]
         ];
     }
 
@@ -51,6 +54,8 @@ class Playlist extends \yii\db\ActiveRecord
             'collectnum' => 'Collectnum',
             'sharenum' => 'Sharenum',
             'state' => 'State',
+            'profile' => 'Profile',
+            'created' => 'Created',
         ];
     }
 }

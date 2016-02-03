@@ -26,6 +26,8 @@ class PlaylistController extends Controller
         $actionArr = [
             'select',
             'add',
+            'create',
+            'del',
             'collect-song',
         ];
         if(in_array($action -> id,$actionArr)){
@@ -58,6 +60,20 @@ class PlaylistController extends Controller
         return json_encode($result);
     }
 
+    /**
+     * 创建歌单
+     */
+    public function actionCreate(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $name = Request::getPostValue('name');
+        $user = \Yii::$app -> user -> identity;
+        $playListLogic = new PlayListLogicImp();
+        $result = $playListLogic -> create($user -> getId(), $name);
+        return json_encode($result);
+    }
+
     public function actionCollectSong(){
         if(\Yii::$app -> user -> isGuest){
             throw new NotFoundHttpException();
@@ -71,6 +87,24 @@ class PlaylistController extends Controller
             return json_encode($result);
         }
         throw new NotFoundHttpException();
+    }
 
+    /**
+     * 删除歌单
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionDel(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $user = \Yii::$app -> user -> identity;
+        $pid = Request::getPostValue('pid');
+        $playListLogic = new PlayListLogicImp();
+        if($playListLogic -> isUserPlayList($user -> getId(), $pid)){
+            $result = $playListLogic ->del($pid);
+            return json_encode($result);
+        }
+        throw new NotFoundHttpException();
     }
 }

@@ -507,7 +507,64 @@ function addSongInfoEvent(){
 	});
 }
 //===============================================================================================
+function leftPlayListEvent(){
+	$(".createPlayList").click(function(){
+		layer.prompt({
+			title: '新建歌单'
+		},function(value, index, elem){
+			$.ajax({
+				type:'post',
+				url:window.CREATE_PLAYLIST_URL,
+				dataType:'json',
+				data:{name:value},
+				success:function(data){
+					layer.alert(data.msg, function(index){
+						if(data.code == 1){
+							$.get(location.href, function(data) {
+								$('.container').get(0).outerHTML=data;
+								addNewObjEvent();
+							});
+						}
+						layer.close(index);
+					});
+				},
+				error:function(){
+					layer.alert('创建失败', function(index){
+						layer.close(index);
+					});
+				}
+
+			});
+			layer.close(index);
+		});
+	});
+	$(".delPlayList").click(function(){
+		var pid = $(this).attr('data-id');
+		layer.confirm('确定删除此歌单?', function(index){
+			$.ajax({
+				type:'post',
+				url:window.DEL_PLAYLIST_URL,
+				dataType:'json',
+				data:{pid:pid},
+				success:function(data){
+					layer.alert(data.msg,function(index){
+						if(data.code == 1){
+							$.get(location.href, function(data) {
+								$('.container').get(0).outerHTML=data;
+								addNewObjEvent();
+							});
+						}
+						layer.close(index);
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});
+}
+//===============================================================================================
 function addMySongEvent(){
+	leftPlayListEvent();
 	$("li.j-iflag").on("mouseover",function(){
 		$(this).addClass("z-hover");
 		$(this).find(".hshow").show();
@@ -516,6 +573,11 @@ function addMySongEvent(){
 		$(this).removeClass("z-hover");
 		$(this).find(".hshow").hide();
 	});
+/*	$("a.u-btni-addply").click(playSong);
+	$("a.u-btni-add").click(function(){
+		var id = $(this).attr('data-res-id');
+		loadSongLi(id);
+	});*/
 }
 //=======================================================
 function addEditCoverEvent(){

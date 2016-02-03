@@ -351,7 +351,7 @@ use yii\helpers\Url;
                 <li>
               <span>
                 <a data-res-action="bilog" data-log-action="page" data-log-json="{&quot;type&quot;:&quot;my&quot;}"
-                   hidefocus="true" href="http://music.163.com/my/" data-module="my">
+                   hidefocus="true" href="<?=Url::to(['user/mysong','id'=>1])?>" data-module="my" class="single">
                     <em>我的音乐</em>
                     <sub class="cor">�</sub></a>
               </span>
@@ -697,7 +697,7 @@ use yii\helpers\Url;
             });
             return false;
         });
-        if(document.location.href.indexOf('userinfo')>=0){
+        if(document.location.href.indexOf('user-info')>=0){
             addUserInfoEvent();
         }
         addSongInfoEvent();
@@ -726,6 +726,8 @@ use yii\helpers\Url;
 </script>
 <script>
     window.ADD_PLAYLIST_URL = '<?=Url::to(['playlist/add'])?>';
+    window.CREATE_PLAYLIST_URL = '<?=Url::to(['playlist/create'])?>';
+    window.DEL_PLAYLIST_URL = '<?=Url::to(['playlist/del'])?>';
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
 </script>
 </html>

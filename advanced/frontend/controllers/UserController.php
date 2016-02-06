@@ -16,6 +16,7 @@ use models\User;
 use Yii;
 use frontend\models\SignupForm;
 use yii\base\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -167,6 +168,15 @@ class UserController extends Controller{
         $pid = Request::getQueryValue('id');
         $uid = Yii::$app -> getUser() -> getId();
         $playListLogic = new PlayListLogicImp();
+
+        if(empty($pid)){
+            $playList = $playListLogic -> getUserPlayListByUid($uid, 1);
+            if(!empty($playList)){
+                $pid = $playList[0]['id'];
+                return $this -> redirect(Url::to(['user/mysong', 'id' => $pid]));
+            }
+            throw new NotFoundHttpException();
+        }
         if($playListLogic -> isUserPlayList($uid, $pid)){
             $model = $playListLogic -> getPlayListById($pid);
             if(empty($model)){

@@ -170,6 +170,22 @@ function loadSongLi(id){
 	});
 	return false;
 }
+function loadSongList(pid){
+	$.ajax({
+		type:'post',
+		url:'http://f.music.com/song/getsongli',
+		dataType:'text',
+		async:false,
+		data:{pid:pid},
+		success:function(data){
+			$("#playlistul").append($(data));
+			$("#playlistul li").off('dblclick');
+			$("#playlistul li").on('dblclick', playSongLi);
+		}
+
+	});
+	return false;
+}
 function prevSong(){
 	switch(pti){
 		case 0:{
@@ -287,6 +303,114 @@ function togglePlayAndPause(){
 		pp.removeClass('pas');
 		window.clearInterval(t);
 	}
+}
+function clearPlayList(){
+	$("#playlistul li").remove();
+}
+function playSongList(){
+	var pid = $(this).attr('data-res-id');
+	clearPlayList();
+	loadSongList(pid);
+	$("#playlistul li").removeClass('z-sel');
+	$("#playlistul li:first").addClass('z-sel');
+	var id = $("#playlistul li").eq(0).attr('data-id');
+	console.log(id);
+	loadSong(id);
+	var pp=$("#play_pause");
+	var player=$("audio")[0];
+	player.play();
+	pp.addClass('pas');
+	window.clearInterval(t);
+	t = window.setInterval(movePlayPosition, 1000);
+}
+function collectSong(sid){
+	$.ajax({
+		type:'get',
+		dataType:'text',
+		url:'http://f.music.com/playlist/select',
+		success:function(data){
+			layer.open({
+				type: 1,
+				area:['400px','300px'],
+				title:'收藏',
+				skin: 'layui-layer-molv',
+				content: data, //这里content是一个普通的String
+				btn:['确定', '新建'],
+				btn1:function(){
+					var pid = $("#play_list_select select").val();
+					if(pid == ''){
+						layer.alert('请选择歌单或新建歌单', function(index){
+							layer.close(index);
+						});
+						return false;
+					}
+					$.ajax({
+						type:'post',
+						url:window.COLLECT_SONG_URL,
+						dataType:'json',
+						data:{pid:pid,sid:sid},
+						success:function(data){
+							layer.alert(data.msg, function(index){
+								layer.close(index);
+							});
+						},
+						error:function(){
+							layer.alert('收藏失败', function(index){
+								layer.close(index);
+							});
+						}
+
+					});
+				},
+				btn2:function(index){
+					layer.prompt({
+						title: '新建歌单'
+					},function(value, index, elem){
+						$.ajax({
+							type:'post',
+							url:window.ADD_PLAYLIST_URL,
+							dataType:'json',
+							data:{name:value,sid:sid},
+							success:function(data){
+								layer.alert(data.msg, function(index){
+									layer.close(index);
+								});
+							},
+							error:function(){
+								layer.alert('创建失败', function(index){
+									layer.close(index);
+								});
+							}
+
+						});
+						layer.close(index);
+					});
+				}
+			});
+		}
+	});
+}
+function delCollectSong(pid,sid){
+	layer.confirm('确定从该歌单中删除此歌曲?', function(index){
+		$.ajax({
+			type:'post',
+			url:window.DEL_COLLECT_SONG_URL,
+			dataType:'json',
+			data:{pid:pid,sid:sid},
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
+		layer.close(index);
+	});
 }
 //===================================================================================
 function addUserInfoEvent(){
@@ -435,75 +559,7 @@ function addSongInfoEvent(){
 	});
 	$("#collectBtn").click(function(){
 		var sid = $(this).attr('data-res-id');
-		$.ajax({
-			type:'get',
-			dataType:'text',
-			url:'http://f.music.com/playlist/select',
-			success:function(data){
-				layer.open({
-					type: 1,
-					area:['400px','300px'],
-					title:'收藏',
-					skin: 'layui-layer-molv',
-					content: data, //这里content是一个普通的String
-					btn:['确定', '新建'],
-					btn1:function(){
-						var pid = $("#play_list_select select").val();
-						if(pid == ''){
-							layer.alert('请选择歌单或新建歌单', function(index){
-								layer.close(index);
-							});
-							return false;
-						}
-						$.ajax({
-							type:'post',
-							url:window.COLLECT_SONG_URL,
-							dataType:'json',
-							data:{pid:pid,sid:sid},
-							success:function(data){
-								layer.alert(data.msg, function(index){
-									layer.close(index);
-								});
-							},
-							error:function(){
-								layer.alert('收藏失败', function(index){
-									layer.close(index);
-								});
-							}
-
-						});
-					},
-					btn2:function(index){
-						layer.prompt({
-							title: '新建歌单'
-						},function(value, index, elem){
-							$.ajax({
-								type:'post',
-								url:window.ADD_PLAYLIST_URL,
-								dataType:'json',
-								data:{name:value,sid:sid},
-								success:function(data){
-									layer.alert(data.msg, function(index){
-										layer.close(index);
-									});
-								},
-								error:function(){
-									layer.alert('创建失败', function(index){
-										layer.close(index);
-									});
-								}
-
-							});
-							layer.close(index);
-						});
-					}
-				});
-			}
-		});
-
-		$("#testAdd").click(function(){
-			alert('ok');
-		});
+		collectSong(sid);
 	});
 }
 //===============================================================================================
@@ -573,11 +629,27 @@ function addMySongEvent(){
 		$(this).removeClass("z-hover");
 		$(this).find(".hshow").hide();
 	});
-/*	$("a.u-btni-addply").click(playSong);
-	$("a.u-btni-add").click(function(){
+	$("#flag_play").click(playSongList);
+	$("#flag_add").click(function(){
+		var pid = $(this).attr('data-res-id');
+		loadSongList(pid);
+	});
+	$("[data-res-action='addto']").click(function(){
 		var id = $(this).attr('data-res-id');
+		console.log(id);
 		loadSongLi(id);
-	});*/
+	});
+	$("[data-res-action='fav']").click(function(){
+		var sid = $(this).attr('data-res-id');
+		console.log(sid);
+		collectSong(sid);
+	});
+	$("[data-res-action='play']").click(playSong);
+	$("[data-res-action='delete']").click(function(){
+		var sid = $(this).attr('data-res-id');
+		var pid = $("#flag_play").attr("data-res-id");
+		delCollectSong(pid,sid);
+	});
 }
 //=======================================================
 function addEditCoverEvent(){
@@ -618,6 +690,7 @@ function addEditCoverEvent(){
 }
 //===========================================================
 $(function(){
+	$("#g_playlist .clear").click(clearPlayList);
 	$(".zbar").on("mousedown",function(ed){
 		var diffX = ed.pageX - $(".z-show").offset().left;
 		var diffY = ed.pageY -$(".z-show").offset().top;

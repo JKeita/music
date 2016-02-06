@@ -12,16 +12,22 @@ namespace logic;
 use common\help\Response;
 use dao\PlayListDao;
 use models\PlayList;
+use models\PlayListCollect;
 use models\SongCollect;
+use yii\helpers\ArrayHelper;
 
 class PlayListLogicImp implements PlayListLogic
 {
-    public function getUserPlayListByUid($uid)
+    public function getUserPlayListByUid($uid, $limit = 0)
     {
         if(empty($uid)){
             return [];
         }
-        return PlayList::find() -> where(['uid' => $uid, 'state' => 0]) -> asArray() -> all();
+        $result = PlayList::find() -> where(['uid' => $uid, 'state' => 0]);
+        if(!empty($limit)){
+            $result = $result -> limit($limit);
+        }
+        return $result ->  asArray() -> all();
     }
 
 
@@ -38,7 +44,7 @@ class PlayListLogicImp implements PlayListLogic
         $model -> name = $name;
         $model -> uid = $uid;
         $result = $model -> save();
-        file_put_contents("c:\log.txt", var_export($model -> errors, true));
+//        file_put_contents("c:\log.txt", var_export($model -> errors, true));
         if($result){
             return Response::returnInfo(1, '创建歌单成功', ['id' => $model -> id]);
         }
@@ -67,6 +73,31 @@ class PlayListLogicImp implements PlayListLogic
             return Response::returnInfo(1, '收藏成功', ['id' => $model -> id]);
         }
         return Response::returnInfo(0, '收藏失败');
+    }
+
+    /**
+     * 从歌单中删除指定音乐
+     * @param $sid
+     * @param $pid
+     * @return mixed
+     */
+    public function delSongFromPlayList($sid, $pid)
+    {
+        if(empty($sid)){
+            return Response::returnInfo(0, '歌曲ID参数出错');
+        }
+        if(empty($pid)){
+            return Response::returnInfo(0, '歌单ID参数出错');
+        }
+        $model = SongCollect::findOne(['sid' => $sid, 'pid' => $pid]);
+        if(empty($model)){
+            return Response::returnInfo(0, '歌曲不存在该歌单中');
+        }
+        $result = $model -> delete();
+        if($result){
+            return Response::returnInfo(1, '删除成功');
+        }
+        return Response::returnInfo(0, '删除失败');
     }
 
 
@@ -125,6 +156,7 @@ class PlayListLogicImp implements PlayListLogic
         }
         $result = $model -> delete();
         if($result){
+            PlayListCollect::deleteAll(['pid' => $pid]);
             return Response::returnInfo(1, '删除成功');
         }
         return Response::returnInfo(0,'删除失败');
@@ -144,5 +176,19 @@ class PlayListLogicImp implements PlayListLogic
         return $playListDao -> getPlayListSong($id);
     }
 
-
+    /**
+     * 获取歌单里的歌曲ID列表
+     * @param $pid
+     * @return mixed
+     */
+    public function getSongIdArrByPid($pid)
+    {
+        if(empty($pid)){
+            return [];
+        }
+        $playListDao = new PlayListDao();
+        $arr =  $playListDao -> getPlayListSong($pid);
+        $result = ArrayHelper::getColumn($arr, 'id', false);
+        return $result;
+    }
 }

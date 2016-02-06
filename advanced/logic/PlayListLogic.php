@@ -13,10 +13,10 @@ interface PlayListLogic
 {
     /**
      * 获取用户自建的歌单
-     * @param $uid
-     * @return mixed
+     * @param int $uid
+     * @return int mixed
      */
-    public function getUserPlayListByUid($uid);
+    public function getUserPlayListByUid($uid, $limit = 0);
 
     /**
      * 创建歌单
@@ -36,6 +36,13 @@ interface PlayListLogic
     public function addSongToPlayList($sid, $pid);
 
     /**
+     * 从歌单中删除指定音乐
+     * @param $sid
+     * @param $pid
+     * @return mixed
+     */
+    public function delSongFromPlayList($sid, $pid);
+    /**
      * 创建歌单并收藏音乐
      * @param $uid
      * @param $name
@@ -43,6 +50,7 @@ interface PlayListLogic
      * @return mixed
      */
     public function createAndCollect($uid, $name, $sid);
+
 
     /**
      * 检查是否是该用户的歌单
@@ -72,4 +80,11 @@ interface PlayListLogic
      * @return mixed
      */
     public function getPlayListSongById($id);
+
+    /**
+     * 获取歌单里的歌曲ID列表
+     * @param $pid
+     * @return mixed
+     */
+    public function getSongIdArrByPid($pid);
 }

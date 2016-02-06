@@ -479,7 +479,7 @@ use yii\helpers\Url;
                         <span class="j-flag">0</span>)</h4>
                     <a href="javascript:;" class="addall" data-action="likeall">收藏全部</a>
                     <a href="javascript:;" class="clear" data-action="clear">清除</a>
-                    <p class="lytit f-ff0 f-thide j-flag">张士超你到底把我家钥匙放在哪里了</p>
+                    <p class="lytit f-ff0 f-thide j-flag">标题</p>
                     <span class="close" data-action="close">关闭</span></div>
             </div>
             <div class="listbd">
@@ -516,7 +516,7 @@ use yii\helpers\Url;
                             <div class="col col-1">
                                 <div class="playicn"></div>
                             </div>
-                            <div class="col col-2">灼け落ちない翼</div>
+                            <div class="col col-2">歌名</div>
                             <div class="col col-3">
                                 <div class="icns">
                                     <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
@@ -526,11 +526,11 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                             <div class="col col-4">
-                                <span title="多田葵">
-                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
+                                <span title="歌手">
+                                  <a class="" href="/artist?id=18009" hidefocus="true">歌手</a>
                                 </span>
                             </div>
-                            <div class="col col-5">05:15</div>
+                            <div class="col col-5">时间</div>
                             <div class="col col-6">
                                 <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
                                    data-action="link">来源</a>
@@ -729,5 +729,6 @@ use yii\helpers\Url;
     window.CREATE_PLAYLIST_URL = '<?=Url::to(['playlist/create'])?>';
     window.DEL_PLAYLIST_URL = '<?=Url::to(['playlist/del'])?>';
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
+    window.DEL_COLLECT_SONG_URL = '<?=Url::to(['playlist/del-song'])?>';
 </script>
 </html>

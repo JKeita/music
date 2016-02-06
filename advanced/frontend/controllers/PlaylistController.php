@@ -29,6 +29,7 @@ class PlaylistController extends Controller
             'create',
             'del',
             'collect-song',
+            'del-song',
         ];
         if(in_array($action -> id,$actionArr)){
             return true;
@@ -90,6 +91,24 @@ class PlaylistController extends Controller
     }
 
     /**
+     * 删除歌单中的歌曲
+     */
+    public function actionDelSong(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $user = \Yii::$app -> user -> identity;
+        $sid = Request::getPostValue('sid');
+        $pid = Request::getPostValue('pid');
+        $playListLogic = new PlayListLogicImp();
+        if($playListLogic -> isUserPlayList($user -> getId(), $pid)){
+            $result = $playListLogic ->delSongFromPlayList($sid, $pid);
+            return json_encode($result);
+        }
+        throw new NotFoundHttpException();
+    }
+
+    /**
      * 删除歌单
      * @return string
      * @throws NotFoundHttpException
@@ -106,5 +125,11 @@ class PlaylistController extends Controller
             return json_encode($result);
         }
         throw new NotFoundHttpException();
+    }
+
+    public function actionTest(){
+        $playListLogic = new PlayListLogicImp();
+        $result = $playListLogic -> getSongIdArrByPid('1');
+        var_dump($result);
     }
 }

@@ -18,7 +18,7 @@ $user = Yii::$app -> user -> identity;
             <?php require_once(__DIR__."/left_playlist.php");?>
             <div class="g-mn3 f-pr j-flag">
                 <div class="f-pr">
-                    <div class="j-flag" id="auto-id-ASa57ArZcoJ9gze1">
+                    <div class="j-flag" id="">
                         <div class="g-wrap">
                             <div class="m-info f-cb">
                                 <div class="cover u-cover u-cover-dj">
@@ -41,20 +41,20 @@ $user = Yii::$app -> user -> identity;
                                         </div>
                                         <div class="btns f-cb">
                                             <a id="flag_play" href="javascript:;" class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true"
-                                               title="播放" data-res-type="13" data-res-id="160729863" data-res-action="play">
+                                               title="播放" data-res-type="13" data-res-id="<?=$id?>" data-res-action="play">
                                                 <i>播放</i>
                                             </a>
-                                            <a href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"
-                                               data-res-type="13" data-res-id="160729863" data-res-action="addto"></a>
+                                            <a id="flag_add" href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"
+                                               data-res-type="13" data-res-id="<?=$id?>" data-res-action="addto"></a>
                                             <a href="javascript:void(0)" hidefocus="true" class="u-btni u-btni-fav u-btni-fav-dis2">
                                                 <i>已收藏</i>
                                             </a>
-                                            <a id="flag_share" data-res-id="160729863" data-res-type="13" data-res-action="share"
+                                            <a id="flag_share" data-res-id="<?=$id?>" data-res-type="13" data-res-action="share"
                                                data-res-pic="http://p3.music.126.net/SOnKukiZEBzme9KolQs3FQ==/859818092966144.jpg"
                                                class="u-btni u-btni-share" href="javascript:void(0)">
                                                 <i>分享</i>
                                             </a>
-                                            <a id="flag_dl" data-res-id="160729863" data-res-type="13" data-res-action="download"
+                                            <a id="flag_dl" data-res-id="<?=$id?>" data-res-type="13" data-res-action="download"
                                                class="u-btni u-btni-dl" href="javascript:void(0)">
                                                 <i>下载</i>
                                             </a>

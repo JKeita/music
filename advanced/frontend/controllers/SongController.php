@@ -10,6 +10,7 @@ namespace frontend\controllers;
 
 use common\help\Lyric;
 use common\help\Request;
+use logic\PlayListLogicImp;
 use logic\SongLogicImp;
 use models\Song;
 use yii\helpers\Html;
@@ -69,11 +70,16 @@ class SongController extends Controller
 
     public function actionGetsongli(){
         $ids =  Request::getValue('ids');
+        $pid = Request::getValue('pid');
+        if(!empty($pid)){
+            $playListLogic = new PlayListLogicImp();
+            $ids = $playListLogic ->getSongIdArrByPid($pid);
+        }
         if(!is_array($ids)){
             $ids = [$ids];
         }
         return $this -> renderPartial('songli', [
-            'idArr' => $ids
+            'idArr' => $ids,
         ]);
     }
 }

@@ -237,10 +237,22 @@ class UserController extends Controller{
         if(\Yii::$app -> user -> isGuest){
             throw new NotFoundHttpException();
         }
-        $id = Request::getQueryValue('id');
-        $params = [
-            'id' => $id,
-        ];
+        $pid = Request::getQueryValue('id');
+        $uid = Yii::$app -> getUser() -> getId();
+        $playListLogic = new PlayListLogicImp();
+        if($playListLogic -> isUserPlayList($uid, $pid)){
+            $model = $playListLogic -> getPlayListById($pid);
+            if(empty($model)){
+                throw new NotFoundHttpException();
+            }
+            $params = [
+                'model' => $model,
+                'id' => $pid,
+            ];
+        }else{
+            throw new NotFoundHttpException();
+        }
+
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("editcover",$params);
         }else{

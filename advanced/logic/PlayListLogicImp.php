@@ -14,6 +14,7 @@ use dao\PlayListDao;
 use models\PlayList;
 use models\PlayListCollect;
 use models\SongCollect;
+use models\User;
 use yii\helpers\ArrayHelper;
 
 class PlayListLogicImp implements PlayListLogic
@@ -51,6 +52,54 @@ class PlayListLogicImp implements PlayListLogic
         return Response::returnInfo(0, '创建歌单失败');
     }
 
+    /**
+     * 保存歌单信息
+     * @param $params
+     * @return mixed
+     */
+    public function saveInfo($params)
+    {
+        if(empty($params['name']) || trim($params['name']) == ''){
+            return Response::returnInfo(0, '歌单名称不能为空字符串');
+        }
+        if(empty($params['id'])){
+            return Response::returnInfo(0, '请求的歌单ID不能为空');
+        }
+        $model = PlayList::findOne($params['id']);
+        if(empty($model)){
+            return Response::returnInfo(0, '未找到数据');
+        }
+        $model -> profile = $params['profile'];
+        $model -> name = $params['name'];
+        $result = $model -> save();
+        if($result){
+            return Response::returnInfo(1, '保存成功');
+        }
+        return Response::returnInfo(0, '保存失败');
+    }
+
+    /**
+     * 保存封面
+     * @param $pid
+     * @param $path
+     * @return mixed
+     */
+    public function saveCover($pid, $path)
+    {
+        if(empty($pid)){
+            return Response::returnInfo(0, '请求的歌单ID不能为空');
+        }
+        $model = PlayList::findOne($pid);
+        if(empty($model)){
+            return Response::returnInfo(0, '未找到数据');
+        }
+        $model -> cover = $path;
+        $result = $model -> save();
+        if($result){
+            return Response::returnInfo(1, '保存成功');
+        }
+        return Response::returnInfo(0, '保存失败');
+    }
 
 
     public function addSongToPlayList($sid, $pid)
@@ -191,4 +240,31 @@ class PlayListLogicImp implements PlayListLogic
         $result = ArrayHelper::getColumn($arr, 'id', false);
         return $result;
     }
+
+    /**
+     * 获取歌单信息
+     * @param $pid
+     * @return mixed
+     */
+    public function getInfo($pid)
+    {
+        if(empty($pid)||!is_numeric($pid)){
+            return [];
+        }
+        $model = PlayList::findOne(['id' => $pid, 'state' => 0]);
+        if(empty($model)){
+            return [];
+        }
+        $playList = $model -> toArray();
+        $uid = $playList['uid'];
+        $model = User::findOne($uid);
+        if(empty($model)){
+            return $playList;
+        }
+        $creator = $model -> toArray();
+        $playList['creator'] = $creator;
+        return $playList;
+    }
+
+
 }

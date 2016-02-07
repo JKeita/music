@@ -23,37 +23,41 @@
                             <span class="f-fw1">编辑歌单</span>
                         </div>
                         <div class="n-base f-cb">
-                            <div class="frm frm-1 m-frm m-frm-1">
-                                <div class="itm">
-                                    <span class="must s-fc6">*</span>
-                                    <label class="lab">歌单名：</label>
-                                    <input type="text" class="u-txt txt j-flag" value="<?=$model['name']?>" id="auto-id-oWKnUD9ewzCzSfC1" />
-                                    <div class="u-err f-vhide j-flag"></div>
-                                </div>
-                         <!--       <div class="itm">
-                                    <label class="lab">标签：</label>
-                                    <div class="f-cb tags">
-                                        <a data-action="select" href="javascript:void(0)" class="cho s-fc7">选择标签</a>
+                            <form id="save_playlist_form" action="<?=\yii\helpers\Url::to(['playlist/saveinfo'])?>">
+                                <input type="hidden" name="id" value="<?=$id?>"/>
+                                <input type="hidden" name="_csrf" value="<?=Yii::$app -> request -> csrfToken?>" />
+                                <div class="frm frm-1 m-frm m-frm-1">
+                                    <div class="itm">
+                                        <span class="must s-fc6">*</span>
+                                        <label class="lab">歌单名：</label>
+                                        <input type="text" class="u-txt txt j-flag" name="name" value="<?=$model['name']?>" id="auto-id-oWKnUD9ewzCzSfC1" />
+                                        <div class="u-err f-vhide j-flag"></div>
                                     </div>
-                                    <div class="s-fc4 tagnote">选择适合的标签，最多选3个</div>
-                                </div>-->
-                                <div class="itm f-cb">
-                                    <label class="lab">介绍：</label>
-                                    <div class="u-txtwrap f-pr">
-                                        <textarea class="u-txt area j-flag" id="auto-id-HAzKmVoMWdbBevwS"></textarea>
-                                        <span class="zs s-fc2 j-flag"><?=empty($model['profile'])?'':$model['profile']?></span>
+                             <!--       <div class="itm">
+                                        <label class="lab">标签：</label>
+                                        <div class="f-cb tags">
+                                            <a data-action="select" href="javascript:void(0)" class="cho s-fc7">选择标签</a>
+                                        </div>
+                                        <div class="s-fc4 tagnote">选择适合的标签，最多选3个</div>
+                                    </div>-->
+                                    <div class="itm f-cb">
+                                        <label class="lab">介绍：</label>
+                                        <div class="u-txtwrap f-pr">
+                                            <textarea class="u-txt area j-flag" name="profile" id="auto-id-HAzKmVoMWdbBevwS"><?=empty($model['profile'])?'':$model['profile']?></textarea>
+                                            <span class="zs s-fc2 j-flag"></span>
+                                        </div>
+                                    </div>
+                                    <div class="itm ft">
+                                        <a id="savePlayListBtn" data-action="save" href="javascript:void(0)" hidefocus="true"
+                                           class="u-btn2 u-btn2-2 u-btn2-w2 j-flag">
+                                            <i>保 存</i>
+                                        </a>
+                                        <a data-action="cc" href="javascript:void(0)" hidefocus="true" class="u-btn2 u-btn2-1 u-btn2-w2">
+                                            <i>取 消</i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="itm ft">
-                                    <a data-action="save" href="javascript:void(0)" hidefocus="true"
-                                       class="u-btn2 u-btn2-2 u-btn2-w2 j-flag">
-                                        <i>保 存</i>
-                                    </a>
-                                    <a data-action="cc" href="javascript:void(0)" hidefocus="true" class="u-btn2 u-btn2-1 u-btn2-w2">
-                                        <i>取 消</i>
-                                    </a>
-                                </div>
-                            </div>
+                            </form>
                             <div class="avatar f-pr">
                                 <img id="edit_cover" src="<?=\common\help\UrlHelp::getImgUrl($model['cover'])?>" />
                                 <span class="btm"></span>
@@ -74,7 +78,7 @@
     </div>
     <script>
         $(function(){
-            addMySongEvent();
+            addEditPlayListEvent();
         });
     </script>
 </div>

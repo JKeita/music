@@ -146,8 +146,8 @@ $user = Yii::$app -> user -> identity;
                                                         </div>
                                                     </td>
                                                     <td class="">
-                                                        <div class="text" title="Lovebugs">
-                                                          <span title="Lovebugs">
+                                                        <div class="text" title="<?=$song['author']?>">
+                                                          <span title="<?=$song['author']?>">
                                                             <a class="" href="/artist?id=95442" hidefocus="true"><?=$song['author']?></a>
                                                           </span>
                                                         </div>

@@ -53,7 +53,7 @@
                                             <i>下载</i>
                                         </a>
                                         <a data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt ">
-                                            <i>(<span id="cnt_comment_count">66</span>)</i>
+                                            <i>评论</i>
                                         </a>
                                     </div>
                                 </div>
@@ -278,8 +278,7 @@
         </div>
     </div>
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true">回到顶部</a>
-
-</div>
 <script>
     addSongInfoEvent();
 </script>
+</div>

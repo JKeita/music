@@ -28,12 +28,27 @@ interface PlayListLogic
     public function create($uid, $name);
 
     /**
+     * 保存歌单信息
+     * @param $params
+     * @return mixed
+     */
+    public function saveInfo($params);
+
+    /**
+     * 保存封面
+     * @param $pid
+     * @param $path
+     * @return mixed
+     */
+    public function saveCover($pid, $path);
+    /**
      * 添加音乐到歌单
      * @param $sid
      * @param $pid
      * @return mixed
      */
     public function addSongToPlayList($sid, $pid);
+
 
     /**
      * 从歌单中删除指定音乐
@@ -87,4 +102,11 @@ interface PlayListLogic
      * @return mixed
      */
     public function getSongIdArrByPid($pid);
+
+    /**
+     * 获取歌单信息
+     * @param $pid
+     * @return mixed
+     */
+    public function getInfo($pid);
 }

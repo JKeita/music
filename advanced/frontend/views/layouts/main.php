@@ -700,8 +700,15 @@ use yii\helpers\Url;
         if(document.location.href.indexOf('user-info')>=0){
             addUserInfoEvent();
         }
-        addSongInfoEvent();
-        addMySongEvent();
+        if(document.location.href.indexOf('song/info')>=0){
+            addSongInfoEvent();
+        }
+        if(document.location.href.indexOf('user/mysong')>=0){
+            addMySongEvent();
+        }
+        if(document.location.href.indexOf('editplaylist')>=0){
+            addEditPlayListEvent();
+        }
         if(document.location.href.indexOf('editcover')>=0){
             addEditCoverEvent();
         }

@@ -18,7 +18,8 @@
             <div class="g-mn3 f-pr j-flag">
                 <div class="g-wrap">
                     <div class="u-bread1">
-                        <a href="/my/#/music/playlist?id=160729863" class="s-fc7 j-flag">123</a>
+                        <input type="hidden" id="playlist_id" name="id" value="<?=$id?>" />
+                        <a href="<?=\yii\helpers\Url::to(['user/mysong', 'id' => $id])?>" class="s-fc7 single"><?=$model['name']?></a>
                         <span class="arr s-fc4">&gt;</span>
                         <a href="<?=\yii\helpers\Url::to(['user/editplaylist', 'id' => $id])?>" class="s-fc7 j-flag single">编辑歌单</a>
                         <span class="arr s-fc4">&gt;</span>

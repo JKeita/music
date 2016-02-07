@@ -171,6 +171,7 @@ function loadSongLi(id){
 	return false;
 }
 function loadSongList(pid){
+	clearPlayList();
 	$.ajax({
 		type:'post',
 		url:'http://f.music.com/song/getsongli',
@@ -652,15 +653,69 @@ function addMySongEvent(){
 	});
 }
 //=======================================================
+function addPlayListEvent(){
+	$("#flag_play").click(playSongList);
+	$("#flag_add").click(function(){
+		var pid = $(this).attr('data-res-id');
+		loadSongList(pid);
+	});
+	$("[data-res-action='addto']").click(function(){
+		var id = $(this).attr('data-res-id');
+		console.log(id);
+		loadSongLi(id);
+	});
+	$("[data-res-action='fav']").click(function(){
+		var sid = $(this).attr('data-res-id');
+		console.log(sid);
+		collectSong(sid);
+	});
+	$("[data-res-action='play']").click(playSong);
+	$("[data-res-action='delete']").click(function(){
+		var sid = $(this).attr('data-res-id');
+		var pid = $("#flag_play").attr("data-res-id");
+		delCollectSong(pid,sid);
+	});
+}
+//=======================================================
+function addEditPlayListEvent(){
+	leftPlayListEvent();
+	$("#savePlayListBtn").on("click",function(){
+		var name = $("input[name='name']").val();
+		if(name == ""){
+			alert("歌单名称不能为空");
+			return false;
+		}
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:$("#save_playlist_form").attr("action"),
+			data:$("#save_playlist_form").serialize(),
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
+		return false;
+	});
+}
+//=======================================================
 function addEditCoverEvent(){
+	var id=$("#playlist_id").val();
 	swfobject.addDomLoadEvent(function () {
 		var swf = new fullAvatarEditor("/plugin/fullAvatarEditor-2.3/fullAvatarEditor.swf", "/plugin/fullAvatarEditor-2.3/expressInstall.swf", "swfContainerCover", {
 				id : 'swf',
-				upload_url : '/user/uploadcover',	//上传接口
+				upload_url : '/playlist/uploadcover?id='+id,	//上传接口
 				method : 'post',	//传递到上传接口中的查询参数的提交方式。更改该值时，请注意更改上传接口中的查询参数的接收方式
 				src_upload : 0,		//是否上传原图片的选项，有以下值：0-不上传；1-上传；2-显示复选框由用户选择
 				avatar_box_border_width : 0,
-				avatar_field_names:'headimg',
+				avatar_field_names:'coverimg',
 				avatar_sizes : '200*200',
 				avatar_sizes_desc : '200*200像素',
 				tab_active:'upload',

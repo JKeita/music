@@ -31,6 +31,22 @@ class PlayListLogicImp implements PlayListLogic
         return $result ->  asArray() -> all();
     }
 
+    /**
+     * 获取用户收藏的歌单
+     * @param $uid
+     * @return mixed
+     */
+    public function getUserCollectListByUid($uid) {
+        if(empty($uid)){
+            return [];
+        }
+        $ids = PlayListCollect::find() -> select('pid')-> where(['uid' => $uid]) -> column();
+        if(empty($ids)){
+            return [];
+        }
+        $playList =  PlayList::find() -> where(['id' => $ids, 'state' => 0]);
+        return $playList ->  asArray() -> all();
+    }
 
     public function create($uid, $name)
     {
@@ -171,6 +187,77 @@ class PlayListLogicImp implements PlayListLogic
         }
         return false;
     }
+
+    /**
+     * 检查用户是否收藏该歌单
+     * @param $uid
+     * @param $pid
+     * @return mixed
+     */
+    public function isUserCollect($uid, $pid)
+    {
+        if(empty($uid)||empty($pid)){
+            return false;
+        }
+        $model = PlayListCollect::findOne(['uid' => $uid, 'pid' => $pid]);
+        if(!empty($model)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 收藏歌单
+     * @param $pid
+     * @param $uid
+     * @return mixed
+     */
+    public function collect($uid, $pid)
+    {
+        if(empty($uid)||empty($pid)){
+            return Response::returnInfo(0, '请求参数出错');
+        }
+        if($this -> isUserPlayList($uid, $pid)){
+            return Response::returnInfo(0, '该歌单是自己创建不能收藏');
+        }
+        if($this -> isUserCollect($uid, $pid)){
+            return Response::returnInfo(0, '该歌单已收藏');
+        }
+        $model = new PlayListCollect();
+        $model -> uid = $uid;
+        $model -> pid = $pid;
+        $result = $model -> save();
+        if($result){
+            return Response::returnInfo(1, '收藏成功');
+        }
+        return Response::returnInfo(0, '收藏失败');
+    }
+
+    /**
+     * 删除收藏的歌单
+     * @param $uid
+     * @param $pid
+     * @return mixed
+     */
+    public function delCollect($uid, $pid)
+    {
+        if(empty($uid)||empty($pid)){
+            return Response::returnInfo(0, '请求参数出错');
+        }
+        if($this -> isUserPlayList($uid, $pid)){
+            return Response::returnInfo(0, '该歌单是自己创建不是收藏歌单');
+        }
+        if(!$this -> isUserCollect($uid, $pid)){
+            return Response::returnInfo(0, '该歌单未收藏');
+        }
+        $model = PlayListCollect::findOne(['uid' => $uid, 'pid' => $pid]);
+        $result = $model -> delete();
+        if($result){
+            return Response::returnInfo(1, '取消收藏成功');
+        }
+        return Response::returnInfo(0, '取消收藏失败');
+    }
+
 
     /**
      * 通过ID取歌单信息

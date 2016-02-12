@@ -19,6 +19,13 @@ interface PlayListLogic
     public function getUserPlayListByUid($uid, $limit = 0);
 
     /**
+     * 获取用户收藏的歌单
+     * @param $uid
+     * @return mixed
+     */
+    public function getUserCollectListByUid($uid);
+
+    /**
      * 创建歌单
      * @param $uid
      * @param $sid
@@ -76,6 +83,14 @@ interface PlayListLogic
     public function isUserPlayList($uid, $pid);
 
     /**
+     * 检查用户是否收藏该歌单
+     * @param $uid
+     * @param $pid
+     * @return mixed
+     */
+    public function isUserCollect($uid, $pid);
+
+    /**
      * 通过ID取歌单信息
      * @param $id
      * @return mixed
@@ -109,4 +124,20 @@ interface PlayListLogic
      * @return mixed
      */
     public function getInfo($pid);
+
+    /**
+     * 收藏歌单
+     * @param $pid
+     * @param $uid
+     * @return mixed
+     */
+    public function collect($uid, $pid);
+
+    /**
+     * 删除收藏的歌单
+     * @param $uid
+     * @param $pid
+     * @return mixed
+     */
+    public function delCollect($uid, $pid);
 }

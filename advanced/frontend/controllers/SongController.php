@@ -10,6 +10,7 @@ namespace frontend\controllers;
 
 use common\help\Lyric;
 use common\help\Request;
+use logic\CommentLogicImp;
 use logic\PlayListLogicImp;
 use logic\SongLogicImp;
 use models\Song;
@@ -41,8 +42,12 @@ class SongController extends Controller
         if($songInfo['code'] != 1){
             throw new NotFoundHttpException();
         }
+        $commentLogic = new CommentLogicImp();
+        $commentData = $commentLogic -> getPage(['psid' => $id, 'type' => '1']);
         $viewData = [
-          'songInfo' => $songInfo['data']
+            'songInfo' => $songInfo['data'],
+            'page' => $commentData['page'],
+            'commentData' => $commentData['data'],
         ];
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("song", $viewData);

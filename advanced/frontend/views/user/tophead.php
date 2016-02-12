@@ -24,25 +24,19 @@
         <div class="m-tophead f-pr j-tflag" id="">
             <div class="head f-fl f-pr">
                 <img src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>">
-                <a href="<?=\yii\helpers\Url::to(['user/user-info'])?>" class="mask"></a>
+                <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="mask"></a>
                 <i class="icn u-icn u-icn-68 f-alpha" style="display:none;"></i>
             </div>
-            <a href="/user/home?id=37889558" class="name f-thide f-fl f-tdn"><?=$user -> username?></a>
+            <a id="tophead_username" href="" class="name f-thide f-fl f-tdn"><?=\yii\helpers\Html::encode($user -> username)?></a>
             <div class="m-tlist m-tlist-lged j-uflag" style="display:none;">
                 <div class="inner">
                     <ul class="f-cb lb mg">
                         <li>
-                            <a hidefocus="true" class="itm-1 single" href="<?=\yii\helpers\Url::to(['user/user-info'])?>">
+                            <a hidefocus="true" class="itm-1 single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>">
                                 <i class="icn icn-hm"></i>
                                 <em>我的主页</em>
                                 <i class="icon u-icn u-icn-68 f-alpha j-uflag" style="display:none;"></i>
                             </a>
-                        </li>
-                        <li hidden>
-                            <a href="/user/level" data-action="viewLevel" class="itm-2 single">
-                                <i class="icn icn-lv"></i>
-                                <em>我的等级</em>
-                                <i class="new u-icn u-icn-78 j-uflag"></i></a>
                         </li>
                     </ul>
                     <ul class="f-cb ltb mg">

@@ -7,24 +7,24 @@
  */
 $user = Yii::$app -> user -> identity;
 ?>
-<style>
-    .tabs .tab{
-        display:none;
-    }
-    .tabs .current{
-        display:block;
-    }
-    .itm .lab{
-        width:60px;
-    }
-    .u-txt {
-        margin-left:20px;
-    }
-    .m-frm .check{
-        margin-left:20px;
-    }
-</style>
 <div class="container">
+    <style>
+        .tabs .tab{
+            display:none;
+        }
+        .tabs .current{
+            display:block;
+        }
+        .itm .lab{
+            width:60px;
+        }
+        .u-txt {
+            margin-left:20px;
+        }
+        .m-frm .check{
+            margin-left:20px;
+        }
+    </style>
     <div class="g-bd">
         <div class="g-wrap" id="baseBox">
             <div class="u-title u-title-2 f-cb">
@@ -161,7 +161,7 @@ $user = Yii::$app -> user -> identity;
     </div>
 
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true" style="">回到顶部</a>
+    <script>
+        addUserInfoEvent();
+    </script>
 </div>
-<script>
-    addUserInfoEvent();
-</script>

@@ -9,7 +9,10 @@
 namespace frontend\controllers;
 
 use common\help\Request;
+use common\help\Response;
 use common\models\LoginForm;
+use logic\CommentLogicImp;
+use logic\FollowLogicImp;
 use logic\PlayListLogicImp;
 use logic\UserLogicImp;
 use models\User;
@@ -32,6 +35,9 @@ class UserController extends Controller{
             'tophead',
             'logout',
             'uploadhead',
+            'comment',
+            'do-follow',
+            'del-follow',
         ];
         if(in_array($action -> id,$actionArr)){
             return true;
@@ -173,20 +179,26 @@ class UserController extends Controller{
             $playList = $playListLogic -> getUserPlayListByUid($uid, 1);
             if(!empty($playList)){
                 $pid = $playList[0]['id'];
-                return $this -> redirect(Url::to(['user/mysong', 'id' => $pid]));
+//                return $this -> redirect(Url::to(['user/mysong', 'id' => $pid]));
+            }else{
+                throw new NotFoundHttpException();
             }
-            throw new NotFoundHttpException();
+
         }
-        if($playListLogic -> isUserPlayList($uid, $pid)){
+        if($playListLogic -> isUserPlayList($uid, $pid) || $playListLogic -> isUserCollect($uid, $pid)){
             $model = $playListLogic -> getPlayListById($pid);
             if(empty($model)){
                 throw new NotFoundHttpException();
             }
             $songList = $playListLogic -> getPlayListSongById($pid);
+            $commentLogic = new CommentLogicImp();
+            $commentData = $commentLogic -> getPage(['psid' => $pid, 'type' => '2']);
             $params = [
                 'model' => $model,
                 'id' => $pid,
                 'songList' => $songList,
+                'page' => $commentData['page'],
+                'commentData' => $commentData['data'],
             ];
         }else{
             throw new NotFoundHttpException();
@@ -258,5 +270,112 @@ class UserController extends Controller{
         }else{
             return $this -> render("editcover",$params);
         }
+    }
+
+    /**
+     * 评论处理
+     */
+    public function actionComment(){
+        if(\Yii::$app -> user -> isGuest){
+           return json_encode(['code' => 0, 'msg' => '请先登录后评论']);
+        }
+        $params = [
+            'pid' => Request::getPostValue('pid'),
+            'sid' => Request::getPostValue('sid'),
+            'tid' => Request::getPostValue('tid'),
+            'uid' => Yii::$app -> getUser() -> getId(),
+            'content' => Request::getPostValue('content'),
+        ];
+        $commentLogic = new CommentLogicImp();
+        $result = $commentLogic -> save($params);
+        return json_encode($result);
+    }
+
+    public function actionHome(){
+        $playListLogic = new \logic\PlayListLogicImp();
+        $uid = Request::getQueryValue('id');
+        $user = User::findOne($uid);
+        if(empty($user)){
+            throw new NotFoundHttpException();
+        }
+        $playList = $playListLogic -> getUserPlayListByUid($uid);
+        $collectList = $playListLogic -> getUserCollectListByUid($uid);
+        $params = [
+            'user' => $user,
+            'playList' => $playList,
+            'collectList' => $collectList,
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("home",$params);
+        }else{
+            return $this -> render("home",$params);
+        }
+    }
+
+    public function actionFollows(){
+        $uid = Request::getQueryValue('id');
+        $user = User::findOne($uid);
+        if(empty($user)){
+            throw new NotFoundHttpException();
+        }
+        $followLogic = new FollowLogicImp();
+        $followList = $followLogic -> getFollows($uid);
+        $params = [
+            'user' => $user,
+            'followList' => $followList,
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("follows",$params);
+        }else{
+            return $this -> render("follows",$params);
+        }
+    }
+
+    public function actionFans(){
+        $uid = Request::getQueryValue('id');
+        $user = User::findOne($uid);
+        if(empty($user)){
+            throw new NotFoundHttpException();
+        }
+        $followLogic = new FollowLogicImp();
+        $fansList = $followLogic -> getFans($uid);
+        $params = [
+            'user' => $user,
+            'fansList' => $fansList,
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("fans",$params);
+        }else{
+            return $this -> render("fans",$params);
+        }
+    }
+    /**
+     * 关注好友
+     * @return string
+     */
+    public function actionDoFollow(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再关注']);
+        }
+        $user = \Yii::$app -> user -> identity;
+        $fid = Request::getPostValue('fid');
+        $followLogic = new FollowLogicImp();
+        $result = $followLogic -> follow($user -> getId(), $fid);
+        return json_encode($result);
+    }
+
+    /**
+     * 取消关注好友
+     * @return string
+     */
+    public function actionDelFollow(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再取消关注']);
+        }
+        $user = \Yii::$app -> user -> identity;
+        $fid = Request::getPostValue('fid');
+        $followLogic = new FollowLogicImp();
+        $result = $followLogic -> delFollow($user -> getId(), $fid);
+        return json_encode($result);
     }
 }

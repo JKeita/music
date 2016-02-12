@@ -10,6 +10,7 @@ namespace frontend\controllers;
 
 
 
+use logic\CommentLogicImp;
 use logic\PlayListLogicImp;
 use yii\base\Exception;
 use yii\web\Controller;
@@ -32,6 +33,8 @@ class PlaylistController extends Controller
             'collect-song',
             'del-song',
             'uploadcover',
+            'collect',
+            'del-collect',
         ];
         if(in_array($action -> id,$actionArr)){
             return true;
@@ -50,10 +53,14 @@ class PlaylistController extends Controller
         $playListLogic = new PlayListLogicImp();
         $data = $playListLogic -> getInfo($id);
         $songList = $playListLogic -> getPlayListSongById($id);
+        $commentLogic = new CommentLogicImp();
+        $commentData = $commentLogic -> getPage(['psid' => $id, 'type' => '2']);
         $params = [
             'id' => $id,
             'data' => $data,
             'songList' => $songList,
+            'page' => $commentData['page'],
+            'commentData' => $commentData['data'],
         ];
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("playlist", $params);
@@ -102,7 +109,7 @@ class PlaylistController extends Controller
 
     public function actionCollectSong(){
         if(\Yii::$app -> user -> isGuest){
-            throw new NotFoundHttpException();
+            return json_encode(['code' => 0, 'msg' => '请先登录后再收藏歌曲']);
         }
         $user = \Yii::$app -> user -> identity;
         $sid = Request::getPostValue('sid');
@@ -116,11 +123,38 @@ class PlaylistController extends Controller
     }
 
     /**
+     * 收藏歌单
+     */
+    public function actionCollect(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再收藏歌单']);
+        }
+        $user = \Yii::$app -> user -> identity;
+        $pid = Request::getPostValue('pid');
+        $playListLogic = new PlayListLogicImp();
+        $result = $playListLogic -> collect($user -> getId(), $pid);
+        return json_encode($result);
+    }
+
+    /**
+     * 删除收藏的歌单
+     */
+    public function actionDelCollect(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再取消收藏歌单']);
+        }
+        $user = \Yii::$app -> user -> identity;
+        $pid = Request::getPostValue('pid');
+        $playListLogic = new PlayListLogicImp();
+        $result = $playListLogic -> delCollect($user -> getId(), $pid);
+        return json_encode($result);
+    }
+    /**
      * 删除歌单中的歌曲
      */
     public function actionDelSong(){
         if(\Yii::$app -> user -> isGuest){
-            throw new NotFoundHttpException();
+            return json_encode(['code' => 0, 'msg' => '请先登录后再取消收藏歌曲']);
         }
         $user = \Yii::$app -> user -> identity;
         $sid = Request::getPostValue('sid');
@@ -140,7 +174,7 @@ class PlaylistController extends Controller
      */
     public function actionDel(){
         if(\Yii::$app -> user -> isGuest){
-            throw new NotFoundHttpException();
+            return json_encode(['code' => 0, 'msg' => '请先登录后再删除歌单']);
         }
         $user = \Yii::$app -> user -> identity;
         $pid = Request::getPostValue('pid');
@@ -157,7 +191,7 @@ class PlaylistController extends Controller
      */
     public function actionSaveinfo(){
         if(\Yii::$app -> user -> isGuest){
-            throw new NotFoundHttpException();
+            return json_encode(['code' => 0, 'msg' => '请先登录后再保存歌单']);
         }
         $user = \Yii::$app -> user -> identity;
         $id = Request::getPostValue('id');
@@ -193,6 +227,7 @@ class PlaylistController extends Controller
         }
         return json_encode(['success' => $result]);
     }
+
     public function actionTest(){
         $playListLogic = new PlayListLogicImp();
         $result = $playListLogic -> getSongIdArrByPid('1');

@@ -6,11 +6,9 @@ use yii\helpers\Url;
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>网易云音乐 听见好时光</title>
-    <link rel="shortcut icon" href="http://s1.music.126.net/music.ico?v1" />
+    <title>ACER音乐网</title>
     <link href="<?=Yii::$app -> homeUrl?>css/core.css" type="text/css" rel="stylesheet" />
     <link href="<?=Yii::$app -> homeUrl?>css/pt_frame.css" type="text/css" rel="stylesheet" />
-
     <script src="<?=Yii::$app -> homeUrl?>js/jquery-1.12.0.js" ></script>
     <script src="<?=Yii::$app -> homeUrl?>js/index.js"></script>
     <script type="text/javascript" src="/plugin/fullAvatarEditor-2.3/scripts/swfobject.js"></script>
@@ -345,13 +343,13 @@ use yii\helpers\Url;
               <span>
                 <a hidefocus="true" href="<?=Url::to(['site/index'])?>" data-module="discover" class="z-slt single">
                     <em>发现音乐</em>
-                    <sub class="cor"></sub></a>
+<!--                    <sub class="cor"></sub></a>-->
               </span>
                 </li>
                 <li>
               <span>
                 <a data-res-action="bilog" data-log-action="page" data-log-json="{&quot;type&quot;:&quot;my&quot;}"
-                   hidefocus="true" href="<?=Url::to(['user/mysong','id'=>1])?>" data-module="my" class="single">
+                   hidefocus="true" href="<?=Url::to(['user/mysong'])?>" data-module="my" class="single">
                     <em>我的音乐</em>
                     <sub class="cor">�</sub></a>
               </span>
@@ -689,7 +687,10 @@ use yii\helpers\Url;
     window.LoadTopHeadUrl = "<?=Url::to(['user/tophead'])?>";
     window.LogoutUrl = "<?=Url::to(['user/logout'])?>";
     function addNewObjEvent(){
-        $(".container .single").on('click', function(){
+        $(".single").on('click', function(){
+            if(!$(this).attr('href')){
+                return false;
+            }
             history.pushState({ path: this.path }, '', $(this).attr('href'));
             $.get($(this).attr('href'), function(data) {
                 $('.container').get(0).outerHTML=data;
@@ -712,8 +713,17 @@ use yii\helpers\Url;
         if(document.location.href.indexOf('editcover')>=0){
             addEditCoverEvent();
         }
+        if(document.location.href.indexOf('playlist/info')>=0){
+            addPlayListEvent();
+        }
+        if(document.location.href.indexOf('user/home')>=0){
+            addUserHomeEvent();
+        }
     }
     $('.single').on('click',function() {
+        if(!$(this).attr('href')){
+            return false;
+        }
         history.pushState({ path: this.path }, '', $(this).attr('href'));
         $.get($(this).attr('href'), function(data) {
             $('.container').get(0).outerHTML=data;
@@ -732,7 +742,13 @@ use yii\helpers\Url;
 
 </script>
 <script>
+    window.MYSONG_URL = '<?=Url::to(['user/mysong'])?>';
+    window.DO_FOLLOW_URL = '<?=Url::to(['user/do-follow'])?>';
+    window.DEL_FOLLOW_URL = '<?=Url::to(['user/del-follow'])?>';
+    window.SAVE_COMMENT_URL = '<?=Url::to(['user/comment'])?>';
     window.ADD_PLAYLIST_URL = '<?=Url::to(['playlist/add'])?>';
+    window.COLLECT_PLAYLIST_URL = '<?=Url::to(['playlist/collect'])?>';
+    window.DEL_COLLECT_URL = '<?=Url::to(['playlist/del-collect'])?>';
     window.CREATE_PLAYLIST_URL = '<?=Url::to(['playlist/create'])?>';
     window.DEL_PLAYLIST_URL = '<?=Url::to(['playlist/del'])?>';
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';

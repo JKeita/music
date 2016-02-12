@@ -8,6 +8,7 @@
 $playListLogic = new \logic\PlayListLogicImp();
 $uid = Yii::$app -> getUser() -> getId();
 $playList = $playListLogic -> getUserPlayListByUid($uid);
+$collectList = $playListLogic -> getUserCollectListByUid($uid);
 ?>
 <div class="g-sd3 u-scroll n-musicsd f-pr j-flag" >
     <div>
@@ -49,44 +50,34 @@ $playList = $playListLogic -> getUserPlayListByUid($uid);
         </div>
         <div class="n-minelst n-minelst-1">
             <h2 class="f-ff1">
-              <span class="rtitle" id="auto-id-LvNiUVHccKiQCfTr">收藏的歌单(
-              <span class="j-flag">37</span>)</span>
+              <span class="rtitle" id="auto-id-LvNiUVHccKiQCfTr">收藏的歌单
+              <span class="j-flag"></span></span>
             </h2>
             <ul class="f-cb j-flag">
-                <li class="j-iflag" id="auto-id-ZmgolkVOFEQWm1p2" data-matcher="playlist-83273991">
-                    <div class="item f-cb">
-                        <div class="left">
-                            <a hidefocus="true" class="avatar">
-                                <img src="http://p4.music.126.net/dPhMpbA89B9edfEr7KK9XQ==/1364493974444295.jpg?param=40y40" alt="" />
-                            </a>
-                        </div>
-                        <p class="name f-thide">
-                            <a hidefocus="true" href="javascript:void(0);" class="s-fc0"
-                               title="【日系/治愈】感谢你的拥抱hލ化我受冷的心">【日系/治愈】感谢你的拥抱hލ化我受冷的心</a>
-                        </p>
-                        <p class="s-fc4 f-thide num">49首by 小e酱紫</p>
-                    </div>
+                <?php
+                    if(!empty($collectList)){
+                        foreach($collectList as $item){
+                ?>
+                            <li class="j-iflag <?=$id==$item['id']?'z-selected':''?> single"  href="<?=\yii\helpers\Url::to(['user/mysong', 'id' => $item['id']])?>">
+                                <div class="item f-cb">
+                                    <div class="left">
+                                        <a hidefocus="true" class="avatar">
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" alt="" />
+                                        </a>
+                                    </div>
+                                    <p class="name f-thide">
+                                        <a hidefocus="true" href="javascript:void(0);" class="s-fc0" title="<?=$item['name']?>"><?=$item['name']?></a>
+                                    </p>
+                                    <p class="s-fc4 f-thide num"></p>
+                                </div>
                 <span class="oper hshow" style="display:none;">
-                  <a data-action="delete" hidefocus="true" title="删除" href="javascript:void(0);" class="u-icn u-icn-11"></a>
+                  <a data-action="delete" hidefocus="true" title="删除" href="javascript:void(0);" class="u-icn u-icn-11 delCollect" data-id="<?=$item['id']?>"></a>
                 </span>
-                </li>
-                <li class="j-iflag" id="auto-id-NeCqg7LxStoW2OQk" data-matcher="playlist-134736767">
-                    <div class="item f-cb">
-                        <div class="left">
-                            <a hidefocus="true" class="avatar">
-                                <img src="http://p4.music.126.net/G1wvqt1NmAofbu5yT93PIg==/3276544656520001.jpg?param=40y40" alt="" />
-                            </a>
-                        </div>
-                        <p class="name f-thide">
-                            <a hidefocus="true" href="javascript:void(0);" class="s-fc0"
-                               title="AcFun音乐投票新趋周榜［151212期］">AcFun音乐投票新趋周榜［151212期］</a>
-                        </p>
-                        <p class="s-fc4 f-thide num">79首by mrp_aka_zmyore</p>
-                    </div>
-                <span class="oper hshow" style="display:none;">
-                  <a data-action="delete" hidefocus="true" title="删除" href="javascript:void(0);" class="u-icn u-icn-11"></a>
-                </span>
-                </li>
+                            </li>
+                <?php
+                        }
+                    }
+                ?>
             </ul>
         </div>
         <div style="height:200px;"></div>

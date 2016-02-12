@@ -6,6 +6,8 @@
  * Time: 20:22
  */
 $user = Yii::$app -> user -> identity;
+$creator = \models\User::findOne($model['uid']);
+$flag = $user -> id == $creator -> id;
 ?>
 
 <div class="container">
@@ -27,15 +29,22 @@ $user = Yii::$app -> user -> identity;
                                 <div class="cnt">
                                     <div class="cntc m-info">
                                         <div class="hd f-cb">
-                                            <a href="<?=\yii\helpers\Url::to(['user/editplaylist', 'id'=>$id])?>" class="edit s-fc7 single">编辑</a>
+                                            <?php
+                                                if($flag){
+                                            ?>
+                                                    <a href="<?=\yii\helpers\Url::to(['user/editplaylist', 'id'=>$id])?>" class="edit s-fc7 single">编辑</a>
+                                            <?php
+                                                }
+                                            ?>
+
                                             <h2 class="f-ff2 f-thide"><?=$model['name']?></h2>
                                         </div>
                                         <div class="user f-cb">
                                             <a class="face" href="">
-                                                <img src="<?=\common\help\UrlHelp::getImgUrl( $user -> headimg)?>" />
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl( $creator -> headimg)?>" />
                                             </a>
                       <span class="name f-thide">
-                        <a href="/user/home?id=37889558" class="s-fc7" title="<?=$user -> username?>"><?=$user -> username?></a>
+                        <a href="/user/home?id=37889558" class="s-fc7" title="<?=$creator -> username?>"><?=$creator -> username?></a>
                       </span>
                                             <span class="time s-fc4"><?=substr($model['created'],0,10)?>创建</span>
                                         </div>
@@ -70,10 +79,8 @@ $user = Yii::$app -> user -> identity;
                             <h3>
                                 <span class="f-ff2">歌曲列表</span>
                             </h3>
-              <span class="sub s-fc3">
-              <span id="flag_trackCount">1</span>首歌</span>
-                            <div class="more s-fc3">播放：
-                                <strong id="flag_playCount" class="s-fc6">0</strong>次</div>
+                              <span class="sub s-fc3">
+                              <span id="flag_trackCount"><?=count($songList)?></span>首歌</span>
                         </div>
                     </div>
                     <?php
@@ -142,7 +149,14 @@ $user = Yii::$app -> user -> identity;
                                                             <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
                                                             <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
                                                             <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="download" class="icn icn-dl" title="下载"></span>
-                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="delete" class="icn icn-del" title="删除">删除</span>
+                                                            <?php
+                                                                if($flag){
+                                                            ?>
+                                                                    <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="delete" class="icn icn-del" title="删除">删除</span>
+                                                            <?php
+                                                                }
+                                                            ?>
+
                                                         </div>
                                                     </td>
                                                     <td class="">
@@ -191,30 +205,33 @@ $user = Yii::$app -> user -> identity;
                         }
                     ?>
 
-                    <div class="j-flag f-mgt40">
-                        <div id="auto-id-5aEJBOu9etRDPolU">
+                    <div class="n-cmt" id="comment-box" data-tid="R_SO_4_2081274" data-count="66">
+                        <div id="auto-id-koiqrc72GG4sfTyn">
                             <div class="u-title u-title-1">
                                 <h3>
                                     <span class="f-ff2">评论</span>
                                 </h3>
-                <span class="sub s-fc3">共
-                <span class="j-flag">0</span>条评论</span>
+                                <!--                                <span class="sub s-fc3">共<span class="j-flag">66</span>条评论</span>-->
                             </div>
                             <div class="m-cmmt">
+                                <input type="hidden" name="pid" value="<?=$id?>" />
                                 <div class="iptarea">
                                     <div class="head">
-                                        <img src="http://p3.music.126.net/0pZwSIb90hSALWk6BGDF0g==/6637751697611512.jpg?param=50y50" />
+                                        <?php
+                                        $headimg = !empty(Yii::$app -> user -> identity -> headimg)?Yii::$app -> user -> identity -> headimg:'';
+                                        ?>
+                                        <img src="<?=\common\help\UrlHelp::getImgUrl($headimg)?>">
                                     </div>
                                     <div class="j-flag">
                                         <div>
                                             <div class="m-cmmtipt f-cb f-pr">
                                                 <div class="u-txtwrap holder-parent f-pr" style="display: block;">
-                                                    <textarea class="u-txt area j-flag" placeholder="评论" id="auto-id-1rc2xp4qC2yedwzm"></textarea>
+                                                    <textarea class="u-txt area j-flag" placeholder="评论"></textarea>
                                                 </div>
                                                 <div class="btns f-cb f-pr">
-                                                    <i class="icn u-icn u-icn-36 j-flag" id="auto-id-fmeEs6ipvE1KtRgi"></i>
-                                                    <i class="icn u-icn u-icn-41 j-flag" id="auto-id-GMUJ4sV2dFenRfHC"></i>
-                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-eUVE9SM4PHokH8oG">评论</a>
+                                                    <!--                     <i class="icn u-icn u-icn-36 j-flag" id="auto-id-aTcpxvew6EnyUvao"></i>
+                                                                         <i class="icn u-icn u-icn-41 j-flag" id="auto-id-3dSMaW3TB4pnapTa"></i>-->
+                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="docomment">评论</a>
                                                     <span class="zs s-fc4 j-flag">140</span>
                                                 </div>
                                                 <div class="corr u-arr">
@@ -225,8 +242,78 @@ $user = Yii::$app -> user -> identity;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cmmts j-flag" id="auto-id-2CnSgaxMqANFfoWp"></div>
-                                <div class="j-flag"></div>
+                                <div class="cmmts j-flag" id="auto-id-3V0eaFlhDUFBRuMG">
+                                    <h3 class="u-hd4">最新评论</h3>
+                                    <?php
+                                    if(!empty($commentData)){
+                                        foreach($commentData as $item){
+                                            $repler = \models\User::findOne($item['uid']);
+                                            ?>
+                                            <div class="itm" data-id="<?=$item['id']?>">
+                                                <div class="head">
+                                                    <a href="">
+                                                        <img src="<?=\common\help\UrlHelp::getImgUrl($repler -> headimg)?>">
+                                                    </a>
+                                                </div>
+                                                <div class="cntwrap">
+                                                    <div class="">
+                                                        <div class="cnt f-brk">
+                                                            <a href="/user/home?id=44816691" class="s-fc7"><?=\yii\helpers\Html::encode($repler -> username)?></a>：<?=\yii\helpers\Html::encode($item['content'])?>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    if(!empty($item['tid'])){
+                                                        $tcomment = \models\Comment::findOne($item['tid']);
+                                                        $trepler = \models\User::findOne($tcomment -> uid);
+                                                        ?>
+                                                        <div class="que f-brk f-pr s-fc3">
+                                                                <span class="darr">
+                                                                  <i class="bd">◆</i>
+                                                                  <i class="bg">◆</i>
+                                                                </span>
+                                                            <a class="s-fc7" href=""><?=\yii\helpers\Html::encode($trepler -> username)?></a>：<?=\yii\helpers\Html::encode($tcomment -> content)?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <div class="rp">
+                                                        <div class="time s-fc4"><?=$item['ctime']?></div>
+                                                        <span class="sep">|</span>
+                                                        <a href="javascript:void(0)" class="s-fc3 a_reply" data-id="<?=$item['id']?>" data-type="reply">回复</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="reply_id_<?=$item['id']?>" class="reply_block" style="display:none">
+                                                <div>
+                                                    <div class="rept m-quk m-quk-1 f-pr">
+                                                        <div class="iner">
+                                                            <div class="corr u-arr u-arr-1">
+                                                                <em class="arrline">◆</em>
+                                                                <span class="arrclr">◆</span>
+                                                            </div>
+                                                            <div class="m-cmmtipt m-cmmtipt-1 f-cb f-pr">
+                                                                <div class="u-txtwrap holder-parent f-pr j-wrap" style="display: block;">
+                                                                    <textarea class="u-txt area j-flag" placeholder="" id="auto-id-1RoJZnXTCM2IJegH" style="overflow: hidden; height: 20px;"></textarea>
+                                                                </div>
+                                                                <div class="btns f-cb f-pr">
+                                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag replybtn" data-id="<?=$item['id']?>">回复</a>
+                                                                    <span class="zs s-fc4 j-flag">140</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+
+                                </div>
+
+                                <div class="j-flag auto-1453622546039-parent">
+                                    <?=\common\help\LinkPager::widget(['pagination' => $page])?>
+                                </div>
                             </div>
                         </div>
                     </div>

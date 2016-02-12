@@ -29,11 +29,11 @@
                                     </div>
                                 </div>
                                 <div class="user f-cb">
-                                    <a class="face" href="">
+                                    <a class="face single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $data['creator']['id']])?>">
                                         <img src="<?=\common\help\UrlHelp::getImgUrl($data['creator']['headimg'])?>" />
                                     </a>
                   <span class="name">
-                    <a href="/user/home?id=54604149" class="s-fc7"><?=$data['creator']['username']?></a>
+                    <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $data['creator']['id']])?>" class="s-fc7 single"><?=$data['creator']['username']?></a>
                   </span>
                                     <span class="time s-fc4"><?=substr($data['created'],0,10)?>创建</span></div>
                                 <div id="content-operation" class="btns f-cb" data-rid="159240917" data-type="13" data-special="0">
@@ -43,7 +43,7 @@
                                     </a>
                                     <a id="flag_add" data-res-action="addto" data-res-id="<?=$id?>" data-res-type="13" href="javascript:;"
                                        class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
-                                    <a id="flag_collect" data-res-id="<?=$id?>" data-res-type="13" data-count="2648" data-res-action="fav" class="u-btni u-btni-fav"
+                                    <a id="flag_collect" data-res-id="<?=$id?>" data-res-type="13" data-count="2648" data-res-action="fav_p" class="u-btni u-btni-fav"
                                        href="javascript:;">
                                         <i>收藏</i>
                                     </a>
@@ -179,23 +179,27 @@
                                 <h3>
                                     <span class="f-ff2">评论</span>
                                 </h3>
-                                <span class="sub s-fc3">共<span class="j-flag">66</span>条评论</span>
+                                <!--                                <span class="sub s-fc3">共<span class="j-flag">66</span>条评论</span>-->
                             </div>
                             <div class="m-cmmt">
+                                <input type="hidden" name="pid" value="<?=$id?>" />
                                 <div class="iptarea">
                                     <div class="head">
-                                        <img src="http://p3.music.126.net/0pZwSIb90hSALWk6BGDF0g==/6637751697611512.jpg?param=50y50">
+                                        <?php
+                                        $headimg = !empty(Yii::$app -> user -> identity -> headimg)?Yii::$app -> user -> identity -> headimg:'';
+                                        ?>
+                                        <img src="<?=\common\help\UrlHelp::getImgUrl($headimg)?>">
                                     </div>
                                     <div class="j-flag">
                                         <div>
                                             <div class="m-cmmtipt f-cb f-pr">
                                                 <div class="u-txtwrap holder-parent f-pr" style="display: block;">
-                                                    <textarea class="u-txt area j-flag" placeholder="评论" id="auto-id-eo0MQeaIah9PQvJe">
-
-                                                    </textarea></div><div class="btns f-cb f-pr">
+                                                    <textarea class="u-txt area j-flag" placeholder="评论"></textarea>
+                                                </div>
+                                                <div class="btns f-cb f-pr">
                                                     <!--                     <i class="icn u-icn u-icn-36 j-flag" id="auto-id-aTcpxvew6EnyUvao"></i>
                                                                          <i class="icn u-icn u-icn-41 j-flag" id="auto-id-3dSMaW3TB4pnapTa"></i>-->
-                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-gmCfhqzATwOvTFX6">评论</a>
+                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="docomment">评论</a>
                                                     <span class="zs s-fc4 j-flag">140</span>
                                                 </div>
                                                 <div class="corr u-arr">
@@ -207,64 +211,76 @@
                                     </div>
                                 </div>
                                 <div class="cmmts j-flag" id="auto-id-3V0eaFlhDUFBRuMG">
-                                    <h3 class="u-hd4">最新评论(66)</h3>
-                                    <div id="631883641453622546037" class="itm" data-id="63188364">
-                                        <div class="head">
-                                            <a href="/user/home?id=44816691">
-                                                <img src="http://p3.music.126.net/KEG6d7VQpXAWqW31rhruxw==/7790039882992620.jpg?param=50y50"></a>
-                                        </div>
-                                        <div class="cntwrap">
-                                            <div class="">
-                                                <div class="cnt f-brk">
-                                                    <a href="/user/home?id=44816691" class="s-fc7">夏末淺秋</a>：<img src="http://s1.music.126.net/style/web2/emt/emoji_33.png">
+                                    <h3 class="u-hd4">最新评论</h3>
+                                    <?php
+                                    if(!empty($commentData)){
+                                        foreach($commentData as $item){
+                                            $repler = \models\User::findOne($item['uid']);
+                                            ?>
+                                            <div class="itm" data-id="<?=$item['id']?>">
+                                                <div class="head">
+                                                    <a href="">
+                                                        <img src="<?=\common\help\UrlHelp::getImgUrl($repler -> headimg)?>">
+                                                    </a>
                                                 </div>
-                                            </div>
-                                            <div class="rp">
-                                                <div class="time s-fc4">1月19日 18:28</div>
-                                                <a data-id="63188364" data-type="like" href="javascript:void(0)">
-                                                    <i class="zan u-icn2 u-icn2-12"></i>
-                                                </a>
-                                                <span class="sep">|</span>
-                                                <a href="javascript:void(0)" class="s-fc3" data-id="63188364" data-type="reply">回复</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <div class="rept m-quk m-quk-1 f-pr">
-                                                <div class="iner">
-                                                    <div class="corr u-arr u-arr-1">
-                                                        <em class="arrline">◆</em>
-                                                        <span class="arrclr">◆</span>
+                                                <div class="cntwrap">
+                                                    <div class="">
+                                                        <div class="cnt f-brk">
+                                                            <a href="/user/home?id=44816691" class="s-fc7"><?=\yii\helpers\Html::encode($repler -> username)?></a>：<?=\yii\helpers\Html::encode($item['content'])?>
+                                                        </div>
                                                     </div>
-                                                    <div class="m-cmmtipt m-cmmtipt-1 f-cb f-pr">
-                                                        <div class="u-txtwrap holder-parent f-pr j-wrap" style="display: block;">
-                                                            <textarea class="u-txt area j-flag" placeholder="" id="auto-id-1RoJZnXTCM2IJegH" style="overflow: hidden; height: 20px;">
-                                                            </textarea>
+                                                    <?php
+                                                    if(!empty($item['tid'])){
+                                                        $tcomment = \models\Comment::findOne($item['tid']);
+                                                        $trepler = \models\User::findOne($tcomment -> uid);
+                                                        ?>
+                                                        <div class="que f-brk f-pr s-fc3">
+                                                                <span class="darr">
+                                                                  <i class="bd">◆</i>
+                                                                  <i class="bg">◆</i>
+                                                                </span>
+                                                            <a class="s-fc7" href=""><?=\yii\helpers\Html::encode($trepler -> username)?></a>：<?=\yii\helpers\Html::encode($tcomment -> content)?>
                                                         </div>
-                                                        <div class="btns f-cb f-pr">
-                                                            <!--     <i class="icn u-icn u-icn-36 j-flag" id="auto-id-1dEpNMnfO5MAUuN1"></i>
-                                                                 <i class="icn u-icn u-icn-41 j-flag" id="auto-id-kuoKy0bXJyXMv8J6"></i>-->
-                                                            <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-IlkdHb6fs72PrIFm">回复</a>
-                                                            <span class="zs s-fc4 j-flag">133</span>
-                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <div class="rp">
+                                                        <div class="time s-fc4"><?=$item['ctime']?></div>
+                                                        <span class="sep">|</span>
+                                                        <a href="javascript:void(0)" class="s-fc3 a_reply" data-id="<?=$item['id']?>" data-type="reply">回复</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                            <div id="reply_id_<?=$item['id']?>" class="reply_block" style="display:none">
+                                                <div>
+                                                    <div class="rept m-quk m-quk-1 f-pr">
+                                                        <div class="iner">
+                                                            <div class="corr u-arr u-arr-1">
+                                                                <em class="arrline">◆</em>
+                                                                <span class="arrclr">◆</span>
+                                                            </div>
+                                                            <div class="m-cmmtipt m-cmmtipt-1 f-cb f-pr">
+                                                                <div class="u-txtwrap holder-parent f-pr j-wrap" style="display: block;">
+                                                                    <textarea class="u-txt area j-flag" placeholder="" id="auto-id-1RoJZnXTCM2IJegH" style="overflow: hidden; height: 20px;"></textarea>
+                                                                </div>
+                                                                <div class="btns f-cb f-pr">
+                                                                    <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag replybtn" data-id="<?=$item['id']?>">回复</a>
+                                                                    <span class="zs s-fc4 j-flag">140</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+
                                 </div>
 
                                 <div class="j-flag auto-1453622546039-parent">
-
-                                    <div class="auto-1453622546039 u-page">
-                                        <a href="#" class="zbtn zprv js-p-1453622546037 js-disabled" id="auto-id-3Kg8yFyfUBNTTbP3">上一页</a>
-                                        <a href="#" class="zpgi zpg1 js-i-1453622546037 js-selected" id="auto-id-uHAgSLDTDPvHaPLU">1</a>
-                                        <a href="#" class="zpgi zpg2 js-i-1453622546037" id="auto-id-oyCaxXs2c2pc4MBw">2</a>
-                                        <a href="#" class="zpgi zpg3 js-i-1453622546037" id="auto-id-rJ8bSWt23IST3kdJ">3</a>
-                                        <a href="#" class="zpgi zpg4 js-i-1453622546037" id="auto-id-7w7STKib6kv0thAu">4</a>
-                                        <a href="#" class="zbtn znxt js-n-1453622546037" id="auto-id-grraOTi25ahBrCxv">下一页</a>
-                                    </div>
+                                    <?=\common\help\LinkPager::widget(['pagination' => $page])?>
                                 </div>
                             </div>
                         </div>

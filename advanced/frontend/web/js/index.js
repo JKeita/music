@@ -14,6 +14,9 @@ function closeBar(){
 }
 
 function showBar(){
+	var top = window.pageYOffset+window.innerHeight/2-324/2;
+	var left = (window.pageXOffset+window.innerWidth-530)/2;
+	$(".m-layer").css("top", top).css("left", left);
 	$("#lrBar").show();
 	$("#loginBar").hide();
 	$("#regBar").hide();
@@ -36,6 +39,10 @@ function logout(){
 		success:function(data){
 			if(data.code == 1){
 				loadTopHead();
+				$.get(location.href, function(data) {
+					$('.container').get(0).outerHTML=data;
+					addNewObjEvent();
+				});
 			}
 		}
 	});
@@ -307,6 +314,7 @@ function togglePlayAndPause(){
 }
 function clearPlayList(){
 	$("#playlistul li").remove();
+	$("#playlistul li").remove();
 }
 function playSongList(){
 	var pid = $(this).attr('data-res-id');
@@ -391,6 +399,19 @@ function collectSong(sid){
 		}
 	});
 }
+function collectPlayList(pid){
+	$.ajax({
+		type:'post',
+		url:window.COLLECT_PLAYLIST_URL,
+		dataType:'json',
+		data:{pid:pid},
+		success:function(data){
+			layer.alert(data.msg, function(index){
+				layer.close(index);
+			});
+		}
+	});
+}
 function delCollectSong(pid,sid){
 	layer.confirm('确定从该歌单中删除此歌曲?', function(index){
 		$.ajax({
@@ -411,6 +432,119 @@ function delCollectSong(pid,sid){
 			}
 		});
 		layer.close(index);
+	});
+}
+function follow(fid){
+	$.ajax({
+		type:'post',
+		url:window.DO_FOLLOW_URL,
+		dataType:'json',
+		data:{fid:fid},
+		success:function(data){
+			layer.alert(data.msg, function(index){
+				if(data.code == 1){
+					$.get(location.href, function(data) {
+						$('.container').get(0).outerHTML=data;
+						addNewObjEvent();
+					});
+				}
+				layer.close(index);
+			});
+		}
+	});
+}
+function delFollow(fid){
+	$.ajax({
+		type:'post',
+		url:window.DEL_FOLLOW_URL,
+		dataType:'json',
+		data:{fid:fid},
+		success:function(data){
+			layer.alert(data.msg, function(index){
+				if(data.code == 1){
+					$.get(location.href, function(data) {
+						$('.container').get(0).outerHTML=data;
+						addNewObjEvent();
+					});
+				}
+				layer.close(index);
+			});
+		}
+	});
+}
+//===========================================================
+function addCommentEvent(){
+	$(".m-cmmtipt .u-txt").focus(function(){
+		if(!$("#tophead_username").text()){
+			showBar();
+			$(this).blur();
+		}
+	});
+	$("#docomment").click(function(){
+		var pid = $("input[name='pid']").val();
+		var sid = $("input[name='sid']").val();
+		var content= $(this).parents(".m-cmmtipt").find("textarea").val();
+		if(content == ''){
+			layer.alert('评论不能为空',function(index){
+				layer.close(index);
+			});
+			return false;
+		}
+		$.ajax({
+			type:'post',
+			url: window.SAVE_COMMENT_URL,
+			dataType:'json',
+			data:{pid:pid,sid:sid,content:content},
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
+	});
+	$(".a_reply").click(function(){
+		if(!$("#tophead_username").text()){
+			showBar();
+			return false;
+		}
+		var tid = $(this).attr('data-id');
+		$(".reply_block").not("#reply_id_"+tid).hide();
+		$("#reply_id_"+tid).toggle();
+	});
+	$(".replybtn").click(function(){
+		var pid = $("input[name='pid']").val();
+		var sid = $("input[name='sid']").val();
+		var content= $(this).parents(".m-cmmtipt").find("textarea").val();
+		var tid = $(this).attr('data-id');
+		if(content == ''){
+			layer.alert('评论不能为空',function(index){
+				layer.close(index);
+			});
+			return false;
+		}
+		$.ajax({
+			type:'post',
+			url: window.SAVE_COMMENT_URL,
+			dataType:'json',
+			data:{pid:pid,sid:sid,tid:tid,content:content},
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
 	});
 }
 //===================================================================================
@@ -536,6 +670,7 @@ function addUserInfoEvent(){
 }
 //===============================================================================================
 function addSongInfoEvent(){
+	addCommentEvent();
 	var lyricShow = false;
 	$("#flag_ctrl").on("click", function(){
 		if(!lyricShow){
@@ -606,7 +741,30 @@ function leftPlayListEvent(){
 				success:function(data){
 					layer.alert(data.msg,function(index){
 						if(data.code == 1){
-							$.get(location.href, function(data) {
+							$.get(window.MYSONG_URL, function(data) {
+								$('.container').get(0).outerHTML=data;
+								addNewObjEvent();
+							});
+						}
+						layer.close(index);
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});
+	$(".delCollect").click(function(){
+		var pid = $(this).attr('data-id');
+		layer.confirm('确定取消收藏此歌单?', function(index){
+			$.ajax({
+				type:'post',
+				url:window.DEL_COLLECT_URL,
+				dataType:'json',
+				data:{pid:pid},
+				success:function(data){
+					layer.alert(data.msg,function(index){
+						if(data.code == 1){
+							$.get(window.MYSONG_URL, function(data) {
 								$('.container').get(0).outerHTML=data;
 								addNewObjEvent();
 							});
@@ -620,8 +778,22 @@ function leftPlayListEvent(){
 	});
 }
 //===============================================================================================
+function userHeadBoxEvent(){
+	$("[data-action='follow']").click(function(){
+		var fid = $(this).attr('data-id');
+		follow(fid);
+		return false;
+	});
+	$("[data-action='delfollow']").click(function(){
+		var fid = $(this).attr('data-id');
+		delFollow(fid);
+		return false;
+	});
+}
+//===============================================================================================
 function addMySongEvent(){
 	leftPlayListEvent();
+	addCommentEvent();
 	$("li.j-iflag").on("mouseover",function(){
 		$(this).addClass("z-hover");
 		$(this).find(".hshow").show();
@@ -654,6 +826,7 @@ function addMySongEvent(){
 }
 //=======================================================
 function addPlayListEvent(){
+	addCommentEvent();
 	$("#flag_play").click(playSongList);
 	$("#flag_add").click(function(){
 		var pid = $(this).attr('data-res-id');
@@ -668,6 +841,11 @@ function addPlayListEvent(){
 		var sid = $(this).attr('data-res-id');
 		console.log(sid);
 		collectSong(sid);
+	});
+	$("#flag_collect").click(function(){
+		var pid = $(this).attr('data-res-id');
+		console.log(pid);
+		collectPlayList(pid);
 	});
 	$("[data-res-action='play']").click(playSong);
 	$("[data-res-action='delete']").click(function(){
@@ -744,6 +922,10 @@ function addEditCoverEvent(){
 	});
 }
 //===========================================================
+function addUserHomeEvent(){
+	userHeadBoxEvent();
+}
+//===========================================================
 $(function(){
 	$("#g_playlist .clear").click(clearPlayList);
 	$(".zbar").on("mousedown",function(ed){
@@ -754,8 +936,8 @@ $(function(){
 		console.log(diffY+'diffY'+ed.pageY+'-'+ $(".z-show").offset().top);
 
 		$('body').on("mousemove",function(em){
-			var maxX = $(window).width()-$(".z-show").width();
-			var maxY = $(window).height()-$(".z-show").height();
+			var maxX = $(document).width()-$(".z-show").width();
+			var maxY = $(document).height()-$(".z-show").height();
 			var y = em.pageY - diffY;
 			var x = em.pageX - diffX;
 			if(x<0){
@@ -857,13 +1039,17 @@ $(function(){
 			url:$("#loginForm").attr('action'),
 			data:$("#loginForm").serialize(),
 			success:function(data){
-				if(data.code == 1){
-					closeBar();
-					loadTopHead();
-				}else{
-					alert(data.msg);
-				}
-
+				layer.alert(data.msg, function(index){
+					if(data.code == 1){
+						closeBar();
+						loadTopHead();
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
 			}
 		});
 		return false;

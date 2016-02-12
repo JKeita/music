@@ -6,8 +6,8 @@
  * Time: 19:35
  */
 ?>
-<link href="<?=Yii::$app -> homeUrl?>css/pt_my_index.css" type="text/css" rel="stylesheet" />
 <div class="container">
+    <link href="<?=Yii::$app -> homeUrl?>css/pt_my_index.css" type="text/css" rel="stylesheet" />
     <!-- <div id="g_nav" class="m-subnav m-subnav-up f-pr">
          <div class="shadow"></div>
      </div>-->

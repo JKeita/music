@@ -47,7 +47,7 @@
                                        href="javascript:;">
                                         <i>收藏</i>
                                     </a>
-                                    <a id="flag_share" data-res-id="<?=$id?>" data-res-type="13" data-count="24" data-res-action="share"
+                                    <a id="flag_share" data-res-id="<?=$id?>" data-res-type="2" data-count="24" data-res-action="share"
                                        data-res-pic="http://p4.music.126.net/Bf0LtOHI29-enSa30TytPw==/1365593486525946.jpg" class="u-btni u-btni-share"
                                        href="javascript:;">
                                         <i>分享</i>
@@ -146,16 +146,16 @@
                                                     ?>
                                                     <span class="u-dur"><?=date('i:s', $duration)?></span>
                                                     <div class="opt hshow">
-                                                        <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="13" data-res-data="42097082"></a>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="download" class="icn icn-dl" title="下载"></span>
+                                                        <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="1" data-res-data="42097082"></a>
+                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
+                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
+                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="download" class="icn icn-dl" title="下载"></span>
                                                     </div>
                                                 </td>
                                                 <td class="">
                                                     <div class="text" title="<?=$song['author']?>">
                                                           <span title="<?=$song['author']?>">
-                                                            <a class="" href="/artist?id=95442" hidefocus="true"><?=$song['author']?></a>
+                                                            <a class="" href="javascript:void(0);" hidefocus="true"><?=$song['author']?></a>
                                                           </span>
                                                     </div>
                                                 </td>

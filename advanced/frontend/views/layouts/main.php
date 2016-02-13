@@ -341,7 +341,7 @@ use yii\helpers\Url;
             <ul class="m-nav j-tflag">
                 <li class="fst">
               <span>
-                <a hidefocus="true" href="<?=Url::to(['site/index'])?>" data-module="discover" class="z-slt single">
+                <a hidefocus="true" href="<?=Url::to(['site/index'])?>" data-module="discover" class="single">
                     <em>发现音乐</em>
 <!--                    <sub class="cor"></sub></a>-->
               </span>
@@ -356,7 +356,7 @@ use yii\helpers\Url;
                 </li>
                 <li>
               <span>
-                <a hidefocus="true" href="http://music.163.com/friend" data-module="friend">
+                <a hidefocus="true" href="<?=Url::to(['user/friend'])?>" data-module="friend" class="single">
                     <em>朋友</em>
                     <sub class="cor">�</sub></a>
               </span>
@@ -719,6 +719,9 @@ use yii\helpers\Url;
         if(document.location.href.indexOf('user/home')>=0){
             addUserHomeEvent();
         }
+        if(document.location.href.indexOf('user/event')>=0){
+            addUserEventEvent();
+        }
     }
     $('.single').on('click',function() {
         if(!$(this).attr('href')){
@@ -743,6 +746,8 @@ use yii\helpers\Url;
 </script>
 <script>
     window.MYSONG_URL = '<?=Url::to(['user/mysong'])?>';
+    window.SHARE_URL = '<?=Url::to(['user/share'])?>';
+    window.DEL_SHARE_URL = '<?=Url::to(['user/del-share'])?>';
     window.DO_FOLLOW_URL = '<?=Url::to(['user/do-follow'])?>';
     window.DEL_FOLLOW_URL = '<?=Url::to(['user/del-follow'])?>';
     window.SAVE_COMMENT_URL = '<?=Url::to(['user/comment'])?>';

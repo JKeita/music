@@ -33,15 +33,16 @@
                         }
                     }
                     ?>
-
-
                 </div>
             </div>
         </div>
         <ul class="data s-fc3 f-cb" id="tab-box">
             <li class="fst">
                 <a href="">
-                    <strong id="event_count">11</strong>
+                    <?php
+                        $shareLogic = new \logic\ShareLogicImp();
+                    ?>
+                    <strong id="event_count"><?=$shareLogic -> getUserEventCount($user -> id)?></strong>
                     <span>动态</span>
                 </a>
             </li>

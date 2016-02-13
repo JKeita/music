@@ -40,11 +40,11 @@ $flag = $user -> id == $creator -> id;
                                             <h2 class="f-ff2 f-thide"><?=$model['name']?></h2>
                                         </div>
                                         <div class="user f-cb">
-                                            <a class="face" href="">
+                                            <a class="face single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $creator -> id])?>">
                                                 <img src="<?=\common\help\UrlHelp::getImgUrl( $creator -> headimg)?>" />
                                             </a>
                       <span class="name f-thide">
-                        <a href="/user/home?id=37889558" class="s-fc7" title="<?=$creator -> username?>"><?=$creator -> username?></a>
+                        <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $creator -> id])?>" class="s-fc7 single" title="<?=$creator -> username?>"><?=$creator -> username?></a>
                       </span>
                                             <span class="time s-fc4"><?=substr($model['created'],0,10)?>创建</span>
                                         </div>
@@ -58,15 +58,15 @@ $flag = $user -> id == $creator -> id;
                                             <a href="javascript:void(0)" hidefocus="true" class="u-btni u-btni-fav u-btni-fav-dis2">
                                                 <i>已收藏</i>
                                             </a>
-                                            <a id="flag_share" data-res-id="<?=$id?>" data-res-type="13" data-res-action="share"
+                                            <a id="flag_share" data-res-id="<?=$id?>" data-res-type="2" data-res-action="share"
                                                data-res-pic="http://p3.music.126.net/SOnKukiZEBzme9KolQs3FQ==/859818092966144.jpg"
                                                class="u-btni u-btni-share" href="javascript:void(0)">
                                                 <i>分享</i>
                                             </a>
-                                            <a id="flag_dl" data-res-id="<?=$id?>" data-res-type="13" data-res-action="download"
+                           <!--                 <a id="flag_dl" data-res-id="<?/*=$id*/?>" data-res-type="13" data-res-action="download"
                                                class="u-btni u-btni-dl" href="javascript:void(0)">
                                                 <i>下载</i>
-                                            </a>
+                                            </a>-->
                                             <a id="flag_comment" data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt">
                                                 <i>评论</i>
                                             </a>
@@ -146,9 +146,9 @@ $flag = $user -> id == $creator -> id;
                                                         <span class="u-dur candel"><?=date('i:s', $duration)?></span>
                                                         <div class="opt hshow">
                                                             <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="13" data-res-data="42097082"></a>
-                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
-                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
-                                                            <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="download" class="icn icn-dl" title="下载"></span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
+                                                            <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="download" class="icn icn-dl" title="下载"></span>
                                                             <?php
                                                                 if($flag){
                                                             ?>
@@ -156,7 +156,6 @@ $flag = $user -> id == $creator -> id;
                                                             <?php
                                                                 }
                                                             ?>
-
                                                         </div>
                                                     </td>
                                                     <td class="">

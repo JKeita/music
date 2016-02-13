@@ -14,6 +14,7 @@ use common\models\LoginForm;
 use logic\CommentLogicImp;
 use logic\FollowLogicImp;
 use logic\PlayListLogicImp;
+use logic\ShareLogicImp;
 use logic\UserLogicImp;
 use models\User;
 use Yii;
@@ -38,6 +39,8 @@ class UserController extends Controller{
             'comment',
             'do-follow',
             'del-follow',
+            'share',
+            'del-share',
         ];
         if(in_array($action -> id,$actionArr)){
             return true;
@@ -291,6 +294,55 @@ class UserController extends Controller{
         return json_encode($result);
     }
 
+    /**
+     * 分享
+     */
+    public function actionShare(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再分享']);
+        }
+        $params = [
+            'id' => Request::getPostValue('id'),
+            'type' => Request::getPostValue('type'),
+            'uid' => Yii::$app -> getUser() -> getId(),
+        ];
+        $shareLogic = new ShareLogicImp();
+        $result = $shareLogic -> share($params);
+        return json_encode($result);
+    }
+
+    /**
+     * 删除分享
+     */
+    public function actionDelShare(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录后再删除分享']);
+        }
+        $id = Request::getPostValue('id');
+        $uid = Yii::$app -> getUser() -> getId();
+        $shareLogic = new ShareLogicImp();
+        $result = $shareLogic -> delShare($uid, $id);
+        return json_encode($result);
+    }
+
+    public function actionFriend(){
+        if(\Yii::$app -> user -> isGuest){
+            throw new NotFoundHttpException();
+        }
+        $uid = Yii::$app -> getUser() -> getId();
+        $shareLogic = new ShareLogicImp();
+        $eventData = $shareLogic -> getFollowEventPage($uid);
+        $params = [
+            'page' => $eventData['page'],
+            'eventData' => $eventData['data'],
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("friend",$params);
+        }else{
+            return $this -> render("friend",$params);
+        }
+    }
+
     public function actionHome(){
         $playListLogic = new \logic\PlayListLogicImp();
         $uid = Request::getQueryValue('id');
@@ -347,6 +399,26 @@ class UserController extends Controller{
             return $this -> renderPartial("fans",$params);
         }else{
             return $this -> render("fans",$params);
+        }
+    }
+
+    public function actionEvent(){
+        $uid = Request::getQueryValue('id');
+        $user = User::findOne($uid);
+        if(empty($user)){
+            throw new NotFoundHttpException();
+        }
+        $shareLogic = new ShareLogicImp();
+        $eventData = $shareLogic -> getUserEventPage($uid);
+        $params = [
+            'user' => $user,
+            'page' => $eventData['page'],
+            'eventData' => $eventData['data'],
+        ];
+        if(\Yii::$app -> request -> isAjax){
+            return $this -> renderPartial("event",$params);
+        }else{
+            return $this -> render("event",$params);
         }
     }
     /**

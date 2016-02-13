@@ -125,7 +125,7 @@ class FollowLogicImp implements FollowLogic
     public function getFansNum($uid)
     {
         if(empty($uid)){
-            return [];
+            return 0;
         }
         $count = Follow::find() -> select('uid')-> where(['fid' => $uid]) -> count();
         return $count;

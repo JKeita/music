@@ -548,6 +548,55 @@ function addCommentEvent(){
 	});
 }
 //===================================================================================
+function addShareEvent(){
+	$("[data-res-action='share']").click(function(){
+		var id = $(this).attr('data-res-id');
+		var type = $(this).attr('data-res-type');
+		$.ajax({
+			type:'post',
+			url: window.SHARE_URL,
+			dataType:'json',
+			data:{id:id,type:type},
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
+		return false;
+	});
+	$("[data-res-action='delshare']").click(function(){
+		if(!confirm("确定删除？")){
+			return false;
+		}
+		var id = $(this).attr('data-res-id');
+		$.ajax({
+			type:'post',
+			url: window.DEL_SHARE_URL,
+			dataType:'json',
+			data:{id:id},
+			success:function(data){
+				layer.alert(data.msg,function(index){
+					if(data.code == 1){
+						$.get(location.href, function(data) {
+							$('.container').get(0).outerHTML=data;
+							addNewObjEvent();
+						});
+					}
+					layer.close(index);
+				});
+			}
+		});
+		return false;
+	});
+}
+//===================================================================================
 function addUserInfoEvent(){
 	swfobject.addDomLoadEvent(function () {
 		var swf = new fullAvatarEditor("/plugin/fullAvatarEditor-2.3/fullAvatarEditor.swf", "/plugin/fullAvatarEditor-2.3/expressInstall.swf", "swfContainer", {
@@ -671,6 +720,7 @@ function addUserInfoEvent(){
 //===============================================================================================
 function addSongInfoEvent(){
 	addCommentEvent();
+	addShareEvent();
 	var lyricShow = false;
 	$("#flag_ctrl").on("click", function(){
 		if(!lyricShow){
@@ -794,6 +844,7 @@ function userHeadBoxEvent(){
 function addMySongEvent(){
 	leftPlayListEvent();
 	addCommentEvent();
+	addShareEvent();
 	$("li.j-iflag").on("mouseover",function(){
 		$(this).addClass("z-hover");
 		$(this).find(".hshow").show();
@@ -827,6 +878,7 @@ function addMySongEvent(){
 //=======================================================
 function addPlayListEvent(){
 	addCommentEvent();
+	addShareEvent();
 	$("#flag_play").click(playSongList);
 	$("#flag_add").click(function(){
 		var pid = $(this).attr('data-res-id');
@@ -924,6 +976,10 @@ function addEditCoverEvent(){
 //===========================================================
 function addUserHomeEvent(){
 	userHeadBoxEvent();
+}
+//===========================================================
+function addUserEventEvent(){
+	addShareEvent();
 }
 //===========================================================
 $(function(){

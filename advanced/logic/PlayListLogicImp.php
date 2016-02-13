@@ -13,6 +13,7 @@ use common\help\Response;
 use dao\PlayListDao;
 use models\PlayList;
 use models\PlayListCollect;
+use models\Song;
 use models\SongCollect;
 use models\User;
 use yii\helpers\ArrayHelper;
@@ -135,6 +136,9 @@ class PlayListLogicImp implements PlayListLogic
         $model -> pid = $pid;
         $result = $model -> save();
         if($result){
+            $song = Song::findOne($sid);
+            $song -> collectnum += 1;
+            $song -> save();
             return Response::returnInfo(1, '收藏成功', ['id' => $model -> id]);
         }
         return Response::returnInfo(0, '收藏失败');
@@ -160,6 +164,13 @@ class PlayListLogicImp implements PlayListLogic
         }
         $result = $model -> delete();
         if($result){
+            $song = Song::findOne($sid);
+            $collectnum =  $song -> collectnum - 1;
+            if($collectnum < 0){
+                $collectnum = 0;
+            }
+            $song -> collectnum = $collectnum;
+            $song -> save();
             return Response::returnInfo(1, '删除成功');
         }
         return Response::returnInfo(0, '删除失败');
@@ -228,6 +239,9 @@ class PlayListLogicImp implements PlayListLogic
         $model -> pid = $pid;
         $result = $model -> save();
         if($result){
+            $playList = Playlist::findOne($pid);
+            $playList -> collectnum += 1;
+            $playList -> save();
             return Response::returnInfo(1, '收藏成功');
         }
         return Response::returnInfo(0, '收藏失败');
@@ -253,6 +267,13 @@ class PlayListLogicImp implements PlayListLogic
         $model = PlayListCollect::findOne(['uid' => $uid, 'pid' => $pid]);
         $result = $model -> delete();
         if($result){
+            $playList = Playlist::findOne($pid);
+            $collectnum =  $playList -> collectnum - 1;
+            if($collectnum < 0){
+                $collectnum = 0;
+            }
+            $playList -> collectnum = $collectnum;
+            $playList -> save();
             return Response::returnInfo(1, '取消收藏成功');
         }
         return Response::returnInfo(0, '取消收藏失败');

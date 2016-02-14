@@ -472,6 +472,25 @@ function delFollow(fid){
 		}
 	});
 }
+function share(id, type){
+	$.ajax({
+		type:'post',
+		url: window.SHARE_URL,
+		dataType:'json',
+		data:{id:id,type:type},
+		success:function(data){
+			layer.alert(data.msg,function(index){
+				if(data.code == 1){
+					$.get(location.href, function(data) {
+						$('.container').get(0).outerHTML=data;
+						addNewObjEvent();
+					});
+				}
+				layer.close(index);
+			});
+		}
+	});
+}
 //===========================================================
 function addCommentEvent(){
 	$(".m-cmmtipt .u-txt").focus(function(){
@@ -874,6 +893,12 @@ function addMySongEvent(){
 		var pid = $("#flag_play").attr("data-res-id");
 		delCollectSong(pid,sid);
 	});
+	$("[data-res-action='share']").click(function(){
+		var id = $(this).attr('data-res-id');
+		var type = $(this).attr('data-res-type');
+		share(id, type);
+		return false;
+	});
 }
 //=======================================================
 function addPlayListEvent(){
@@ -980,6 +1005,40 @@ function addUserHomeEvent(){
 //===========================================================
 function addUserEventEvent(){
 	addShareEvent();
+}
+//===========================================================
+function addSearchEvent(){
+	$("#searchBtn").click(function(){
+		var key = $("#search_key").val();
+		var url = $(this).attr('href');
+		if(key == ''){
+			return false;
+		}
+		url = url.replace(/_k_/,key);
+		history.pushState({ path: url }, '', url);
+		$.get(url, function(data) {
+			$('.container').get(0).outerHTML=data;
+			addNewObjEvent();
+		});
+		return false;
+	});
+	$("[data-res-action='addto']").click(function(){
+		var id = $(this).attr('data-res-id');
+		console.log(id);
+		loadSongLi(id);
+	});
+	$("[data-res-action='fav']").click(function(){
+		var sid = $(this).attr('data-res-id');
+		console.log(sid);
+		collectSong(sid);
+	});
+	$("[data-res-action='play']").click(playSong);
+	$("[data-res-action='share']").click(function(){
+		var id = $(this).attr('data-res-id');
+		var type = $(this).attr('data-res-type');
+		share(id, type);
+		return false;
+	});
 }
 //===========================================================
 $(function(){
@@ -1236,6 +1295,22 @@ $(function(){
 	});
 	$('.m-pbar,body').on("mouseup",function(){
 		$(".m-pbar .barbg").off("mousemove");
+	});
+
+	$("#top_search").keyup(function(e){
+		if(e.keyCode == 13){
+			var url = $(this).attr('data-url');
+			var key = $(this).val();
+			if(key == ''){
+				return false;
+			}
+			url = url.replace(/_k_/,key);
+			history.pushState({ path: url }, '', url);
+			$.get(url, function(data) {
+				$('.container').get(0).outerHTML=data;
+				addNewObjEvent();
+			});
+		}
 	});
 });
 

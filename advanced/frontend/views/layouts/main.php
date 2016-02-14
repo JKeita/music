@@ -368,8 +368,9 @@ use yii\helpers\Url;
             <div class="m-srch f-pr j-suggest" id="g_search">
                 <div class="srchbg">
               <span class="parent">
-              <input type="text" class="txt j-flag" value="" id="auto-id-6J1k4oM2hQ1ArLOw" />
-              <label class="ph j-flag" id="auto-id-RIG6JDU5DUPmdgCt">单曲/歌手/专辑/歌单/用户</label></span>
+              <input type="text" class="txt j-flag" value="" id="top_search" data-url="<?=Url::to(['search/index','key' => '_k_'])?>"/>
+<!--              <label class="ph j-flag" id="auto-id-RIG6JDU5DUPmdgCt">单曲/歌手/专辑/歌单/用户</label>-->
+              </span>
                 </div>
                 <span class="j-flag" style="display:none;" id="auto-id-1TCVnZVkn87mMByK">�</span>
                 <div class="u-lstlay j-flag" style="display:none;" id="auto-id-v3UlfhfWN5ggqzrG"></div>
@@ -721,6 +722,9 @@ use yii\helpers\Url;
         }
         if(document.location.href.indexOf('user/event')>=0){
             addUserEventEvent();
+        }
+        if(document.location.href.indexOf('search/index')>=0){
+            addSearchEvent();
         }
     }
     $('.single').on('click',function() {

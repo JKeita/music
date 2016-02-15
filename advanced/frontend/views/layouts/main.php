@@ -380,28 +380,6 @@ use yii\helpers\Url;
     <div class="m-subnav m-subnav-up f-pr j-tflag f-hide">
         <div class="shadow">�</div>
     </div>
-
-<!--    <div id="g_nav2" class="m-subnav j-tflag">
-        <div class="wrap f-pr">
-            <ul class="nav">
-                <li>
-                    <a hidefocus="true" data-module="discover" href="./css/discover.html" class="z-slt">
-                        <em>推荐</em>
-                    </a>
-                </li>
-                <li>
-                    <a hidefocus="true" data-module="toplist" href="http://music.163.com/discover/toplist">
-                        <em>排行榜</em>
-                    </a>
-                </li>
-                <li>
-                    <a hidefocus="true" data-module="playlist" href="http://music.163.com/discover/playlist">
-                        <em>歌单</em>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>-->
 </div>
 <div class="clear" style="clear:both;"></div>
 <?= $content ?>
@@ -422,16 +400,16 @@ use yii\helpers\Url;
                 <a href="javascript:;" hidefocus="true" data-action="play" class="ply j-flag" title="播放/暂停(p)" id="play_pause">播放/暂停</a>
                 <a href="javascript:;" hidefocus="true" data-action="next" class="nxt" title="下一首(ctrl+→)" id="next_btn">下一首</a></div>
             <div class="head j-flag" id="song_img">
-                <img src="./css/3398590442421534.jpg"/>
+                <img src=""/>
                 <a href="http://music.163.com/song?id=31789096" hidefocus="true" class="mask"></a>
             </div>
             <div class="play">
                 <div class="j-flag words" id="songinfo">
-                    <a hidefocus="true" href="http://music.163.com/song?id=31789096" class="f-thide name fc1 f-fl"
-                       title="格斗宝贝">格斗宝贝</a>
+                    <a hidefocus="true" href="" class="f-thide name fc1 f-fl"
+                       title=""></a>
                     <span class="by f-thide f-fl">
-                          <span title="祈Inory/流月" id="song_author">
-                            <a class="" href="http://music.163.com/artist?id=189577" hidefocus="true">祈Inory</a>
+                          <span title="" id="song_author">
+                            <a class="" href="http://music.163.com/artist?id=189577" hidefocus="true"></a>
                           </span>
                     </span>
                   <a href="http://music.163.com/playlist?id=30588557&amp;_hash=songlist-31789096" class="src"
@@ -478,7 +456,7 @@ use yii\helpers\Url;
                         <span class="j-flag">0</span>)</h4>
                     <a href="javascript:;" class="addall" data-action="likeall">收藏全部</a>
                     <a href="javascript:;" class="clear" data-action="clear">清除</a>
-                    <p class="lytit f-ff0 f-thide j-flag">标题</p>
+                    <p class="lytit f-ff0 f-thide j-flag"></p>
                     <span class="close" data-action="close">关闭</span></div>
             </div>
             <div class="listbd">
@@ -487,54 +465,6 @@ use yii\helpers\Url;
                 <div class="msk"></div>
                 <div class="listbdc j-flag" id="auto-id-FwTi8Dk41WAeTLoN">
                     <ul class="f-cb" id="playlistul">
-                        <li class="z-sel" data-id="100000" data-action="play">
-                            <div class="col col-1">
-                                <div class="playicn"></div>
-                            </div>
-                            <div class="col col-2">灼け落ちない翼</div>
-                            <div class="col col-3">
-                                <div class="icns">
-                                    <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
-                                    <i class="ico ico-dl" title="下载" data-id="34077763" data-action="download">下载</i>
-                                    <i class="ico ico-share" title="分享" data-id="34077763" data-action="share">分享</i>
-                                    <i class="j-t ico ico-add" title="收藏" data-id="34077763" data-action="like">收藏</i>
-                                </div>
-                            </div>
-                            <div class="col col-4">
-                                <span title="多田葵">
-                                  <a class="" href="/artist?id=18009" hidefocus="true">多田葵</a>
-                                </span>
-                            </div>
-                            <div class="col col-5">05:15</div>
-                            <div class="col col-6">
-                                <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
-                                   data-action="link">来源</a>
-                            </div>
-                        </li>
-                        <li data-id="100002" data-action="play">
-                            <div class="col col-1">
-                                <div class="playicn"></div>
-                            </div>
-                            <div class="col col-2">歌名</div>
-                            <div class="col col-3">
-                                <div class="icns">
-                                    <i class="ico icn-del" title="删除" data-id="34077763" data-action="delete">删除</i>
-                                    <i class="ico ico-dl" title="下载" data-id="34077763" data-action="download">下载</i>
-                                    <i class="ico ico-share" title="分享" data-id="34077763" data-action="share">分享</i>
-                                    <i class="j-t ico ico-add" title="收藏" data-id="34077763" data-action="like">收藏</i>
-                                </div>
-                            </div>
-                            <div class="col col-4">
-                                <span title="歌手">
-                                  <a class="" href="/artist?id=18009" hidefocus="true">歌手</a>
-                                </span>
-                            </div>
-                            <div class="col col-5">时间</div>
-                            <div class="col col-6">
-                                <a href="/user/songs/rank?id=37889558&amp;cat=1" class="ico ico-src" title="来自听歌排行榜"
-                                   data-action="link">来源</a>
-                            </div>
-                        </li>
                     </ul>
                 </div>
                 <div class="bline j-flag" id="auto-id-EArPJeWQBsJ1Mc57"></div>
@@ -548,38 +478,8 @@ use yii\helpers\Url;
                 <div class="msk2"></div>
                 <div class="listlyric j-flag" id="">
                     <div class=" content mCustomScrollbar">
-                        <p class="j-flag" data-time="0">灼け落ちない翼
-                            <br />灼热不落之翼</p>
-                        <p class="j-flag" data-time="31.65">見渡せる場所に
-                            <br />【今晨终于抵达了】</p>
-                        <p class="j-flag" data-time="35.28">今朝は辿り着く
-                            <br />【能俯瞰世间之处】</p>
-                        <p class="j-flag" data-time="39.01">遠く線路が伸びる
-                            <br />【望着那向远方无限延伸的铁轨】</p>
-                        <p class="j-flag" data-time="46.47">こびりついた土
-                            <br />【轻轻地踢着鞋跟】</p>
-                        <p class="j-flag" data-time="50.12">踵から落とし
-                            <br />【抖去上面的泥土】</p>
-                        <p class="j-flag" data-time="53.33">歩いた距離を
-                            <br />【尝试着测量着】</p>
-                        <p class="j-flag" data-time="56.41">測ってみたり
-                            <br />【走过的距离】</p>
-                        <p class="j-flag" data-time="61.14">前髪を揺らすように
-                            <br />【忽然之间一阵风】</p>
-                        <p class="j-flag" data-time="64.87">風が強く吹いたら
-                            <br />【吹起了我的发梢】</p>
-                        <p class="j-flag" data-time="68.56">もう何も迷わない
-                            <br />【我已经不会再迷惘了】</p>
-                        <p class="j-flag" data-time="74.51">世界の果てさえ
-                            <br />【世界的尽头在何处】</p>
-                        <p class="j-flag" data-time="78.21000000000001">僕らは知らない
-                            <br />【我们也无从知晓】</p>
                     </div>
                 </div>
-                <!-- 		<div class="bline bline-1 j-flag" id="auto-id-4fv4dZLT46kyzC8d">
-                          <span class="scrol scrol-1 j-flag" hidefocus="true" id="auto-id-PnHO9x2IgkWiopgn"
-                          style="height: 29.6563px; display: block; top: 0px;"></span>
-                        </div> -->
             </div>
         </div>
 

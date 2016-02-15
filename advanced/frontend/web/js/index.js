@@ -110,7 +110,7 @@ function loadSong(id){
 				$("#song_author a").text(data.data.author);
 				$("#mCSB_1_container").html(data.data.lyric);
 				$("#g_playlist .listhdc p.lytit").text(data.data.name);
-
+				$("#songinfo").attr('data-res-id', data.data.id);
 				var duration = data.data.duration/1000;
 				var min = parseInt(duration/60);
 				var cer = parseInt(duration%60);
@@ -172,6 +172,7 @@ function loadSongLi(id){
 			$("#playlistul").append($(data));
 			$("#playlistul li").off('dblclick');
 			$("#playlistul li").on('dblclick', playSongLi);
+			addSongLiEvent();
 		}
 
 	});
@@ -614,6 +615,26 @@ function addShareEvent(){
 		});
 		return false;
 	});
+}
+//===================================================================================
+function addSongLiEvent(){
+	$("#playlistul [data-action='delete']").off('click');
+	$("#playlistul [data-action='delete']").on('click', function(){
+		$(this).parents('li[data-action="play"]').remove();
+	});
+
+	$("#playlistul [data-action='like']").off('click');
+	$("#playlistul [data-action='like']").on('click',function(){
+		var id = $(this).attr('data-id');
+		collectSong(id);
+	});
+
+	$("#playlistul [data-action='share']").off('click');
+	$("#playlistul [data-action='share']").on('click',function(){
+		var id = $(this).attr('data-id');
+		share(id, 1);
+	});
+
 }
 //===================================================================================
 function addUserInfoEvent(){
@@ -1310,6 +1331,20 @@ $(function(){
 				$('.container').get(0).outerHTML=data;
 				addNewObjEvent();
 			});
+		}
+	});
+	$("#g_player [data-action='like']").click(function(){
+		var id = $("#songinfo").attr('data-res-id');
+		console.log(id);
+		if(id&&id!=''){
+			collectSong(id);
+		}
+	});
+	$("#g_player [data-action='share']").click(function(){
+		var id = $("#songinfo").attr('data-res-id');
+		console.log(id);
+		if(id&&id!=''){
+			share(id,1);
 		}
 	});
 });

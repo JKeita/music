@@ -7,6 +7,7 @@
  */
 namespace dao;
 use models\PlayList;
+use yii\data\Pagination;
 use yii\db\Query;
 class PlayListDao {
 
@@ -25,5 +26,23 @@ class PlayListDao {
             ]);
         $result = $query -> all();
         return $result;
+    }
+
+    public function getPlayListPage(){
+        $query = new Query();
+        $query
+            -> select ('*')
+            -> from('playlist')
+            -> where([
+                'state' => 0
+            ])
+            -> orderBy('collectnum desc, sharenum desc, created desc');
+        $count = $query -> count();
+        $page = new Pagination([
+            'totalCount' => $count,
+            'defaultPageSize' => 20,
+        ]);
+        $data = $query -> limit($page -> limit) -> offset($page -> offset) -> all();
+        return ['data' => $data, 'page' => $page];
     }
 }

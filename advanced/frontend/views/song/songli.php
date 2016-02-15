@@ -22,7 +22,7 @@
                         <div class="col col-3">
                             <div class="icns">
                                 <i class="ico icn-del" title="删除" data-id="<?=$id?>" data-action="delete">删除</i>
-                                <i class="ico ico-dl" title="下载" data-id="<?=$id?>" data-action="download">下载</i>
+                                <a class="ico ico-dl" title="下载" data-id="<?=$id?>" data-action="download" target="_blank" href="<?=\yii\helpers\Url::to(['song/down', 'id' => $id])?>">下载</a>
                                 <i class="ico ico-share" title="分享" data-id="<?=$id?>" data-action="share">分享</i>
                                 <i class="j-t ico ico-add" title="收藏" data-id="<?=$id?>" data-action="like">收藏</i>
                             </div>

@@ -374,5 +374,15 @@ class PlayListLogicImp implements PlayListLogic
         return $playList;
     }
 
+    /**
+     * 歌单列表页面
+     * @return mixed
+     */
+    public function getPlayListPage()
+    {
+        $playListDao = new PlayListDao();
+        return $playListDao -> getPlayListPage();
+    }
+
 
 }

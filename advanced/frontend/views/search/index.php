@@ -68,7 +68,7 @@ $total = $data['hits']['total'];
                                                     <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-copyright="1" data-res-type="1" data-res-id="<?=$item['_id']?>" data-res-action="addto" data-res-from="32" data-res-data="0"></a>
                                                     <span data-res-id="<?=$item['_id']?>" data-res-action="fav" data-res-type="1" class="icn icn-fav" title="收藏"></span>
                                                     <span data-res-id="<?=$item['_id']?>" data-res-action="share" data-res-type="1" class="icn icn-share" title="分享"></span>
-                                                    <span data-res-id="<?=$item['_id']?>" data-res-action="download" data-res-type="1" class="icn icn-dl" title="下载"></span>
+                                                    <a data-res-id="<?=$item['_id']?>" data-res-action="download" data-res-type="1" class="icn icn-dl" title="下载"  target="_blank" href="<?=\yii\helpers\Url::to(['song/down', 'id' => $item['_id']])?>"></a>
                                                 </div>
                                             </div>
                                             <div class="td w1">

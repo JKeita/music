@@ -38,7 +38,7 @@
         </div>
         <ul class="data s-fc3 f-cb" id="tab-box">
             <li class="fst">
-                <a href="">
+                <a href="<?=\yii\helpers\Url::to(['user/event', 'id' => $user -> id])?>" class="single">
                     <?php
                         $shareLogic = new \logic\ShareLogicImp();
                     ?>

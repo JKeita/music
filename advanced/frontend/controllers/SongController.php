@@ -87,4 +87,28 @@ class SongController extends Controller
             'idArr' => $ids,
         ]);
     }
+
+    public function actionDown(){
+        $id = Request::getQueryValue('id');
+        if(empty($id)){
+            throw new NotFoundHttpException();
+        }
+        $song = Song::findOne($id);
+        if(empty($song)){
+            throw new NotFoundHttpException();
+        }
+
+        header("Content-type: application/octet-stream");
+        header("Content-Disposition:attachment;filename={$song -> name}.mp3");
+        $url = $song -> src;
+        $header_array = get_headers($url, true);
+        $size = $header_array['Content-Length'];
+        header("Content-Length:{$size}");
+        $handle  =  fopen($url, "rb");
+        while (!feof($handle)){
+            echo fread($handle, 1024);
+        }
+        fclose($handle);
+        exit();
+    }
 }

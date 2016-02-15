@@ -140,4 +140,10 @@ interface PlayListLogic
      * @return mixed
      */
     public function delCollect($uid, $pid);
+
+    /**
+     * 歌单列表页面
+     * @return mixed
+     */
+    public function getPlayListPage();
 }

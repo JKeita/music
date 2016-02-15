@@ -9,14 +9,23 @@ $curUser = Yii::$app -> getUser();
 $followLogic = new \logic\FollowLogicImp();
 ?>
 <div class="container">
-    <link href="<?=Yii::$app -> homeUrl?>css/pt_profile_follows.css" type="text/css" rel="stylesheet" />
+<!--    <link href="<?/*=Yii::$app -> homeUrl*/?>css/pt_profile_follows.css" type="text/css" rel="stylesheet" />-->
     <div class="g-bd">
         <div class="g-wrap p-prf">
-            <div class="g-bd1 g-bd1-1 f-cb">
+            <div class="u-title f-cb">
+                <h3>
+                    <span class="f-ff2 d-flag">好友动态</span>
+                </h3>
+                <!--                <div class="u-btn f-fr u-btn-hot d-flag">
+                                    <a href="/discover/playlist/?order=hot" class="a1" data-order="hot">热门</a>
+                                    <a href="/discover/playlist/?order=new" class="a2" data-order="new">最新</a>
+                                </div>-->
+            </div>
+            <div class=" g-bd1-1 f-cb">
                 <div class="g-mn1">
                     <div class="g-mn1c">
                         <div class="g-wrap10" id="eventListBox">
-                            <div id="auto-id-LtwLR9JA3xeGZ0Li">
+                            <div>
                                 <a data-action="pull" class="m-dynamicbar f-ff1 j-flag" style="display:none;" href="javascript:;"></a>
                                 <div class="m-timeline">
                                     <ul class="m-dlist j-flag">

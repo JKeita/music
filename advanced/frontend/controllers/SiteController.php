@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use logic\PlayListLogicImp;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -72,10 +73,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $playListLogic = new PlayListLogicImp();
+        $playListData = $playListLogic -> getPlayListPage();
+        $viewData = [
+          'page' => $playListData['page'],
+          'data' => $playListData['data'],
+        ];
         if(Yii::$app -> request -> isAjax){
-            return $this -> renderPartial("index");
+            return $this -> renderPartial("index", $viewData);
         }else{
-            return $this->render('index');
+            return $this->render('index', $viewData);
         }
 
     }

@@ -49,12 +49,12 @@
                                         <a data-res-id="<?=$songInfo['id']?>" data-res-type="1" data-count="-1" data-res-action="share" data-res-pic="" class="u-btni u-btni-share " href="javascript:;">
                                             <i>分享</i>
                                         </a>
-                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-res-action="download" class="u-btni u-btni-dl " href="javascript:;">
+                                        <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-res-action="download" class="u-btni u-btni-dl " target="_blank" href="<?=\yii\helpers\Url::to(['song/down', 'id' => $songInfo['id']])?>">
                                             <i>下载</i>
                                         </a>
-                                        <a data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt ">
+<!--                                        <a data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt ">
                                             <i>评论</i>
-                                        </a>
+                                        </a>-->
                                     </div>
                                 </div>
 

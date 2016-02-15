@@ -148,7 +148,7 @@ $flag = $user -> id == $creator -> id;
                                                             <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="13" data-res-data="42097082"></a>
                                                             <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
                                                             <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
-                                                            <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="download" class="icn icn-dl" title="下载"></span>
+                                                            <a data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="download" class="icn icn-dl" title="下载" target="_blank" href="<?=\yii\helpers\Url::to(['song/down', 'id' => $song['id']])?>"></a>
                                                             <?php
                                                                 if($flag){
                                                             ?>

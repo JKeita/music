@@ -378,6 +378,12 @@ $admin = Yii::$app -> getUser() -> identity;
                                 新建
                             </a>
                         </li>
+                        <li>
+                            <a href="<?=Url::to(['song/list'])?>" class="single">
+                                <i class="icon-double-angle-right"></i>
+                                管理
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -519,8 +525,11 @@ $admin = Yii::$app -> getUser() -> identity;
             });
             return false;
         });
-        if(document.location.href.indexOf('user-info')>=0){
-
+        if(document.location.href.indexOf('song/edit')>=0){
+            addSongEditEvent();
+        }
+        if(document.location.href.indexOf('song/list')>=0){
+            addSongListEvent();
         }
     }
     $('.single').on('click',function() {
@@ -547,8 +556,11 @@ $admin = Yii::$app -> getUser() -> identity;
     $timestamp = time();
 ?>
 <script>
-    window.TIMESTAMP=<?=$timestamp?>;
+    window.TIMESTAMP='<?=$timestamp?>';
     window.TOKEN = '<?=md5('unique_salt' . $timestamp)?>';
+    window.UPLOAD_MP3_URL = '<?=Url::to(['song/upload-mp3'])?>';
+    window.UPLOAD_COVER_URL = '<?=Url::to(['song/upload-cover'])?>';
+    window.DEL_SONG_URL = '<?=Url::to(['song/del'])?>';
 </script>
 </body>
 </html>

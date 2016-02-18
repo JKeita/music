@@ -6,8 +6,8 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 
 // Define a destination
-$targetFolder = '/uploads'; // Relative to the root
-
+$targetFolder = '../../upload/song'; // Relative to the root
+var_dump($_POST);
 $verifyToken = md5('unique_salt' . $_POST['timestamp']);
 
 if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
@@ -16,7 +16,7 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	$targetFile = rtrim($targetPath,'/') . '/' . $_FILES['Filedata']['name'];
 	
 	// Validate the file type
-	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+	$fileTypes = array('mp3'); // File extensions
 	$fileParts = pathinfo($_FILES['Filedata']['name']);
 	
 	if (in_array($fileParts['extension'],$fileTypes)) {

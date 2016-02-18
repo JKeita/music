@@ -25,17 +25,31 @@ class SearchLogicImp implements SearchLogic
         $params['type'] = 'song';
         $pageSize = !empty($condition['pageSize'])?$condition['pageSize']:10;
         $params['size'] = $pageSize;
-        $params['from'] = !empty($condition['page'])?$condition['page']:0;
-        if(!empty($condition['type'])){
-            if($condition['type'] == 1){
-                $params['body']['query']['match']['name'] = $condition['key'];
-            }else if($condition['type'] == 2){
-                $params['body']['query']['match']['author'] = $condition['key'];
-            }else if($condition['type'] == 3){
-                $params['body']['query']['match']['lyric'] = $condition['key'];
-            }
+        $params['from'] = !empty($condition['page'])?($condition['page']-1)*$pageSize:0;
+        if(empty($condition['key'])){
+            $params['body']['query']['match_all']=[];
+            $params['body']['sort']['id']['order'] = 'desc';
         }else{
-            $params['body']['query']['match']['name'] = $condition['key'];
+            if(!empty($condition['type'])){
+                if($condition['type'] == 1){
+                    $params['body']['query']['match']['name'] = $condition['key'];
+                }else if($condition['type'] == 2){
+                    $params['body']['query']['match']['author'] = $condition['key'];
+                }else if($condition['type'] == 3){
+                    $params['body']['query']['match']['lyric'] = $condition['key'];
+                }else if($condition['type'] == 'mult'){
+                    if(is_numeric($condition['key'])){
+                            $params['body']['query']['bool']['should']['term']['id']=$condition['key'];
+                    }else{
+                        $params['body']['query']['bool']['should']=[
+                            ['match' => ['name' => $condition['key']]],
+                            ['match' => ['author' => $condition['key']]],
+                        ];
+                    }
+                }
+            }else{
+                $params['body']['query']['match']['name'] = $condition['key'];
+            }
         }
         $data = $client -> search($params);
         $totalCount = ($data['hits']['total'] > 10*$pageSize)?10*$pageSize:$data['hits']['total'];
@@ -43,7 +57,7 @@ class SearchLogicImp implements SearchLogic
             'totalCount' => $totalCount,
             'defaultPageSize' => $pageSize,
         ]);
-        file_put_contents("c:\log.txt", var_export($data, true));
+//        file_put_contents("c:\log.txt", var_export($data, true));
         return ['page' => $page, 'data' => $data];
     }
 

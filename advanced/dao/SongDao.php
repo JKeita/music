@@ -7,6 +7,25 @@
  */
 namespace dao;
 use models\Song;
-class SongDao {
+use yii\data\Pagination;
+use yii\db\Query;
 
+class SongDao {
+    public function getSongListPage($params){
+        $query = new Query();
+        $query
+            -> select('id,name,author')
+            -> from('song')
+            -> where([
+                'state' => 0
+            ])
+            -> orderBy('id desc');
+        $count = $query -> count();
+        $page = new Pagination([
+           'totalCount' => $count,
+            'defaultPageSize' => 10
+        ]);
+        $data = $query -> limit($page -> limit) -> offset($page -> offset) -> all();
+        return ['data' => $data, 'page' => $page];
+    }
 }

@@ -13,14 +13,13 @@ $client = ClientBuilder::create()->setHosts(['127.0.0.1:9200'])->build();
 
 $db = new PDO("mysql:host=127.0.0.1;dbname=music","root","123456");
 $db->exec('set names utf8');
-$sql = "select * from song";
+$sql = "select * from song where state = 0";
 $query = $db -> query($sql, PDO::FETCH_ASSOC);
 $params['index'] = 'music';
 $params['type'] = 'song';
 while($row = $query -> fetch()){
     $params['id'] = $row['id'];
     echo $params['id']."\n";
-    unset($row['id']);
     $params['body'] = $row;
     $client->index($params);
 }

@@ -20,15 +20,20 @@ class Lyric
         $lrc_row = explode("\n", $lyric);
 //        file_put_contents("c:\log.txt", var_export($lyric, true));
 //        file_put_contents("c:\log.txt", var_export($lrc_row, true),FILE_APPEND);
+        $i=0;
         foreach ($lrc_row as $key => $value) {
                 $tmp = explode("]", $value);
                 $val = $tmp[0];
                 $tmp2 = substr($val, 1, 8);
                 $tmp2 = explode(":", $tmp2);
+                if(empty($tmp2[0])||empty($tmp2[1])){
+                    $lrc_sec = $i;
+                }else{
+                    $lrc_sec = intval( (int)$tmp2[0]*60 + $tmp2[1]*1);
+                }
 
-                $lrc_sec = intval( (int)$tmp2[0]*60 + $tmp2[1]*1);
 //            file_put_contents("c:\log.txt", var_export($lrc_sec."\n", true),FILE_APPEND);
-                if( is_numeric($lrc_sec) && $lrc_sec > 0){
+                if( is_numeric($lrc_sec) && $lrc_sec >= 0){
                     $count = count($tmp);
                     $lrc = trim($tmp[$count-1]);
 
@@ -36,6 +41,7 @@ class Lyric
                         $now_lrc[$lrc_sec] = $lrc;
                     }
                 }
+                $i++;
         }
 
         return $now_lrc;

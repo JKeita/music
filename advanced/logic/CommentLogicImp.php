@@ -50,6 +50,32 @@ class CommentLogicImp implements CommentLogic
     }
 
     /**
+     * 删除用户评论
+     * @param $cid
+     * @param $uid
+     * @return mixed
+     */
+    public function del($cid, $uid)
+    {
+        if(empty($cid)||!is_numeric($cid)){
+            return Response::returnInfo(0, '评论ID参数出错');
+        }
+        if(empty($uid)||!is_numeric($uid)){
+            return Response::returnInfo(0, '用户ID参数出错');
+        }
+        $model = Comment::findOne(['id' => $cid, 'uid' => $uid, 'state' => 0]);
+        if(empty($model)){
+            return Response::returnInfo(0, '删除失败：没有找到对应数据');
+        }
+        $result = $model -> delete();
+        if($result){
+            return Response::returnInfo(1, '删除成功');
+        }
+        return Response::returnInfo(0, '删除失败');
+    }
+
+
+    /**
      * 获取评论分页数据
      * @param $params
      * @return mixed

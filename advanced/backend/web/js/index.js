@@ -164,3 +164,137 @@ function addSongListEvent(){
         });
     });
 }
+//=================================================
+function addReportListEvent(){
+    $('table th input:checkbox').on('click' , function(){
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox')
+            .each(function(){
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+
+    });
+    $(".okBtn").click(function(e){
+        if(confirm("确定通过？")){
+            var id =$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:window.EXAMINE_REPORT_URL,
+                data:{
+                    id:id,
+                    type:2
+                },
+                success:function(data){
+                    layer.alert(data.msg,function(index){
+                        if(data.code == 1){
+                            $.get(location.href, function(data) {
+                                $('.main-content').get(0).outerHTML=data;
+                                addNewObjEvent();
+                            });
+                        }
+                        layer.close(index);
+                    });
+                }
+            });
+        }
+        return false;
+    });
+    $("#okBtn").click(function(e){
+        var checkbox = $("input[name='ids']");
+        var ids = "";
+        for(var i=0;i<checkbox.length;i++)
+        {
+            if($(checkbox[i]).prop("checked"))
+            {
+                if(ids != null && ids != "")
+                {
+                    ids = ids + ",";
+                }
+                ids =  ids + $(checkbox[i]).val();
+            }
+        }
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:window.EXAMINE_REPORT_URL,
+            data:{
+                ids:ids,
+                type:2
+            },
+            success:function(data){
+                layer.alert(data.msg,function(index){
+                    if(data.code == 1){
+                        $.get(location.href, function(data) {
+                            $('.main-content').get(0).outerHTML=data;
+                            addNewObjEvent();
+                        });
+                    }
+                    layer.close(index);
+                });
+            }
+        });
+    });
+    $(".errorBtn").click(function(e){
+        if(confirm("确定违规？")){
+            var id =$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:window.EXAMINE_REPORT_URL,
+                data:{
+                    id:id,
+                    type:1
+                },
+                success:function(data){
+                    layer.alert(data.msg,function(index){
+                        if(data.code == 1){
+                            $.get(location.href, function(data) {
+                                $('.main-content').get(0).outerHTML=data;
+                                addNewObjEvent();
+                            });
+                        }
+                        layer.close(index);
+                    });
+                }
+            });
+        }
+        return false;
+    });
+    $("#errorBtn").click(function(e){
+        var checkbox = $("input[name='ids']");
+        var ids = "";
+        for(var i=0;i<checkbox.length;i++)
+        {
+            if($(checkbox[i]).prop("checked"))
+            {
+                if(ids != null && ids != "")
+                {
+                    ids = ids + ",";
+                }
+                ids =  ids + $(checkbox[i]).val();
+            }
+        }
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:window.EXAMINE_REPORT_URL,
+            data:{
+                ids:ids,
+                type:1
+            },
+            success:function(data){
+                layer.alert(data.msg,function(index){
+                    if(data.code == 1){
+                        $.get(location.href, function(data) {
+                            $('.main-content').get(0).outerHTML=data;
+                            addNewObjEvent();
+                        });
+                    }
+                    layer.close(index);
+                });
+            }
+        });
+    });
+}

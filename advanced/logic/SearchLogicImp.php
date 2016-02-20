@@ -20,12 +20,27 @@ class SearchLogicImp implements SearchLogic
      */
     public function search($condition)
     {
+        $maxPageCount = !empty($condition['maxPageCount'])?$condition['maxPageCount']:10;
         $client = ClientBuilder::create()->setHosts(['127.0.0.1:9200'])->build();
         $params['index'] = 'music';
         $params['type'] = 'song';
         $pageSize = !empty($condition['pageSize'])?$condition['pageSize']:10;
         $params['size'] = $pageSize;
-        $params['from'] = !empty($condition['page'])?($condition['page']-1)*$pageSize:0;
+        if(!empty($condition['page'])){
+            $page = $condition['page'];
+            if(is_numeric($page)){
+                if($page<1){
+                    $page=1;
+                }else if($page > $maxPageCount){
+                    $page = $maxPageCount;
+                }
+            }else{
+                $page = 1;
+            }
+        }else{
+            $page = 1;
+        }
+        $params['from'] = !empty($page)?($page-1)*$pageSize:0;
         if(empty($condition['key'])){
             $params['body']['query']['match_all']=[];
             $params['body']['sort']['id']['order'] = 'desc';

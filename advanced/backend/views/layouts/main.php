@@ -386,7 +386,23 @@ $admin = Yii::$app -> getUser() -> identity;
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-desktop"></i>
+                        <span class="menu-text"> 评论管理 </span>
 
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="<?=Url::to(['report/list'])?>" class="single">
+                                <i class="icon-double-angle-right"></i>
+                                审核管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-collapse" id="sidebar-collapse">
@@ -531,6 +547,9 @@ $admin = Yii::$app -> getUser() -> identity;
         if(document.location.href.indexOf('song/list')>=0){
             addSongListEvent();
         }
+        if(document.location.href.indexOf('report/list')>=0){
+            addReportListEvent();
+        }
     }
     $('.single').on('click',function() {
         if(!$(this).attr('href')){
@@ -561,6 +580,7 @@ $admin = Yii::$app -> getUser() -> identity;
     window.UPLOAD_MP3_URL = '<?=Url::to(['song/upload-mp3'])?>';
     window.UPLOAD_COVER_URL = '<?=Url::to(['song/upload-cover'])?>';
     window.DEL_SONG_URL = '<?=Url::to(['song/del'])?>';
+    window.EXAMINE_REPORT_URL = '<?=Url::to(['report/examine'])?>';
 </script>
 </body>
 </html>

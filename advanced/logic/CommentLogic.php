@@ -18,6 +18,14 @@ interface CommentLogic
     public function save($params);
 
     /**
+     * 删除用户评论
+     * @param $cid
+     * @param $uid
+     * @return mixed
+     */
+    public function del($cid, $uid);
+
+    /**
      * 获取评论分页数据
      * @param $params
      * @return mixed

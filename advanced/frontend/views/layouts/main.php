@@ -655,6 +655,8 @@ use yii\helpers\Url;
     window.DO_FOLLOW_URL = '<?=Url::to(['user/do-follow'])?>';
     window.DEL_FOLLOW_URL = '<?=Url::to(['user/del-follow'])?>';
     window.SAVE_COMMENT_URL = '<?=Url::to(['user/comment'])?>';
+    window.DEL_COMMENT_URL = '<?=Url::to(['user/del-comment'])?>';
+    window.REPORT_COMMENT_URL = '<?=Url::to(['user/report'])?>';
     window.ADD_PLAYLIST_URL = '<?=Url::to(['playlist/add'])?>';
     window.COLLECT_PLAYLIST_URL = '<?=Url::to(['playlist/collect'])?>';
     window.DEL_COLLECT_URL = '<?=Url::to(['playlist/del-collect'])?>';
@@ -662,5 +664,6 @@ use yii\helpers\Url;
     window.DEL_PLAYLIST_URL = '<?=Url::to(['playlist/del'])?>';
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
     window.DEL_COLLECT_SONG_URL = '<?=Url::to(['playlist/del-song'])?>';
+
 </script>
 </html>

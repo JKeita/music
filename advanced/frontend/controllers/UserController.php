@@ -14,6 +14,7 @@ use common\models\LoginForm;
 use logic\CommentLogicImp;
 use logic\FollowLogicImp;
 use logic\PlayListLogicImp;
+use logic\ReportLogicImp;
 use logic\ShareLogicImp;
 use logic\UserLogicImp;
 use models\User;
@@ -41,6 +42,8 @@ class UserController extends Controller{
             'del-follow',
             'share',
             'del-share',
+            'del-comment',
+            'report',
         ];
         if(in_array($action -> id,$actionArr)){
             return true;
@@ -294,6 +297,35 @@ class UserController extends Controller{
         return json_encode($result);
     }
 
+    /**
+     * 删除评论
+     * @return string
+     */
+    public function actionDelComment(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录']);
+        }
+        $cid = Request::getPostValue('cid');
+        $uid = Yii::$app -> getUser() -> getId();
+        $commentLogic = new CommentLogicImp();
+        $result = $commentLogic -> del($cid, $uid);
+        return json_encode($result);
+    }
+
+    /**
+     * 评论举报
+     */
+    public function actionReport(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录']);
+        }
+        $cid = Request::getPostValue('cid');
+        $uid = Yii::$app -> getUser() -> getId();
+        $reason = Request::getPostValue('reason');
+        $reportLogic = new ReportLogicImp();
+        $result = $reportLogic -> report($cid, $uid, $reason);
+        return json_encode($result);
+    }
     /**
      * 分享
      */

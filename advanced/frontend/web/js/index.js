@@ -566,6 +566,54 @@ function addCommentEvent(){
 			}
 		});
 	});
+	$(".rp a[data-type='delete']").click(function(){
+		var cid = $(this).attr('data-id');
+		layer.confirm('确定删除该评论?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				type:'post',
+				url:window.DEL_COMMENT_URL,
+				dataType:'json',
+				data:{cid:cid},
+				success:function(data){
+					layer.alert(data.msg,function(index){
+						if(data.code == 1){
+							$.get(location.href, function(data) {
+								$('.container').get(0).outerHTML=data;
+								addNewObjEvent();
+							});
+						}
+						layer.close(index);
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});
+	$(".rp a[data-type='report']").click(function() {
+		if (!$("#tophead_username").text()) {
+			showBar();
+			return false;
+		}
+		var cid = $(this).attr('data-id');
+		layer.prompt({
+			formType: 2,
+			value: '',
+			title: '请输入理由'
+		}, function (value, index, elem) {
+			$.ajax({
+				type: 'post',
+				url: window.REPORT_COMMENT_URL,
+				dataType: 'json',
+				data: {cid: cid, reason: value},
+				success: function (data) {
+					layer.alert(data.msg, function (index) {
+						layer.close(index);
+					});
+				}
+			});
+			layer.close(index);
+		});
+	});
 }
 //===================================================================================
 function addShareEvent(){

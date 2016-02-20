@@ -20,7 +20,7 @@ $total = $data['hits']['total'];
                 <i class="icon-home home-icon"></i>
                 <a href="<?=Url::to(['site/index'])?>" class="single">首页</a>
             </li>
-            <li class="active"><?=!empty($model)?'编辑':'新建'?></li>
+            <li class="active">音乐管理</li>
         </ul><!-- .breadcrumb -->
     </div>
 

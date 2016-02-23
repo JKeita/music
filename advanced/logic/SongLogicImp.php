@@ -19,9 +19,19 @@ class SongLogicImp implements  SongLogic
 {
     public function getSongById($id)
     {
-        $data = Song::findOne(['id' => $id, 'state' => 0]);
+
+        $redisLogic = new RedisLogicImp();
+        $data = $redisLogic -> getSongById($id);
+//        file_put_contents("c:\log.txt", var_export($data, true));
+        if(empty($data)){
+            $data = Song::findOne(['id' => $id, 'state' => 0]);
+            if(!empty($data)){
+                $data = $data -> toArray();
+            }
+        }
+
         if(!empty($data)){
-            return Response::returnInfo(1, 'ok', $data -> toArray());
+            return Response::returnInfo(1, 'ok', $data);
         }
         return Response::returnInfo(0, 'no found');
     }
@@ -73,6 +83,9 @@ class SongLogicImp implements  SongLogic
                 'state' => $model -> state,
             ];
             $this -> esIndex($esParams);
+            $redisLogic = new RedisLogicImp();
+            $redisParams = $esParams['body'];
+            $redisLogic -> saveSong($redisParams);
             return Response::returnInfo(1, '保存成功');
         }
         return Response::returnInfo(0, '保存失败');
@@ -90,14 +103,17 @@ class SongLogicImp implements  SongLogic
         }
         $result = Song::updateAll(['state' => 1], ['id' => $ids]);
         if($result > 0){
+            $redisLogic = new RedisLogicImp();
             if(is_array($ids)){
                 foreach($ids as $id){
                     $params['id'] = $id;
                     $this -> esDel($params);
+                    $redisLogic -> delSongById($id);
                 }
             }else{
                 $params['id'] = $ids;
                 $this -> esDel($params);
+                $redisLogic -> delSongById($ids);
             }
             return Response::returnInfo(1, '删除成功');
         }

@@ -58,6 +58,14 @@ interface PlayListLogic
 
 
     /**
+     * 收藏所有
+     * @param $sidArr
+     * @param $pid
+     * @return mixed
+     */
+    public function collectAll($sidArr, $pid);
+
+    /**
      * 从歌单中删除指定音乐
      * @param $sid
      * @param $pid

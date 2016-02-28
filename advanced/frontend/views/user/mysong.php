@@ -71,6 +71,25 @@ $flag = $user -> id == $creator -> id;
                                                 <i>评论</i>
                                             </a>
                                         </div>
+                                        <?php
+                                            if(!empty($pTagArr)){
+                                        ?>
+                                                <div class="tags f-cb">
+                                                    <b>标签：</b>
+                                                    <?php
+                                                        foreach($pTagArr as $tag){
+                                                    ?>
+                                                            <a class="u-tag" href="javascript:void(0);"><i><?=$tag['name']?></i></a>
+                                                    <?php
+                                                        }
+                                                    ?>
+
+
+                                                </div>
+                                        <?php
+                                            }
+                                        ?>
+
                                     </div>
                                 </div>
                             </div>

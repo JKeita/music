@@ -16,6 +16,7 @@ use logic\FollowLogicImp;
 use logic\PlayListLogicImp;
 use logic\ReportLogicImp;
 use logic\ShareLogicImp;
+use logic\TagLogicImp;
 use logic\UserLogicImp;
 use models\User;
 use Yii;
@@ -185,7 +186,6 @@ class UserController extends Controller{
             $playList = $playListLogic -> getUserPlayListByUid($uid, 1);
             if(!empty($playList)){
                 $pid = $playList[0]['id'];
-//                return $this -> redirect(Url::to(['user/mysong', 'id' => $pid]));
             }else{
                 throw new NotFoundHttpException();
             }
@@ -199,12 +199,15 @@ class UserController extends Controller{
             $songList = $playListLogic -> getPlayListSongById($pid);
             $commentLogic = new CommentLogicImp();
             $commentData = $commentLogic -> getPage(['psid' => $pid, 'type' => '2']);
+            $tagLogic = new TagLogicImp();
+            $pTagArr = $tagLogic -> getTagByPid($pid);
             $params = [
                 'model' => $model,
                 'id' => $pid,
                 'songList' => $songList,
                 'page' => $commentData['page'],
                 'commentData' => $commentData['data'],
+                'pTagArr' => $pTagArr,
             ];
         }else{
             throw new NotFoundHttpException();
@@ -229,12 +232,15 @@ class UserController extends Controller{
         $playListLogic = new PlayListLogicImp();
         if($playListLogic -> isUserPlayList($uid, $pid)){
             $model = $playListLogic -> getPlayListById($pid);
+            $tagLogic = new TagLogicImp();
+            $pTagArr = $tagLogic -> getTagByPid($pid);
             if(empty($model)){
                 throw new NotFoundHttpException();
             }
             $params = [
               'model' => $model,
               'id' => $pid,
+              'pTagArr' => $pTagArr,
             ];
         }else{
             throw new NotFoundHttpException();

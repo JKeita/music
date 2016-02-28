@@ -15,6 +15,7 @@ use yii\helpers\Url;
     <script type="text/javascript" src="/plugin/fullAvatarEditor-2.3/scripts/fullAvatarEditor.js"></script>
     <script type="text/javascript" src="/plugin/layer/layer.js"></script>
     <script type="text/javascript" src="/plugin/layer/extend/layer.ext.js"></script>
+    <script type="text/javascript" src="/plugin/chosen/chosen.jquery.min.js"></script>
     <style type="text/css">
         object,embed {
             -webkit-animation-duration:.001s;
@@ -443,7 +444,7 @@ use yii\helpers\Url;
                 <span class="add f-pr">
                       <span class="tip" style="display:none;">已添加到播放列表</span>
                       <a href="javascript:;" title="播放列表" hidefocus="true" data-action="panel" id="play_list_btn"
-                         class="icn icn-list s-fc3">176</a>
+                         class="icn icn-list s-fc3"></a>
                 </span>
                 <div class="tip tip-1" style="display:none;">循环</div>
             </div>
@@ -452,24 +453,24 @@ use yii\helpers\Url;
         <div class="list" id="g_playlist" style="display:none">
             <div class="listhd">
                 <div class="listhdc">
-                    <h4>播放列表(
-                        <span class="j-flag">0</span>)</h4>
+                    <h4>播放列表
+                        <span class="j-flag"></span></h4>
                     <a href="javascript:;" class="addall" data-action="likeall">收藏全部</a>
                     <a href="javascript:;" class="clear" data-action="clear">清除</a>
                     <p class="lytit f-ff0 f-thide j-flag"></p>
                     <span class="close" data-action="close">关闭</span></div>
             </div>
             <div class="listbd">
-                <img class="imgbg j-flag" id="auto-id-BUxBLBFbwMZD5ROd" src="http://music.163.com/api/img/blur/16645506533224412"
+                <img class="imgbg j-flag" src="http://music.163.com/api/img/blur/16645506533224412"
                      style="top: -360px;" />
                 <div class="msk"></div>
-                <div class="listbdc j-flag" id="auto-id-FwTi8Dk41WAeTLoN">
+                <div class="listbdc j-flag">
                     <ul class="f-cb" id="playlistul">
                     </ul>
                 </div>
-                <div class="bline j-flag" id="auto-id-EArPJeWQBsJ1Mc57"></div>
-                <div class="ask j-flag" id="auto-id-fQe5QTU2qO3dT4UI">
-                    <a class="ico ico-ask"></a>
+                <div class="bline j-flag"></div>
+                <div class="ask j-flag">
+<!--                    <a class="ico ico-ask"></a>-->
                 </div>
                 <div class="upload j-flag" style="display: none;">
                     <a href="/lyric/translrc?id=41602869">翻译歌词</a>
@@ -489,7 +490,7 @@ use yii\helpers\Url;
        src="http://p2.music.126.net/dl4o55BujeXger3kwXN1EA==/7730666255475657.mp3"
        style="display: none;"></audio>
 <div class="m-layer z-show" style="top: 56px; left: 418px;display:none">
-    <div class="zbar" id="auto-id-hsFcqWD8UErCyz9N">
+    <div class="zbar">
         <div class="zttl">登录</div>
     </div>
     <div class="zcnt">
@@ -663,6 +664,7 @@ use yii\helpers\Url;
     window.CREATE_PLAYLIST_URL = '<?=Url::to(['playlist/create'])?>';
     window.DEL_PLAYLIST_URL = '<?=Url::to(['playlist/del'])?>';
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
+    window.COLLECT_ALL_URL = '<?=Url::to(['playlist/collect-all'])?>';
     window.DEL_COLLECT_SONG_URL = '<?=Url::to(['playlist/del-song'])?>';
 
 </script>

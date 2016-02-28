@@ -90,6 +90,8 @@ class PlayListLogicImp implements PlayListLogic
         $model -> name = $params['name'];
         $result = $model -> save();
         if($result){
+            $tagLogic = new TagLogicImp();
+            $tagLogic -> savePlayListTag($params['id'], $params['tidArr']);
             return Response::returnInfo(1, '保存成功');
         }
         return Response::returnInfo(0, '保存失败');
@@ -145,6 +147,37 @@ class PlayListLogicImp implements PlayListLogic
     }
 
     /**
+     * 收藏所有
+     * @param $sidArr
+     * @param $pid
+     * @return mixed
+     */
+    public function collectAll($sidArr, $pid)
+    {
+        if(empty($sidArr) || !is_array($sidArr)){
+            return Response::returnInfo(0, '歌曲ID数组参数出错');
+        }
+        if(empty($pid) || !is_numeric($pid)){
+            return Response::returnInfo(0, '歌单ID参数出错');
+        }
+        $okCount = 0;
+        $errorCount = 0;
+        foreach($sidArr as $sid){
+            $result = $this ->addSongToPlayList($sid, $pid);
+            if($result['code'] == 1){
+                $okCount++;
+            }else{
+                $errorCount++;
+            }
+        }
+        if($okCount > 0){
+            return Response::returnInfo(1, '收藏成功:'.$okCount.'首,收藏失败:'.$errorCount.'首');
+        }
+        return Response::returnInfo(0, '收藏失败');
+    }
+
+
+    /**
      * 从歌单中删除指定音乐
      * @param $sid
      * @param $pid
@@ -183,7 +216,11 @@ class PlayListLogicImp implements PlayListLogic
         if($result['code'] != 1){
             return $result;
         }
-        $result = $this -> addSongToPlayList($sid, $result['data']['id']);
+        if(is_array($sid)){
+            $result = $this -> collectAll($sid, $result['data']['id']);
+        }else{
+            $result = $this -> addSongToPlayList($sid, $result['data']['id']);
+        }
         return $result;
     }
 

@@ -17,8 +17,8 @@ $collectList = $playListLogic -> getUserCollectListByUid($uid);
                 <a hidefocus="true" href="javascript:void(0);" class="u-btn u-btn-crt f-fr j-flag" id="auto-id-wM05WHrGGAebXix7">
                     <i class="createPlayList">新建</i>
                 </a>
-            <span class="rtitle" id="auto-id-ggT4hzXUd3UIN6s4">创建的歌单(
-            <span class="j-flag">4</span>)</span></h2>
+            <span class="rtitle" id="auto-id-ggT4hzXUd3UIN6s4">创建的歌单
+            <span class="j-flag"></span></span></h2>
             <ul class="j-flag f-cb">
                 <?php
                 if(!empty($playList)){

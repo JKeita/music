@@ -173,10 +173,27 @@ function loadSongLi(id){
 			$("#playlistul li").off('dblclick');
 			$("#playlistul li").on('dblclick', playSongLi);
 			addSongLiEvent();
+			saveSongList();
 		}
 
 	});
 	return false;
+}
+
+//保存播放列表到本地
+function saveSongList(){
+	var localStorage = window.localStorage;
+	var data = $("#playlistul").get(0).innerHTML;
+	localStorage.setItem('songli', data);
+}
+
+function InitPlayListUl(){
+	var localStorage = window.localStorage;
+	var data = localStorage.getItem('songli');
+	if(data&&data!=''){
+		$("#playlistul").get(0).innerHTML = data;
+	}
+	addSongLiEvent();
 }
 function loadSongList(pid){
 	clearPlayList();
@@ -315,7 +332,7 @@ function togglePlayAndPause(){
 }
 function clearPlayList(){
 	$("#playlistul li").remove();
-	$("#playlistul li").remove();
+	saveSongList();
 }
 function playSongList(){
 	var pid = $(this).attr('data-res-id');
@@ -409,6 +426,78 @@ function collectPlayList(pid){
 		success:function(data){
 			layer.alert(data.msg, function(index){
 				layer.close(index);
+			});
+		}
+	});
+}
+function collectAll(){
+	var sidArr = [];
+	var songli = $("#playlistul li");
+	for(var i =0; i < songli.length; i++){
+		sidArr[i] = songli.eq(i).attr('data-id');
+	}
+	$.ajax({
+		type:'get',
+		dataType:'text',
+		url:'http://f.music.com/playlist/select',
+		success:function(data){
+			layer.open({
+				type: 1,
+				area:['400px','300px'],
+				title:'收藏',
+				skin: 'layui-layer-molv',
+				content: data, //这里content是一个普通的String
+				btn:['确定', '新建'],
+				btn1:function(){
+					var pid = $("#play_list_select select").val();
+					if(pid == ''){
+						layer.alert('请选择歌单或新建歌单', function(index){
+							layer.close(index);
+						});
+						return false;
+					}
+					$.ajax({
+						type:'post',
+						url:window.COLLECT_ALL_URL,
+						dataType:'json',
+						data:{pid:pid,sidArr:sidArr},
+						success:function(data){
+							layer.alert(data.msg, function(index){
+								layer.close(index);
+							});
+						},
+						error:function(){
+							layer.alert('收藏失败', function(index){
+								layer.close(index);
+							});
+						}
+
+					});
+				},
+				btn2:function(index){
+					layer.prompt({
+						title: '新建歌单'
+					},function(value, index, elem){
+						$.ajax({
+							type:'post',
+							url:window.ADD_PLAYLIST_URL,
+							dataType:'json',
+							data:{name:value,sid:sidArr},
+							success:function(data){
+								layer.alert(data.msg, function(index){
+									layer.close(index);
+								});
+							},
+							error:function(){
+								layer.alert('创建失败', function(index){
+									layer.close(index);
+								});
+							}
+
+						});
+						layer.close(index);
+					});
+				}
 			});
 		}
 	});
@@ -669,6 +758,7 @@ function addSongLiEvent(){
 	$("#playlistul [data-action='delete']").off('click');
 	$("#playlistul [data-action='delete']").on('click', function(){
 		$(this).parents('li[data-action="play"]').remove();
+		saveSongList();
 	});
 
 	$("#playlistul [data-action='like']").off('click');
@@ -1003,6 +1093,10 @@ function addPlayListEvent(){
 //=======================================================
 function addEditPlayListEvent(){
 	leftPlayListEvent();
+	var config = {
+		max_selected_options: 3
+	};
+	$(".chosen-select").chosen(config);
 	$("#savePlayListBtn").on("click",function(){
 		var name = $("input[name='name']").val();
 		if(name == ""){
@@ -1028,6 +1122,7 @@ function addEditPlayListEvent(){
 		});
 		return false;
 	});
+
 }
 //=======================================================
 function addEditCoverEvent(){
@@ -1111,7 +1206,9 @@ function addSearchEvent(){
 }
 //===========================================================
 $(function(){
+	InitPlayListUl();
 	$("#g_playlist .clear").click(clearPlayList);
+	$("#g_playlist .addall").click(collectAll);
 	$(".zbar").on("mousedown",function(ed){
 		var diffX = ed.pageX - $(".z-show").offset().left;
 		var diffY = ed.pageY -$(".z-show").offset().top;

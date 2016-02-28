@@ -12,6 +12,7 @@ namespace frontend\controllers;
 
 use logic\CommentLogicImp;
 use logic\PlayListLogicImp;
+use logic\TagLogicImp;
 use yii\base\Exception;
 use yii\web\Controller;
 use common\help\Request;
@@ -31,6 +32,7 @@ class PlaylistController extends Controller
             'create',
             'del',
             'collect-song',
+            'collect-all',
             'del-song',
             'uploadcover',
             'collect',
@@ -55,12 +57,15 @@ class PlaylistController extends Controller
         $songList = $playListLogic -> getPlayListSongById($id);
         $commentLogic = new CommentLogicImp();
         $commentData = $commentLogic -> getPage(['psid' => $id, 'type' => '2']);
+        $tagLogic = new TagLogicImp();
+        $pTagArr = $tagLogic -> getTagByPid($id);
         $params = [
             'id' => $id,
             'data' => $data,
             'songList' => $songList,
             'page' => $commentData['page'],
             'commentData' => $commentData['data'],
+            'pTagArr' => $pTagArr,
         ];
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("playlist", $params);
@@ -107,6 +112,10 @@ class PlaylistController extends Controller
         return json_encode($result);
     }
 
+    /**
+     * 收藏单曲
+     * @return string
+     */
     public function actionCollectSong(){
         if(\Yii::$app -> user -> isGuest){
             return json_encode(['code' => 0, 'msg' => '请先登录后再收藏歌曲']);
@@ -119,7 +128,25 @@ class PlaylistController extends Controller
             $result = $playListLogic ->addSongToPlayList($sid, $pid);
             return json_encode($result);
         }
-        throw new NotFoundHttpException();
+        return json_encode(['code' => 0, 'msg' => '收藏失败']);
+    }
+
+    /**
+     * 收藏所有
+     */
+    public function actionCollectAll(){
+        if(\Yii::$app -> user -> isGuest){
+            return json_encode(['code' => 0, 'msg' => '请先登录']);
+        }
+        $user = \Yii::$app -> user -> identity;
+        $sidArr = Request::getPostValue('sidArr');
+        $pid = Request::getPostValue('pid');
+        $playListLogic = new PlayListLogicImp();
+        if($playListLogic -> isUserPlayList($user -> getId(), $pid)){
+            $result = $playListLogic -> collectAll($sidArr, $pid);
+            return json_encode($result);
+        }
+        return json_encode(['code' => 0, 'msg' => '收藏失败']);
     }
 
     /**
@@ -201,6 +228,7 @@ class PlaylistController extends Controller
                 'id' => $id,
                 'name' => Request::getPostValue('name'),
                 'profile' => Request::getPostValue('profile'),
+                'tidArr' => Request::getPostValue('tidArr'),
             ];
             $result = $playListLogic -> saveInfo($params);
             return json_encode($result);

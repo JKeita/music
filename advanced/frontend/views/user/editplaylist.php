@@ -8,6 +8,7 @@
 ?>
 <div class="container">
     <link href="<?=Yii::$app -> homeUrl?>css/pt_my_index.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app -> homeUrl?>plugin/chosen/chosen.min.css" type="text/css" rel="stylesheet" />
     <!-- <div id="g_nav" class="m-subnav m-subnav-up f-pr">
          <div class="shadow"></div>
      </div>-->
@@ -33,13 +34,26 @@
                                         <input type="text" class="u-txt txt j-flag" name="name" value="<?=$model['name']?>" id="auto-id-oWKnUD9ewzCzSfC1" />
                                         <div class="u-err f-vhide j-flag"></div>
                                     </div>
-                             <!--       <div class="itm">
+                                    <div class="itm">
                                         <label class="lab">标签：</label>
-                                        <div class="f-cb tags">
+                                        <!--<div class="f-cb tags">
                                             <a data-action="select" href="javascript:void(0)" class="cho s-fc7">选择标签</a>
-                                        </div>
+                                        </div>-->
+                                        <select data-placeholder="选择标签" multiple name="tidArr[]" class="chosen-select" style="width:306px;">
+                                            <?php
+                                                $pTidArr = \yii\helpers\ArrayHelper::getColumn($pTagArr, 'id');
+//                                                file_put_contents("c:\log.txt", var_export($pTagArr, true));
+                                                $tagLogic = new \logic\TagLogicImp();
+                                                $tagArr = $tagLogic -> getAllTag();
+                                                foreach($tagArr as $tag){
+                                            ?>
+                                                <option value="<?=$tag['id']?>" <?=in_array($tag['id'], $pTidArr)?'selected':''?>><?=$tag['name']?></option>
+                                            <?php
+                                                }
+                                            ?>
+                                        </select>
                                         <div class="s-fc4 tagnote">选择适合的标签，最多选3个</div>
-                                    </div>-->
+                                    </div>
                                     <div class="itm f-cb">
                                         <label class="lab">介绍：</label>
                                         <div class="u-txtwrap f-pr">

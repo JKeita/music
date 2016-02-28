@@ -61,18 +61,24 @@ $user = Yii::$app -> user -> identity;
                                         <i>评论</i>
                                     </a>
                                 </div>
-                          <!--      <div class="tags f-cb">
-                                    <b>标签：</b>
-                                    <a class="u-tag" href="/discover/playlist/?cat=%E5%8D%8E%E8%AF%AD&amp;order=hot">
-                                        <i>华语</i>
-                                    </a>
-                                    <a class="u-tag" href="/discover/playlist/?cat=%E6%B5%81%E8%A1%8C&amp;order=hot">
-                                        <i>流行</i>
-                                    </a>
-                                    <a class="u-tag" href="/discover/playlist/?cat=%E6%84%9F%E5%8A%A8&amp;order=hot">
-                                        <i>感动</i>
-                                    </a>
-                                    </div>-->
+                                <?php
+                                if(!empty($pTagArr)){
+                                    ?>
+                                    <div class="tags f-cb">
+                                        <b>标签：</b>
+                                        <?php
+                                        foreach($pTagArr as $tag){
+                                            ?>
+                                            <a class="u-tag" href="javascript:void(0);"><i><?=$tag['name']?></i></a>
+                                            <?php
+                                        }
+                                        ?>
+
+
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                                 <p id="album-desc-more" class="intr f-brk">
                                     <b>介绍：</b><br />
                                    <?=\yii\helpers\Html::encode($data['profile'])?>

@@ -550,6 +550,9 @@ $admin = Yii::$app -> getUser() -> identity;
         if(document.location.href.indexOf('report/list')>=0){
             addReportListEvent();
         }
+        if(document.location.href.indexOf('tag/list')>=0){
+            addTagListEvent();
+        }
     }
     $('.single').on('click',function() {
         if(!$(this).attr('href')){
@@ -581,6 +584,8 @@ $admin = Yii::$app -> getUser() -> identity;
     window.UPLOAD_COVER_URL = '<?=Url::to(['song/upload-cover'])?>';
     window.DEL_SONG_URL = '<?=Url::to(['song/del'])?>';
     window.EXAMINE_REPORT_URL = '<?=Url::to(['report/examine'])?>';
+    window.SAVE_TAG_URL = '<?=Url::to(['tag/save'])?>';
+    window.DEL_TAG_URL = '<?=Url::to(['tag/del'])?>';
 </script>
 </body>
 </html>

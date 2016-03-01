@@ -16,7 +16,7 @@ use yii\helpers\Url;
             </li>
 
             <li>
-                <a href="#">音乐管理</a>
+                <a href="<?=Url::to(['song/list'])?>" class="single">音乐管理</a>
             </li>
             <li class="active"><?=!empty($model)?'编辑':'新建'?></li>
         </ul><!-- .breadcrumb -->

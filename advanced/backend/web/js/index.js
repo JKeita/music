@@ -298,3 +298,94 @@ function addReportListEvent(){
         });
     });
 }
+//=================================================
+function addTagListEvent(){
+    $(".add-btn").click(function(){
+        layer.prompt({
+            title: '新建标签'
+        },function(value, index, elem){
+            $.ajax({
+                type:'post',
+                url:window.SAVE_TAG_URL,
+                dataType:'json',
+                data:{name:value},
+                success:function(data){
+                    layer.alert(data.msg, function(index){
+                        if(data.code == 1){
+                            $.get(location.href, function(data) {
+                                $('.main-content').get(0).outerHTML=data;
+                                addNewObjEvent();
+                            });
+                        }
+                        layer.close(index);
+                    });
+                },
+                error:function(){
+                    layer.alert('创建失败', function(index){
+                        layer.close(index);
+                    });
+                }
+
+            });
+            layer.close(index);
+        });
+    });
+
+    $(".edit-btn").click(function(){
+        var id = $(this).attr('data-id');
+        var name = $(this).attr('data-name');
+        layer.prompt({
+            title: '编辑标签',
+            value:name
+        },function(value, index, elem){
+            $.ajax({
+                type:'post',
+                url:window.SAVE_TAG_URL,
+                dataType:'json',
+                data:{id:id, name:value},
+                success:function(data){
+                    layer.alert(data.msg, function(index){
+                        if(data.code == 1){
+                            $.get(location.href, function(data) {
+                                $('.main-content').get(0).outerHTML=data;
+                                addNewObjEvent();
+                            });
+                        }
+                        layer.close(index);
+                    });
+                },
+                error:function(){
+                    layer.alert('创建失败', function(index){
+                        layer.close(index);
+                    });
+                }
+
+            });
+            layer.close(index);
+        });
+    });
+    $(".del-btn").click(function(){
+        if(confirm("确定删除？")){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:window.DEL_TAG_URL,
+                data:{
+                    id:id
+                },
+                success:function(data){
+                    layer.alert(data.msg,function(index){
+                        if(data.code == 1){
+                            $.get(location.href, function(data) {
+                                $('.main-content').get(0).outerHTML=data;
+                                addNewObjEvent();
+                            });
+                        }
+                        layer.close(index);
+                    });
+                }
+            });
+        }
+    });
+}

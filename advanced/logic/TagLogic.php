@@ -31,4 +31,24 @@ interface TagLogic
      * @return mixed
      */
     public function getTagByPid($pid);
+
+    /**
+     * 获取标签列表页面
+     * @return mixed
+     */
+    public function getListPage();
+
+    /**
+     * 保存标签
+     * @param $params
+     * @return mixed
+     */
+    public function save($params);
+
+    /**
+     * 删除标签
+     * @param $id
+     * @return mixed
+     */
+    public function delTagById($id);
 }

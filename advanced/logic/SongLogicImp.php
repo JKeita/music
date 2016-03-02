@@ -10,6 +10,7 @@ namespace logic;
 
 
 use common\help\Response;
+use dao\SongCollectDao;
 use dao\SongDao;
 use Elasticsearch\ClientBuilder;
 use models\Song;
@@ -160,5 +161,17 @@ class SongLogicImp implements  SongLogic
         $params['type'] = 'song';
         return $client -> delete($params);
     }
+
+    /**
+     * 通过歌曲id获取包含该歌曲的歌单
+     * @param $sid
+     * @param $limit
+     */
+    public function getPlayListBySid($sid, $limit = 8)
+    {
+        $songCollectDao = new SongCollectDao();
+        return $songCollectDao -> getPlayListBySid($sid, $limit);
+    }
+
 
 }

@@ -52,4 +52,11 @@ interface SongLogic
      * @return mixed
      */
     public function del($ids);
+
+    /**
+     * 通过歌曲id获取包含该歌曲的歌单
+     * @param $sid
+     * @param $limit
+     */
+    public function getPlayListBySid($sid, $limit = 8);
 }

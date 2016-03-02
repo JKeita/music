@@ -154,4 +154,19 @@ interface PlayListLogic
      * @return mixed
      */
     public function getPlayListPage();
+
+    /**
+     * 获取收藏该歌单的用户信息
+     * @param $pid
+     * @param int $limit
+     * @return mixed
+     */
+    public function getCollectUserByPid($pid, $limit = 8);
+
+    /**
+     * 获取热门歌单
+     * @param $limit
+     * @return mixed
+     */
+    public function getHotPlayList($limit = 5);
 }

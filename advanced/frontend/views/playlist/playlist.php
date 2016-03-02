@@ -135,7 +135,7 @@ $user = Yii::$app -> user -> identity;
                                                         <div class="tt">
                                                             <div class="ttc">
                                                               <span class="txt">
-                                                                  <a href="<?=\yii\helpers\Url::to(['song/info', 'id' => $song['id']])?>">
+                                                                  <a href="<?=\yii\helpers\Url::to(['song/info', 'id' => $song['id']])?>" class="single">
                                                                       <b title="<?=$song['name']?>"><?=$song['name']?></b>
                                                                   </a>
                                                               </span>
@@ -187,155 +187,73 @@ $user = Yii::$app -> user -> identity;
         </div>
         <div class="g-sd4">
             <div class="g-wrap7">
-                <h3 class="u-hd3">
-                    <span class="f-fl">喜欢这个歌单的人</span>
-                </h3>
-                <ul class="m-piclist f-cb">
-                    <li>
-                        <a href="/user/home?id=118009947" class="f-tdn" title="归来的德瑞阿诺">
-                            <img src="http://p4.music.126.net/K3HqyRYkyfQGjl4AnW1yKg==/2535473817646431.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=68026471" class="f-tdn" title="2R-木头">
-                            <img src="http://p4.music.126.net/FoBcKau8u7oR0ZRR2n48mg==/2538772353230241.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=110909722" class="f-tdn" title="今天的我也很帅">
-                            <img src="http://p4.music.126.net/YmHwS4Pn3SPIxJR5J6yQ0w==/1394180744822634.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=69397411" class="f-tdn" title="走个心">
-                            <img src="http://p4.music.126.net/bTIoFKFaE1-JQpgN3OynGg==/1986817511391283.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=29672573" class="f-tdn" title="红杏爱吃屎">
-                            <img src="http://p3.music.126.net/JyShrtPOIXiyDvV62tBDsQ==/2940094093828277.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=1311570" class="f-tdn" title="francisliu">
-                            <img src="http://p3.music.126.net/bTIoFKFaE1-JQpgN3OynGg==/1986817511391283.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=108871408" class="f-tdn" title="萝裙">
-                            <img src="http://p3.music.126.net/8ByzhCztGmwlDtPeuqvsFg==/528865130781740.jpg?param=40y40" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=120983550" class="f-tdn" title="萧萧慕慕">
-                            <img src="http://p3.music.126.net/U-4rDWSb68U-1hp0PLnExg==/528865139102869.jpg?param=40y40" />
-                        </a>
-                    </li>
-                </ul>
-                <h3 class="u-hd3">
-                    <span class="f-fl">热门歌单</span>
-                </h3>
-                <ul class="m-rctlist f-cb">
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=135320141" title="〖前奏不耐症〗愿予你最安心的温柔" data-res-id="135320141"
-                               data-res-type="13" data-res-action="log" data-res-data="recommendclick|0||playlist-playlist-recommend|159240917">
-                                <img src="http://p3.music.126.net/C1sC5DGNL8h0GULBaKDnlg==/3262251006799516.jpg?param=50y50" />
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=135320141"
-                                   title="〖前奏不耐症〗愿予你最安心的温柔" data-res-id="135320141" data-res-type="13"
-                                   data-res-action="log"
-                                   data-res-data="recommendclick|0||playlist-playlist-recommend|159240917">〖前奏不耐症〗愿予你最安心的温柔</a>
-                            </p>
-                            <p>
-                                <span class="by s-fc4">by</span>
-                                <a class="nm nm f-thide s-fc3" href="/user/home?id=27595707" title="__BeginAgain__">__BeginAgain__</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=156772090" title="就算在天涯，家是永远的牵挂" data-res-id="156772090"
-                               data-res-type="13" data-res-action="log" data-res-data="recommendclick|1||playlist-playlist-recommend|159240917">
-                                <img src="http://p3.music.126.net/z-oizb4kpbpO8AXQiuQ17w==/1364493978265781.jpg?param=50y50" />
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=156772090" title="就算在天涯，家是永远的牵挂"
-                                   data-res-id="156772090" data-res-type="13" data-res-action="log"
-                                   data-res-data="recommendclick|1||playlist-playlist-recommend|159240917">就算在天涯，家是永远的牵挂</a>
-                            </p>
-                            <p>
-                                <span class="by s-fc4">by</span>
-                                <a class="nm nm f-thide s-fc3" href="/user/home?id=100298640" title="九月枍薇">九月枍薇</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=98401485" title="【迪士尼】经典长篇动画电影" data-res-id="98401485"
-                               data-res-type="13" data-res-action="log" data-res-data="recommendclick|2||playlist-playlist-recommend|159240917">
-                                <img src="http://p4.music.126.net/Lui1U9LoLjQFOWe_lAnBQg==/3441471395306734.jpg?param=50y50" />
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=98401485" title="【迪士尼】经典长篇动画电影"
-                                   data-res-id="98401485" data-res-type="13" data-res-action="log"
-                                   data-res-data="recommendclick|2||playlist-playlist-recommend|159240917">【迪士尼】经典长篇动画电影</a>
-                            </p>
-                            <p>
-                                <span class="by s-fc4">by</span>
-                                <a class="nm nm f-thide s-fc3" href="/user/home?id=44033417" title="莎士比亚书店">莎士比亚书店</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=164857330" title="阳光明媚适合睡懒觉[持续更新]" data-res-id="164857330"
-                               data-res-type="13" data-res-action="log" data-res-data="recommendclick|3||playlist-playlist-recommend|159240917">
-                                <img src="http://p3.music.126.net/dtxmpNBMV9sla_f0q2x-XA==/3264450034481516.jpg?param=50y50" />
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=164857330" title="阳光明媚适合睡懒觉[持续更新]"
-                                   data-res-id="164857330" data-res-type="13" data-res-action="log"
-                                   data-res-data="recommendclick|3||playlist-playlist-recommend|159240917">阳光明媚适合睡懒觉[持续更新]</a>
-                            </p>
-                            <p>
-                                <span class="by s-fc4">by</span>
-                                <a class="nm nm f-thide s-fc3" href="/user/home?id=60893996" title="Dreamlock">Dreamlock</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=166216532" title="来年，我们谈个长长久久的恋爱可好？"
-                               data-res-id="166216532" data-res-type="13" data-res-action="log"
-                               data-res-data="recommendclick|4||playlist-playlist-recommend|159240917">
-                                <img src="http://p3.music.126.net/14jGzKHpCOPPIuVYFTMoWg==/3405187516523258.jpg?param=50y50" />
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=166216532"
-                                   title="来年，我们谈个长长久久的恋爱可好？" data-res-id="166216532" data-res-type="13"
-                                   data-res-action="log"
-                                   data-res-data="recommendclick|4||playlist-playlist-recommend|159240917">来年，我们谈个长长久久的恋爱可好？</a>
-                            </p>
-                            <p>
-                                <span class="by s-fc4">by</span>
-                                <a class="nm nm f-thide s-fc3" href="/user/home?id=7479357"
-                                   title="吃兔头大赛第一名">吃兔头大赛第一名...</a>
-                            </p>
-                        </div>
-                    </li>
-                </ul>
+                <?php
+                    $playListLogic = new \logic\PlayListLogicImp();
+                    $collectUser = $playListLogic -> getCollectUserByPid($data['id']);
+
+                ?>
+                <?php
+                    if(!empty($collectUser)){
+                ?>
+                        <h3 class="u-hd3">
+                            <span class="f-fl">喜欢这个歌单的人</span>
+                        </h3>
+                        <ul class="m-piclist f-cb">
+                            <?php
+                                foreach($collectUser as $item){
+                            ?>
+                                    <li>
+                                        <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $item['id']])?>" class="f-tdn single" title="<?=\yii\helpers\Html::encode($item['username'])?>">
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['headimg'])?>" />
+                                        </a>
+                                    </li>
+                            <?php
+                                }
+                            ?>
+
+                        </ul>
+                <?php
+                    }
+                ?>
+                <?php
+                    $hotList =  $playListLogic -> getHotPlayList();
+                ?>
+                <?php
+                    if(!empty($hotList)){
+                ?>
+                        <h3 class="u-hd3">
+                            <span class="f-fl">热门歌单</span>
+                        </h3>
+                        <ul class="m-rctlist f-cb">
+                            <?php
+                                foreach($hotList as $item){
+                            ?>
+                                    <li>
+                                        <div class="cver u-cover u-cover-3">
+                                            <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="single" title="<?=\yii\helpers\Html::encode($item['name'])?>">
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                            </a>
+                                        </div>
+                                        <div class="info">
+                                            <p class="f-thide">
+                                                <a class="sname f-fs1 s-fc0 single" href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>"
+                                                   title="<?=\yii\helpers\Html::encode($item['name'])?>"><?=\yii\helpers\Html::encode($item['name'])?></a>
+                                            </p>
+                                            <p>
+                                                <span class="by s-fc4">by</span>
+                                                <a class="nm nm f-thide s-fc3 single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $item['uid']])?>" title="<?=\yii\helpers\Html::encode($item['username'])?>"><?=\yii\helpers\Html::encode($item['username'])?></a>
+                                            </p>
+                                        </div>
+                                    </li>
+                            <?php
+                                }
+                            ?>
+
+                        </ul>
+                <?php
+                    }
+                ?>
+
             </div>
         </div>
     </div>

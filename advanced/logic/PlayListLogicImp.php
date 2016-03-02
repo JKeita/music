@@ -10,6 +10,7 @@ namespace logic;
 
 
 use common\help\Response;
+use dao\PlayListCollectDao;
 use dao\PlayListDao;
 use models\PlayList;
 use models\PlayListCollect;
@@ -419,6 +420,29 @@ class PlayListLogicImp implements PlayListLogic
     {
         $playListDao = new PlayListDao();
         return $playListDao -> getPlayListPage();
+    }
+
+    /**
+     * 获取收藏该歌单的用户信息
+     * @param $pid
+     * @param int $limit
+     * @return mixed
+     */
+    public function getCollectUserByPid($pid, $limit = 8)
+    {
+        $plcDao = new PlayListCollectDao();
+        return $plcDao -> getCollectUserByPid($pid, $limit);
+    }
+
+    /**
+     * 获取热门歌单
+     * @param $limit
+     * @return mixed
+     */
+    public function getHotPlayList($limit = 5)
+    {
+        $playListDao = new PlayListDao();
+        return $playListDao -> getHotPlayList($limit);
     }
 
 

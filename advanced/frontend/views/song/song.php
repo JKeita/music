@@ -99,7 +99,7 @@ $user = Yii::$app -> user -> identity;
         </div>
         <div class="g-sd4">
             <div class="g-wrap7">
-                <h3 class="u-hd3">
+<!--                <h3 class="u-hd3">
                     <span class="f-fl">喜欢这首歌的人</span>
                 </h3>
                 <ul class="m-piclist f-cb">
@@ -108,65 +108,47 @@ $user = Yii::$app -> user -> identity;
                             <img src="http://p3.music.126.net/YvkF33dXzqAKl48Z2MVwPw==/3275445146976056.jpg?param=40y40">
                         </a>
                     </li>
-                    <li>
-                        <a href="/user/home?id=16557771" class="f-tdn" title="最讨厌起名了" data-res-id="16557771" data-res-type="1" data-res-action="log" data-res-data="recommendclick|1||song-user-recommend|2081274">
-                            <img src="http://p4.music.126.net/gGbIpjD-X5-us3-JvmvMlg==/6013229092656519.jpg?param=40y40">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=110648284" class="f-tdn" title="A大白菜" data-res-id="110648284" data-res-type="1" data-res-action="log" data-res-data="recommendclick|2||song-user-recommend|2081274">
-                            <img src="http://p4.music.126.net/bTIoFKFaE1-JQpgN3OynGg==/1986817511391283.jpg?param=40y40">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/home?id=109421968" class="f-tdn" title="舟萌摩尔" data-res-id="109421968" data-res-type="1" data-res-action="log" data-res-data="recommendclick|3||song-user-recommend|2081274">
-                            <img src="http://p3.music.126.net/3_TLeEdhTlMoUr8oTzsG7A==/528865123000372.jpg?param=40y40">
-                        </a>
-                    </li>
-                </ul>
-                <h3 class="u-hd3">
-                    <span class="f-fl">包含这首歌的歌单</span>
-                </h3>
-                <ul class="m-rctlist f-cb">
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=42453853" title="★【欧美】超爽节奏控★" data-res-id="42453853" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0||song-playlist-recommend|2081274"><img src="http://p4.music.126.net/vTXg0CYMEo3xLAnuc6TDnQ==/7849413511119505.jpg?param=50y50">
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=42453853" title="★【欧美】超爽节奏控★" data-res-id="42453853" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0||song-playlist-recommend|2081274">★【欧美】超爽节奏控★</a>
-                            </p>
-                            <p><span class="by s-fc4">by</span><a class="nm nm f-thide s-fc3" href="/user/home?id=18365139" title="果冻糖">果冻糖</a>
-                                <sup class="u-icn u-icn-84"></sup>
-                            </p></div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=32261664" title="★【欧美】至尊经典合集★" data-res-id="32261664" data-res-type="13" data-res-action="log" data-res-data="recommendclick|1||song-playlist-recommend|2081274"><img src="http://p4.music.126.net/faOzEbRWl1oopcbvzx2BBg==/3233663700048274.jpg?param=50y50">
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=32261664" title="★【欧美】至尊经典合集★" data-res-id="32261664" data-res-type="13" data-res-action="log" data-res-data="recommendclick|1||song-playlist-recommend|2081274">★【欧美】至尊经典合集★</a>
-                            </p>
-                            <p><span class="by s-fc4">by</span><a class="nm nm f-thide s-fc3" href="/user/home?id=18365139" title="果冻糖">果冻糖</a>
-                                <sup class="u-icn u-icn-84"></sup>
-                            </p></div>
-                    </li>
-                    <li>
-                        <div class="cver u-cover u-cover-3">
-                            <a href="/playlist?id=50450306" title="欧美超爽节奏控" data-res-id="50450306" data-res-type="13" data-res-action="log" data-res-data="recommendclick|2||song-playlist-recommend|2081274"><img src="http://p4.music.126.net/nWkjTxUlVk1RR65BtWClmw==/7704277976243099.jpg?param=50y50">
-                            </a>
-                        </div>
-                        <div class="info">
-                            <p class="f-thide">
-                                <a class="sname f-fs1 s-fc0" href="/playlist?id=50450306" title="欧美超爽节奏控" data-res-id="50450306" data-res-type="13" data-res-action="log" data-res-data="recommendclick|2||song-playlist-recommend|2081274">欧美超爽节奏控</a>
-                            </p>
-                            <p><span class="by s-fc4">by</span><a class="nm nm f-thide s-fc3" href="/user/home?id=30632372" title="钱茂昌">钱茂昌</a>
-                            </p></div>
-                    </li>
-                </ul>
+                </ul>-->
+                <?php
+                    $songLogic = new \logic\SongLogicImp();
+                    $collectPlayList = $songLogic -> getPlayListBySid($songInfo['id']);
+                ?>
+                <?php
+                    if(!empty($collectPlayList)){
+                ?>
+                        <h3 class="u-hd3">
+                            <span class="f-fl">包含这首歌的歌单</span>
+                        </h3>
+                        <ul class="m-rctlist f-cb">
+                            <?php
+                                foreach($collectPlayList as $item){
+                        ?>
+                                    <li>
+                                        <div class="cver u-cover u-cover-3">
+                                            <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="single" title="<?=\yii\helpers\Html::encode($item['name'])?>">
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                            </a>
+                                        </div>
+                                        <div class="info">
+                                            <p class="f-thide">
+                                                <a class="sname f-fs1 s-fc0 single" href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>"
+                                                   title="<?=\yii\helpers\Html::encode($item['name'])?>"><?=\yii\helpers\Html::encode($item['name'])?></a>
+                                            </p>
+                                            <p>
+                                                <span class="by s-fc4">by</span>
+                                                <a class="nm nm f-thide s-fc3 single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $item['uid']])?>" title="<?=\yii\helpers\Html::encode($item['username'])?>"><?=\yii\helpers\Html::encode($item['username'])?></a>
+                                            </p>
+                                        </div>
+                                    </li>
+                        <?php
+                                }
+                        ?>
+
+                        </ul>
+                <?php
+                    }
+                ?>
+
 
 
 

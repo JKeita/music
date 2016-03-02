@@ -45,4 +45,24 @@ class PlayListDao {
         $data = $query -> limit($page -> limit) -> offset($page -> offset) -> all();
         return ['data' => $data, 'page' => $page];
     }
+
+    /**
+     * 获取热门歌单
+     * @param $limit
+     * @return mixed
+     */
+    public function getHotPlayList($limit = 5)
+    {
+        $query = new Query();
+        $query
+            -> select ('p.*, u.username')
+            -> from('playlist as p')
+            -> leftJoin('user as u', 'p.uid = u.id')
+            -> where([
+                'state' => 0
+            ])
+            -> orderBy('collectnum desc, sharenum desc, created desc')
+            -> limit($limit);
+        return $query -> all();
+    }
 }

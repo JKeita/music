@@ -44,10 +44,10 @@ $user = Yii::$app -> user -> identity;
                                         </a>
                                         <a data-res-action="addto" data-res-id="<?=$songInfo['id']?>" data-res-type="18" href="javascript:;" class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
                                         <a data-res-id="<?=$songInfo['id']?>" id="collectBtn" data-res-type="18" data-count="-1" data-fee="0" data-payed="0" data-pl="320000" data-dl="320000" data-cp="1" data-res-action="fav" class="u-btni u-btni-fav " href="javascript:;">
-                                            <i>收藏</i>
+                                            <i>收藏(<?=$songInfo['collectnum']?>)</i>
                                         </a>
                                         <a data-res-id="<?=$songInfo['id']?>" data-res-type="1" data-count="-1" data-res-action="share" data-res-pic="" class="u-btni u-btni-share " href="javascript:;">
-                                            <i>分享</i>
+                                            <i>分享(<?=$songInfo['sharenum']?>)</i>
                                         </a>
                                         <a data-res-id="<?=$songInfo['id']?>" data-res-type="18" data-res-action="download" class="u-btni u-btni-dl " target="_blank" href="<?=\yii\helpers\Url::to(['song/down', 'id' => $songInfo['id']])?>">
                                             <i>下载</i>

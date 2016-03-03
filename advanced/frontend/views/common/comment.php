@@ -12,7 +12,7 @@
             <h3>
                 <span class="f-ff2">评论</span>
             </h3>
-            <!--                                <span class="sub s-fc3">共<span class="j-flag">66</span>条评论</span>-->
+            <span class="sub s-fc3">共<span class="j-flag"><?=$page -> totalCount?></span>条评论</span>
         </div>
         <div class="m-cmmt">
 

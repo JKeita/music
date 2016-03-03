@@ -46,12 +46,12 @@ $user = Yii::$app -> user -> identity;
                                        class="u-btni u-btni-add" hidefocus="true" title="添加到播放列表"></a>
                                     <a id="flag_collect" data-res-id="<?=$id?>" data-res-type="13" data-count="2648" data-res-action="fav_p" class="u-btni u-btni-fav"
                                        href="javascript:;">
-                                        <i>收藏</i>
+                                        <i>收藏(<?=$data['collectnum']?>)</i>
                                     </a>
                                     <a id="flag_share" data-res-id="<?=$id?>" data-res-type="2" data-count="24" data-res-action="share"
                                        data-res-pic="http://p4.music.126.net/Bf0LtOHI29-enSa30TytPw==/1365593486525946.jpg" class="u-btni u-btni-share"
                                        href="javascript:;">
-                                        <i>分享</i>
+                                        <i>分享(<?=$data['sharenum']?>)</i>
                                     </a>
                                     <a data-res-id="<?=$id?>" data-res-type="13" data-res-action="download" class="u-btni u-btni-dl"
                                        href="javascript:;">
@@ -92,7 +92,7 @@ $user = Yii::$app -> user -> identity;
                                 <span class="f-ff2">歌曲列表</span>
                             </h3>
                             <span class="sub s-fc3">
-                            <span id="playlist-track-count">38</span>首歌</span>
+                            <span id="playlist-track-count"><?=!empty($songList)?count($songList):0?></span>首歌</span>
                         </div>
                         <div id="song-list-pre-cache" data-key="track_playlist-159240917">
                             <div id="auto-id-ZqGxAG7tU37HFsc3">

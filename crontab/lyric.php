@@ -30,9 +30,11 @@ try{
                 foreach($idArr as $id){
                     $lyric = get_song_lrc($id);
                     $usth -> execute();
-                    echo $id.'<br/>';
+                    echo $id."\n";
                 }
-            }
+            }else{
+				break;
+			}
             ob_flush();
             $count++;
             if($count>10 && true){

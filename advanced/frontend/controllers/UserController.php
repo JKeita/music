@@ -187,7 +187,7 @@ class UserController extends Controller{
             if(!empty($playList)){
                 $pid = $playList[0]['id'];
             }else{
-                throw new NotFoundHttpException();
+                return $this -> renderPartial("mysong");
             }
 
         }

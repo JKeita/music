@@ -20,13 +20,20 @@ $addSongSth = $pdo -> prepare('insert into song(id,name,author,src,cover,duratio
 $addSongCollectSth = $pdo -> prepare('insert into song_collect(pid,sid) values(:pid,:sid)');
 $addTagSth = $pdo -> prepare('insert into tag(name) values(:name)');
 $addPlayListTagSth = $pdo -> prepare('insert into playlist_tag(pid,tid) value(:pid,:tid)');
-for($id = 1003; $id <= 10000; $id++){
+$getTagIdSth = $pdo -> prepare('select id from tag where name = :name limit 1');
+
+$startId = 108000;
+$endId = $startId + 100000;
+for($id = $startId; $id < $endId; $id++){
     $url = "http://music.163.com/api/playlist/detail?id=" . $id;
     $res = netease_http($url);
     if( $res["code"]==200 && $res["result"] ){
         $data = $res['result'];
         $creator = $data['creator'];
         $songList = $data['tracks'];
+        if(empty($songList)||empty($creator)||empty($data)){
+            continue;
+        }
         $tags = $data['tags'];
         //插入用户
         $addUserResult = $addUserSth -> execute([
@@ -38,6 +45,9 @@ for($id = 1003; $id <= 10000; $id++){
             ':profile' => $creator['signature'],
         ]);
 //        var_dump($addUserResult);
+		if($addUserResult){
+			echo ' uid:'.$pdo -> lastInsertId();
+		}
         //插入歌单
         $addPlayListResult = $addPlayListSth -> execute([
             ':id' => $data['id'],
@@ -47,6 +57,9 @@ for($id = 1003; $id <= 10000; $id++){
             ':profile' => !empty($data['description'])?$data['description']:'',
         ]);
 //        var_dump($addPlayListResult);
+		if($addPlayListResult){
+			echo ' pid:'.$pdo -> lastInsertId();
+		}
         if(!empty($songList)){
             foreach($songList as $song){
                 $addSongResult = $addSongSth -> execute([
@@ -58,32 +71,53 @@ for($id = 1003; $id <= 10000; $id++){
                     ':duration' => $song['duration'],
                 ]);
 //                var_dump($addSongResult);
-                if($addSongResult){
+				if($addSongResult){
+					echo ' sid:'.$pdo -> lastInsertId();
+				}
+                if($addSongResult || true){
                     $addSongCollectResult = $addSongCollectSth -> execute([
                         ':pid' => $data['id'],
                         ':sid' => $song['id'],
                     ]);
 //                    var_dump($addSongCollectResult);
+					if($addSongCollectResult){
+						echo ' scid:'.$pdo -> lastInsertId();
+					}
                 }
             }
         }
 
         if(!empty($tags)){
             foreach($tags as $tag){
-                $addTagResult = $addTagSth -> execute([
-                    ':name' => $tag
-                ]);
+				$getTagIdResult = $getTagIdSth -> execute([
+					':name' => $tag
+				]);
+				if($getTagIdResult){
+					$tid = $getTagIdSth -> fetchColumn ();
+				}
+				if(empty($tid)){
+				   $addTagResult = $addTagSth -> execute([
+						':name' => $tag
+					]);
+					if($addTagResult){
+						$tid = $pdo -> lastInsertId();
+					}
+				}
+				
 //                var_dump($addTagResult);
-                if($addTagResult){
+                if(!empty($tid)){
                     $addPlayListTagResult = $addPlayListTagSth -> execute([
                         ':pid' => $data['id'],
-                        ':tid' => $pdo -> lastInsertId(),
+                        ':tid' => $tid,
                     ]);
 //                    var_dump($addPlayListTagResult);
                 }
+				unset($tid);
             }
         }
-    }
-    echo $id."\r\n";
+		echo "\r\n";
+    }else{
+		echo "error:{$id}\r\n";
+	}
 }
 

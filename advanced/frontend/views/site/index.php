@@ -16,6 +16,7 @@
                     if(!empty($data)){
                         foreach($data as $item){
                             $creator = \common\models\User::findOne($item['uid']);
+//                            file_put_contents("c:\log.txt", var_export($item['uid'], true));
                 ?>
                             <li>
                                 <div class="u-cover u-cover-1">

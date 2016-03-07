@@ -331,6 +331,8 @@ use yii\helpers\Url;
     </style>
     <link href="<?=Yii::$app -> homeUrl?>plugin/scrollbar/scrollbar.css" type="text/css" rel="stylesheet" />
     <script src="<?=Yii::$app -> homeUrl?>plugin/scrollbar/scrollbar.js" ></script>
+    <link href="<?=Yii::$app -> homeUrl?>plugin/scrollbar/nanoscroller.css" type="text/css" rel="stylesheet" />
+    <script src="<?=Yii::$app -> homeUrl?>plugin/scrollbar/jquery.nanoscroller.js" ></script>
 </head>
 <body class="auto-1452599464323-parent auto-1452599464322-parent">
 <div id="g-topbar" class="g-topbar" style="width: 1349px; top: 0px;">
@@ -464,9 +466,9 @@ use yii\helpers\Url;
                 <img class="imgbg j-flag" src="http://music.163.com/api/img/blur/16645506533224412"
                      style="top: -360px;" />
                 <div class="msk"></div>
-                <div class="listbdc j-flag">
-                    <ul class="f-cb" id="playlistul">
-                    </ul>
+                <div class="listbdc j-flag nano" style="color: #fff;">
+                    <div class="f-cb nano-content" id="playlistul">
+                    </div>
                 </div>
                 <div class="bline j-flag"></div>
                 <div class="ask j-flag">

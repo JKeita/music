@@ -174,6 +174,7 @@ function loadSongLi(id){
 			$("#playlistul li").on('dblclick', playSongLi);
 			addSongLiEvent();
 			saveSongList();
+			$(".nano").nanoScroller();
 		}
 
 	});
@@ -194,6 +195,7 @@ function InitPlayListUl(){
 		$("#playlistul").get(0).innerHTML = data;
 	}
 	addSongLiEvent();
+	$(".nano").nanoScroller();
 }
 function loadSongList(pid){
 	clearPlayList();
@@ -207,6 +209,7 @@ function loadSongList(pid){
 			$("#playlistul").append($(data));
 			$("#playlistul li").off('dblclick');
 			$("#playlistul li").on('dblclick', playSongLi);
+			$(".nano").nanoScroller();
 		}
 
 	});
@@ -333,6 +336,7 @@ function togglePlayAndPause(){
 function clearPlayList(){
 	$("#playlistul li").remove();
 	saveSongList();
+	$(".nano").nanoScroller();
 }
 function playSongList(){
 	var pid = $(this).attr('data-res-id');
@@ -759,6 +763,7 @@ function addSongLiEvent(){
 	$("#playlistul [data-action='delete']").on('click', function(){
 		$(this).parents('li[data-action="play"]').remove();
 		saveSongList();
+		$(".nano").nanoScroller();
 	});
 
 	$("#playlistul [data-action='like']").off('click');
@@ -1492,6 +1497,7 @@ $(function(){
 			share(id,1);
 		}
 	});
+	$(".nano").nanoScroller({ flash: true });
 });
 
 	

@@ -17,4 +17,11 @@ interface SearchLogic
      * @return mixed
      */
     public function search($condition);
+
+    /**
+     * 搜索歌单
+     * @param $condition
+     * @return mixed
+     */
+    public function searchPlayList($condition);
 }

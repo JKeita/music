@@ -22,23 +22,7 @@ $total = $data['hits']['total'];
                 <div class="snote s-fc4 ztag">搜索“<?=$key?>”，找到
                     <em class="s-fc6"><?=$total?></em> 首单曲
                 </div>
-                <ul class="m-tabs m-tabs-srch f-cb ztag" data-xname="" id="auto-id-vSPCS8n3c6G2bzPI" style="margin-bottom: auto;">
-                    <li class="fst">
-                        <a <?=(empty($type)||$type == 1)?'':'hidefocus="true"'?> data-type="1" href="<?=\yii\helpers\Url::to(['search/index', 'key' => $key, 'type' => 1])?>" class="<?=(empty($type)||$type == 1)?'z-slt':''?> single">
-                            <em>歌名</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a <?=(!empty($type)&&$type == 2)?'':'hidefocus="true"'?> data-type="2" href="<?=\yii\helpers\Url::to(['search/index', 'key' => $key, 'type' => 2])?>" class="<?=(!empty($type)&&$type == 2)?'z-slt':''?> single">
-                            <em>歌手</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a <?=(!empty($type)&&$type == 3)?'':'hidefocus="true"'?> data-type="3" href="<?=\yii\helpers\Url::to(['search/index', 'key' => $key, 'type' => 3])?>" class="<?=(!empty($type)&&$type == 3)?'z-slt':''?> single">
-                            <em>歌词</em>
-                        </a>
-                    </li>
-                </ul>
+                <?php include_once(__DIR__."/tab.php"); ?>
                 <div class="ztag j-flag" id="auto-id-nCMtfCDTdqG0DLly">
                     <div class="n-srchrst">
                         <div class="srchsongst">
@@ -58,7 +42,7 @@ $total = $data['hits']['total'];
                                                 <div class="sn">
                                                     <div class="text">
                                                         <a href="<?=\yii\helpers\Url::to(['song/info', 'id' => $item['_id']])?>" class="single">
-                                                            <b title=""><?=$source['name']?></b>
+                                                            <b title=""> <?=!empty($item['highlight']['name'][0])?$item['highlight']['name'][0]:$source['name']?></b>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -73,7 +57,7 @@ $total = $data['hits']['total'];
                                             </div>
                                             <div class="td w1">
                                                 <div class="text">
-                                                    <a href="javascript:void(0);"><?=$source['author']?></a>
+                                                    <a href="javascript:void(0);"><?=!empty($item['highlight']['author'][0])?$item['highlight']['author'][0]:$source['author']?></a>
                                                 </div>
                                             </div>
                                             <?php

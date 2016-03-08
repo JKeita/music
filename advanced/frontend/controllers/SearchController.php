@@ -22,7 +22,15 @@ class SearchController extends Controller
             'page' => Request::getQueryValue('page'),
         ];
         $searchLogic = new SearchLogicImp();
-        $searchData = $searchLogic -> search($condition);
+        if(!empty($condition['type']) && $condition['type'] == 4){
+            $searchData = $searchLogic -> searchPlayList($condition);
+            $viewName = 'playlist';
+            file_put_contents("c:\log.txt", var_export($searchData, true), FILE_APPEND);
+        }else{
+            $searchData = $searchLogic -> search($condition);
+            $viewName = 'index';
+        }
+
         $viewData = [
             'key' => $condition['key'],
             'type' => $condition['type'],
@@ -30,9 +38,9 @@ class SearchController extends Controller
             'page' => $searchData['page'],
         ];
         if(\Yii::$app -> request -> isAjax){
-            return $this -> renderPartial("index", $viewData);
+            return $this -> renderPartial($viewName, $viewData);
         }else{
-            return $this -> render("index", $viewData);
+            return $this -> render($viewName, $viewData);
         }
     }
 }

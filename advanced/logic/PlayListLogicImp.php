@@ -445,5 +445,18 @@ class PlayListLogicImp implements PlayListLogic
         return $playListDao -> getHotPlayList($limit);
     }
 
+    /**
+     * 获取用户歌单数
+     * @param $id
+     * @return mixed
+     */
+    public function getUserPlayListNum($id)
+    {
+        if(empty($id) || !is_numeric($id)){
+            return 0;
+        }
+        return PlayList::find() -> where(['uid' => $id, 'state' => 0]) -> count();
+    }
+
 
 }

@@ -28,8 +28,8 @@ class LinkPager extends \yii\widgets\LinkPager{
     public $nextPageLabel = '下一页';
     public $prevPageLabel = '上一页';
     public $maxButtonCount = 10;//最大按钮数
-    public $firstPageLabel = false;
-    public $lastPageLabel = false;
+    public $firstPageLabel = '首页';
+    public $lastPageLabel = '末页';
     public $registerLinkTags = false;
     public $hideOnSinglePage = true;
     public function run()

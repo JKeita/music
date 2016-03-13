@@ -7,12 +7,13 @@
  */
 $user = Yii::$app -> user -> identity;
 ?>
-<style>
-    .container{
-        padding-top:70px !important;
-    }
-</style>
+
 <div class="container" >
+    <style>
+        .container{
+            padding-top:70px !important;
+        }
+    </style>
     <div class="g-bd4 f-cb">
         <div class="g-mn4">
             <div class="g-mn4c">
@@ -97,7 +98,7 @@ $user = Yii::$app -> user -> identity;
                 </div>
             </div>
         </div>
-        <div class="g-sd4">
+    <div class="g-sd4">
             <div class="g-wrap7">
 <!--                <h3 class="u-hd3">
                     <span class="f-fl">喜欢这首歌的人</span>
@@ -153,10 +154,9 @@ $user = Yii::$app -> user -> identity;
 
 
             </div>
-        </div>
     </div>
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true">回到顶部</a>
-<script>
-    addSongInfoEvent();
-</script>
+    <script>
+        addSongInfoEvent();
+    </script>
 </div>

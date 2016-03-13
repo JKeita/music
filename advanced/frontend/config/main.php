@@ -43,7 +43,7 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                '' => 'site/index',
+                '' => 'site/es-index',
                 '<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
             ]
         ],

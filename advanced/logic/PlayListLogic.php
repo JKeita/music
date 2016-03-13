@@ -169,4 +169,11 @@ interface PlayListLogic
      * @return mixed
      */
     public function getHotPlayList($limit = 5);
+
+    /**
+     * 获取用户歌单数
+     * @param $id
+     * @return mixed
+     */
+    public function getUserPlayListNum($id);
 }

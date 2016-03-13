@@ -62,6 +62,11 @@ class SearchLogicImp implements SearchLogic
                     ];
                 }else if($condition['type'] == 3){
                     $params['body']['query']['match']['lyric'] = $condition['key'];
+                    $params['body']['highlight'] = [
+                        "pre_tags" => ["<span class=\"s-fc7\">"],
+                        "post_tags" => ["</span>"],
+                        "fields" => ["lyric" => ["fragment_size" => 500]]
+                    ];
                 }else if($condition['type'] == 'mult'){
                     if(is_numeric($condition['key'])){
                             $params['body']['query']['bool']['should']['term']['id']=$condition['key'];
@@ -74,6 +79,11 @@ class SearchLogicImp implements SearchLogic
                 }
             }else{
                 $params['body']['query']['match']['name'] = $condition['key'];
+                $params['body']['highlight'] = [
+                    "pre_tags" => ["<span class=\"s-fc7\">"],
+                    "post_tags" => ["</span>"],
+                    "fields" => ["name" => (object)[]]
+                ];
             }
         }
         $data = $client -> search($params);
@@ -115,14 +125,65 @@ class SearchLogicImp implements SearchLogic
         }
         $params['from'] = !empty($page)?($page-1)*$pageSize:0;
         if(empty($condition['key'])){
-            $params['body']['query']['match_all']=[];
-            $params['body']['sort']['id']['order'] = 'desc';
+            $params['body']['sort'] = [
+                ['collectnum' => ['order' => 'desc']],
+                ['sharenum' => ['order' => 'desc']],
+                ['created' => ['order' => 'desc']],
+            ];
         }else{
             $params['body']['query']['match']['name'] = $condition['key'];
             $params['body']['highlight'] = [
                 "pre_tags" => ["<span class=\"s-fc7\">"],
                 "post_tags" => ["</span>"],
                 "fields" => ["name" => (object)[]]
+            ];
+        }
+        $data = $client -> search($params);
+        $totalCount = ($data['hits']['total'] > 10*$pageSize)?10*$pageSize:$data['hits']['total'];
+        $page = new Pagination([
+            'totalCount' => $totalCount,
+            'defaultPageSize' => $pageSize,
+        ]);
+        return ['page' => $page, 'data' => $data];
+    }
+
+    /**
+     * 搜索用户
+     * @param $condition
+     * @return mixed
+     */
+    public function searchUser($condition)
+    {
+        $maxPageCount = !empty($condition['maxPageCount'])?$condition['maxPageCount']:10;
+        $client = ClientBuilder::create()->setHosts(['127.0.0.1:9200'])->build();
+        $params['index'] = 'music';
+        $params['type'] = 'user';
+        $pageSize = !empty($condition['pageSize'])?$condition['pageSize']:10;
+        $params['size'] = $pageSize;
+        if(!empty($condition['page'])){
+            $page = $condition['page'];
+            if(is_numeric($page)){
+                if($page<1){
+                    $page=1;
+                }else if($page > $maxPageCount){
+                    $page = $maxPageCount;
+                }
+            }else{
+                $page = 1;
+            }
+        }else{
+            $page = 1;
+        }
+        $params['from'] = !empty($page)?($page-1)*$pageSize:0;
+        if(empty($condition['key'])){
+            $params['body']['query']['match_all']=[];
+            $params['body']['sort']['id']['order'] = 'desc';
+        }else{
+            $params['body']['query']['match']['username'] = $condition['key'];
+            $params['body']['highlight'] = [
+                "pre_tags" => ["<span class=\"s-fc7\">"],
+                "post_tags" => ["</span>"],
+                "fields" => ["username" => (object)[]]
             ];
         }
         $data = $client -> search($params);

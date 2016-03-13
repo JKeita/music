@@ -1191,6 +1191,22 @@ function addSearchEvent(){
 		});
 		return false;
 	});
+	$("#search_key").keyup(function(e){
+		if(e.keyCode == 13){
+			var key = $("#search_key").val();
+			var url = $("#searchBtn").attr('href');
+			if(key == ''){
+				return false;
+			}
+			url = url.replace(/_k_/,key);
+			history.pushState({ path: url }, '', url);
+			$.get(url, function(data) {
+				$('.container').get(0).outerHTML=data;
+				addNewObjEvent();
+			});
+			return false;
+		}
+	});
 	$("[data-res-action='addto']").click(function(){
 		var id = $(this).attr('data-res-id');
 		console.log(id);
@@ -1206,6 +1222,33 @@ function addSearchEvent(){
 		var id = $(this).attr('data-res-id');
 		var type = $(this).attr('data-res-type');
 		share(id, type);
+		return false;
+	});
+	$("[data-res-action='follow']").click(function(){
+		if(!$("#tophead_username").text()){
+			showBar();
+			return false;
+		}
+		var fid = $(this).attr('data-res-id');
+		follow(fid);
+		return false;
+	});
+	$(".lyric .crl a").click(function(){
+		var type = $(this).attr('data-res-action');
+		var id = $(this).attr('data-res-id');
+		if(type == 'open'){
+			$(this).attr('data-res-action', 'close');
+			$(this).parent().find('i').removeClass('u-icn-69').addClass('u-icn-70');
+			$('#lrc_all'+id).removeClass('f-hide');
+			$('#lrc_abstract'+id).addClass('f-hide');
+			$(this).text('收起');
+		}else{
+			$(this).attr('data-res-action', 'open');
+			$(this).parent().find('i').removeClass('u-icn-70').addClass('u-icn-69');
+			$('#lrc_all'+id).addClass('f-hide');
+			$('#lrc_abstract'+id).removeClass('f-hide');
+			$(this).text('展开');
+		}
 		return false;
 	});
 }

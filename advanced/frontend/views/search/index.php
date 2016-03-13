@@ -23,7 +23,7 @@ $total = $data['hits']['total'];
                     <em class="s-fc6"><?=$total?></em> 首单曲
                 </div>
                 <?php include_once(__DIR__."/tab.php"); ?>
-                <div class="ztag j-flag" id="auto-id-nCMtfCDTdqG0DLly">
+                <div class="ztag j-flag">
                     <div class="n-srchrst">
                         <div class="srchsongst">
                             <?php

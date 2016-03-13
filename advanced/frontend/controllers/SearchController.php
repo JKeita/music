@@ -25,10 +25,16 @@ class SearchController extends Controller
         if(!empty($condition['type']) && $condition['type'] == 4){
             $searchData = $searchLogic -> searchPlayList($condition);
             $viewName = 'playlist';
-            file_put_contents("c:\log.txt", var_export($searchData, true), FILE_APPEND);
-        }else{
+        }else if(!empty($condition['type']) && $condition['type'] == 5){
+            $searchData = $searchLogic -> searchUser($condition);
+            $viewName = 'user';
+        } else {
             $searchData = $searchLogic -> search($condition);
-            $viewName = 'index';
+            if(!empty($condition['type']) && $condition['type'] == 3){
+                $viewName = 'lyric';
+            }else{
+                $viewName = 'index';
+            }
         }
 
         $viewData = [

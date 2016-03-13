@@ -344,7 +344,7 @@ use yii\helpers\Url;
             <ul class="m-nav j-tflag">
                 <li class="fst">
               <span>
-                <a hidefocus="true" href="<?=Url::to(['site/index'])?>" data-module="discover" class="single">
+                <a hidefocus="true" href="<?=Yii::$app -> homeUrl?>" data-module="discover" class="single">
                     <em>发现音乐</em>
 <!--                    <sub class="cor"></sub></a>-->
               </span>

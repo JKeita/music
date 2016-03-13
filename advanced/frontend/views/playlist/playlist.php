@@ -7,12 +7,12 @@
  */
 $user = Yii::$app -> user -> identity;
 ?>
-<style>
-    .container{
-        padding-top:70px !important;
-    }
-</style>
 <div class="container" >
+    <style>
+        .container{
+            padding-top:70px !important;
+        }
+    </style>
     <div id="m-playlist" class="g-bd4 f-cb">
         <div class="g-mn4">
             <div class="g-mn4c">
@@ -258,13 +258,13 @@ $user = Yii::$app -> user -> identity;
         </div>
     </div>
 
+    <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true">回到顶部</a>
+    <script>
+        $(function(){
+            addPlayListEvent();
+        });
+    </script>
+</div>
 
-</div>
-<a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true">回到顶部</a>
-<script>
-    $(function(){
-        addPlayListEvent();
-    });
-</script>
-</div>
+
 

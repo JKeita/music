@@ -20,7 +20,7 @@ $total = $data['hits']['total'];
                 <div class="u-lstlay j-flag" style="display:none;" id="auto-id-twoQpWBXqMiZ29zG"></div></div>
             <div id="m-search">
                 <div class="snote s-fc4 ztag">搜索“<?=$key?>”，找到
-                    <em class="s-fc6"><?=$total?></em> 首单曲
+                    <em class="s-fc6"><?=$total?></em> 张歌单
                 </div>
                 <?php include_once(__DIR__."/tab.php"); ?>
                 <div class="ztag j-flag" id="auto-id-m5FSsImNUxmmPFU1">

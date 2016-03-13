@@ -24,4 +24,11 @@ interface SearchLogic
      * @return mixed
      */
     public function searchPlayList($condition);
+
+    /**
+     * 搜索用户
+     * @param $condition
+     * @return mixed
+     */
+    public function searchUser($condition);
 }

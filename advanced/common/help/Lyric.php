@@ -16,9 +16,10 @@ class Lyric
             return [];
         }
         $now_lrc = array();
+//        file_put_contents("c:\log.txt", var_export($lyric, true));
         $lyric = trim($lyric , "\n");
         $lrc_row = explode("\n", $lyric);
-//        file_put_contents("c:\log.txt", var_export($lyric, true));
+//        file_put_contents("c:\log.txt", var_export($lyric, true),FILE_APPEND);
 //        file_put_contents("c:\log.txt", var_export($lrc_row, true),FILE_APPEND);
         $i=0;
         foreach ($lrc_row as $key => $value) {

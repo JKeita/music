@@ -22,7 +22,7 @@
 			foreach($row as $key => $value){
 				$redis -> hSet("music:song:{$row['id']}", $key, $value);
 			}
-			echo $row['id'].'<br/>';
+			echo $row['id']."\n";
 		}
 	}catch(Exception $e){
 		echo $e -> getMessage();

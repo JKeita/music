@@ -11,7 +11,7 @@ try{
     $redis -> connect('127.0.0.1',6379);
     $result = $redis -> ping();
     var_dump($result);
-
+//    $redis -> delete($redis -> keys("music:playlist:*"));die();
     $db = new PDO("mysql:host=127.0.0.1;dbname=music","root","123456");
     $db->exec('set names utf8');
     $sql = "select p.*, pt.tags
@@ -23,7 +23,7 @@ try{
 	            group by pid
                 ) as pt
                 on pt.pid = p.id
-            where state = 0;";
+            ";
     $query = $db -> query($sql, PDO::FETCH_ASSOC);
     while($row = $query -> fetch()){
         foreach($row as $key => $value){

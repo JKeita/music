@@ -20,10 +20,11 @@ class SongLogicImp implements  SongLogic
 {
     public function getSongById($id)
     {
-
+        if(empty($id)){
+            return [];
+        }
         $redisLogic = new RedisLogicImp();
         $data = $redisLogic -> getSongById($id);
-//        file_put_contents("c:\log.txt", var_export($data, true));
         if(empty($data)){
             $data = Song::findOne(['id' => $id, 'state' => 0]);
             if(!empty($data)){

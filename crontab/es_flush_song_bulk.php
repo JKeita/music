@@ -24,7 +24,7 @@ try{
         PDO::ATTR_PREFETCH => 1024,
     ]);
     $db->exec('set names utf8');
-    $sql = "select * from song where state = 0";
+    $sql = "select * from song";
     $query = $db -> query($sql, PDO::FETCH_ASSOC);
     $params['index'] = 'test';
     $params['type'] = 'song';

@@ -63,8 +63,9 @@ class PlayListLogicImp implements PlayListLogic
         $model -> name = $name;
         $model -> uid = $uid;
         $result = $model -> save();
-//        file_put_contents("c:\log.txt", var_export($model -> errors, true));
         if($result){
+            $redisLogic = new RedisLogicImp();
+            $redisLogic -> flushPlayListById($model -> id);
             return Response::returnInfo(1, '创建歌单成功', ['id' => $model -> id]);
         }
         return Response::returnInfo(0, '创建歌单失败');
@@ -93,6 +94,11 @@ class PlayListLogicImp implements PlayListLogic
         if($result){
             $tagLogic = new TagLogicImp();
             $tagLogic -> savePlayListTag($params['id'], $params['tidArr']);
+
+            //更新redis
+            $redisLogic = new RedisLogicImp();
+            $redisLogic -> flushPlayListById($model -> id);
+
             return Response::returnInfo(1, '保存成功');
         }
         return Response::returnInfo(0, '保存失败');
@@ -116,6 +122,9 @@ class PlayListLogicImp implements PlayListLogic
         $model -> cover = $path;
         $result = $model -> save();
         if($result){
+            //更新redis
+            $redisLogic = new RedisLogicImp();
+            $redisLogic -> flushPlayListById($pid);
             return Response::returnInfo(1, '保存成功');
         }
         return Response::returnInfo(0, '保存失败');
@@ -328,11 +337,17 @@ class PlayListLogicImp implements PlayListLogic
         if(empty($id)){
             return [];
         }
-        $model = PlayList::findOne(['id' => $id, 'state' => 0]);
-        if(!empty($model)){
-            return $model -> toArray();
+        //先从redis中查找
+        $redisLogic = new RedisLogicImp();
+        $playList = $redisLogic -> getPlayListById($id);
+        if(empty($playList)){
+            $model = PlayList::findOne(['id' => $id, 'state' => 0]);
+            if(!empty($model)){
+                $playList = $model -> toArray();
+            }
         }
-        return null;
+
+        return $playList;
     }
 
     /**
@@ -352,6 +367,9 @@ class PlayListLogicImp implements PlayListLogic
         $result = $model -> delete();
         if($result){
             PlayListCollect::deleteAll(['pid' => $pid]);
+            //更新redis
+            $redisLogic = new RedisLogicImp();
+            $redisLogic -> delPlayListById($pid);
             return Response::returnInfo(1, '删除成功');
         }
         return Response::returnInfo(0,'删除失败');
@@ -397,11 +415,17 @@ class PlayListLogicImp implements PlayListLogic
         if(empty($pid)||!is_numeric($pid)){
             return [];
         }
-        $model = PlayList::findOne(['id' => $pid, 'state' => 0]);
-        if(empty($model)){
-            return [];
+        $redisLogic = new RedisLogicImp();
+        $playList = $redisLogic -> getPlayListById($pid);
+        if(empty($playList)){
+            $model = PlayList::findOne(['id' => $pid, 'state' => 0]);
+            if(empty($model)){
+                return [];
+            }
+            $playList = $model -> toArray();
         }
-        $playList = $model -> toArray();
+
+
         $uid = $playList['uid'];
         $model = User::findOne($uid);
         if(empty($model)){

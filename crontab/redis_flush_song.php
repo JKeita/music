@@ -13,10 +13,10 @@
 		$redis -> connect('127.0.0.1',6379);
 		$result = $redis -> ping();
 		var_dump($result);
-
+//		$redis -> delete($redis -> keys("music:song:*"));die();
 		$db = new PDO("mysql:host=127.0.0.1;dbname=music","root","123456");
 		$db->exec('set names utf8');
-		$sql = "select * from song where state = 0";
+		$sql = "select * from song";
 		$query = $db -> query($sql, PDO::FETCH_ASSOC);
 		while($row = $query -> fetch()){
 			foreach($row as $key => $value){

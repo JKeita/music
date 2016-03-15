@@ -28,6 +28,35 @@ class PlayListDao {
         return $result;
     }
 
+    /**
+     * 获取歌单信息
+     * @param $id
+     */
+    public function getPlayListById($id){
+        $query = new Query();
+        $query
+            -> select([
+                'p.*',
+                'pt.tags'
+            ])
+            -> from('playlist as p')
+            -> leftJoin('(
+	            select pid, GROUP_CONCAT(t.name) as tags
+	            from playlist_tag
+	            inner join tag as t on tid = t.id
+	            where pid = :pid
+	            group by pid
+                ) as pt', 'pt.pid = p.id')
+            -> where([
+                'p.id' => $id
+            ])
+            -> limit(1)
+            -> addParams([':pid' => $id]);
+        $result = $query -> one();
+        file_put_contents("c:\log.txt", var_export($result, true));
+        return $result;
+    }
+
     public function getPlayListPage(){
         $query = new Query();
         $query

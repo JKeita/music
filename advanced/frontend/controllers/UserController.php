@@ -196,17 +196,13 @@ class UserController extends Controller{
             if(empty($model)){
                 throw new NotFoundHttpException();
             }
-            $songList = $playListLogic -> getPlayListSongById($pid);
-            $commentLogic = new CommentLogicImp();
-            $commentData = $commentLogic -> getPage(['psid' => $pid, 'type' => '2']);
+
             $tagLogic = new TagLogicImp();
             $pTagArr = $tagLogic -> getTagByPid($pid);
             $params = [
                 'model' => $model,
                 'id' => $pid,
-                'songList' => $songList,
-                'page' => $commentData['page'],
-                'commentData' => $commentData['data'],
+                'type' => 2,
                 'pTagArr' => $pTagArr,
             ];
         }else{
@@ -382,18 +378,16 @@ class UserController extends Controller{
     }
 
     public function actionHome(){
-        $playListLogic = new \logic\PlayListLogicImp();
+
         $uid = Request::getQueryValue('id');
         $user = User::findOne($uid);
         if(empty($user)){
             throw new NotFoundHttpException();
         }
-        $playList = $playListLogic -> getUserPlayListByUid($uid);
-        $collectList = $playListLogic -> getUserCollectListByUid($uid);
+
         $params = [
+            'id' => $uid,
             'user' => $user,
-            'playList' => $playList,
-            'collectList' => $collectList,
         ];
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("home",$params);

@@ -54,17 +54,12 @@ class PlaylistController extends Controller
         }
         $playListLogic = new PlayListLogicImp();
         $data = $playListLogic -> getInfo($id);
-        $songList = $playListLogic -> getPlayListSongById($id);
-        $commentLogic = new CommentLogicImp();
-        $commentData = $commentLogic -> getPage(['psid' => $id, 'type' => '2']);
         $tagLogic = new TagLogicImp();
         $pTagArr = $tagLogic -> getTagByPid($id);
         $params = [
             'id' => $id,
             'data' => $data,
-            'songList' => $songList,
-            'page' => $commentData['page'],
-            'commentData' => $commentData['data'],
+            'type' => 2,
             'pTagArr' => $pTagArr,
         ];
         if(\Yii::$app -> request -> isAjax){

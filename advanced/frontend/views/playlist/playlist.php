@@ -6,6 +6,8 @@
  * Time: 15:57
  */
 $user = Yii::$app -> user -> identity;
+
+$playListLogic = new \logic\PlayListLogicImp();
 ?>
 <div class="container" >
     <style>
@@ -86,100 +88,130 @@ $user = Yii::$app -> user -> identity;
                             </div>
                         </div>
                     </div>
-                    <div class="n-songtb">
-                        <div class="u-title u-title-1 f-cb">
-                            <h3>
-                                <span class="f-ff2">歌曲列表</span>
-                            </h3>
+                    <?php
+                        $dependency = [
+                            'class' => 'yii\caching\DbDependency',
+                            'sql' => "SELECT COUNT(sid) FROM song_collect where pid={$id}",
+                        ];
+                        if($this -> beginCache('SongList_'.$id, ['dependency' => $dependency, 'duration' => 36000])) {
+                            $songList = $playListLogic -> getPlayListSongById($id);
+                    ?>
+                            <!-- <?=date('Y-m-d H:i:s')?>-->
+                            <div class="n-songtb">
+                            <div class="u-title u-title-1 f-cb">
+                                <h3>
+                                    <span class="f-ff2">歌曲列表</span>
+                                </h3>
                             <span class="sub s-fc3">
-                            <span id="playlist-track-count"><?=!empty($songList)?count($songList):0?></span>首歌</span>
-                        </div>
-                        <div id="song-list-pre-cache" data-key="track_playlist-159240917">
-                            <div id="auto-id-ZqGxAG7tU37HFsc3">
-                                <div class="j-flag" id="auto-id-gKgLHwLq12CLK1Si">
-                                    <table class="m-table">
-                                        <thead>
-                                        <tr>
-                                            <th class="first w1">
-                                                <div class="wp"></div>
-                                            </th>
-                                            <th>
-                                                <div class="wp">歌曲标题</div>
-                                            </th>
-                                            <th class="w2">
-                                                <div class="wp">时长</div>
-                                            </th>
-                                            <th class="w3">
-                                                <div class="wp">歌手</div>
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        if(!empty($songList)){
-                                        ?>
-                                            <?php
-                                            $i = 0;
-                                            foreach($songList as $song) {
-                                                $i++;
-                                            ?>
+                            <span
+                                id="playlist-track-count"><?= !empty($songList) ? count($songList) : 0 ?></span>首歌</span>
+                            </div>
+                            <div id="song-list-pre-cache" data-key="track_playlist-159240917">
+                                <div id="auto-id-ZqGxAG7tU37HFsc3">
+                                    <div class="j-flag" id="auto-id-gKgLHwLq12CLK1Si">
+                                        <table class="m-table">
+                                            <thead>
                                             <tr>
-                                                <td class="left">
-                                                    <div class="hd">
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="18" data-res-action="play" data-res-from="13" data-res-data="" class="ply"></span>
-                                                        <span class="num"><?=$i?></span>
-                                                    </div>
-                                                </td>
-                                                <td class="">
-                                                    <div class="f-cb">
-                                                        <div class="tt">
-                                                            <div class="ttc">
+                                                <th class="first w1">
+                                                    <div class="wp"></div>
+                                                </th>
+                                                <th>
+                                                    <div class="wp">歌曲标题</div>
+                                                </th>
+                                                <th class="w2">
+                                                    <div class="wp">时长</div>
+                                                </th>
+                                                <th class="w3">
+                                                    <div class="wp">歌手</div>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            if (!empty($songList)) {
+                                                ?>
+                                                <?php
+                                                $i = 0;
+                                                foreach ($songList as $song) {
+                                                    $i++;
+                                                    ?>
+                                                    <tr>
+                                                        <td class="left">
+                                                            <div class="hd">
+                                                                <span data-res-id="<?= $song['id'] ?>"
+                                                                      data-res-type="18" data-res-action="play"
+                                                                      data-res-from="13" data-res-data=""
+                                                                      class="ply"></span>
+                                                                <span class="num"><?= $i ?></span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="">
+                                                            <div class="f-cb">
+                                                                <div class="tt">
+                                                                    <div class="ttc">
                                                               <span class="txt">
-                                                                  <a href="<?=\yii\helpers\Url::to(['song/info', 'id' => $song['id']])?>" class="single">
-                                                                      <b title="<?=$song['name']?>"><?=$song['name']?></b>
+                                                                  <a href="<?= \yii\helpers\Url::to(['song/info', 'id' => $song['id']]) ?>"
+                                                                     class="single">
+                                                                      <b title="<?= $song['name'] ?>"><?= $song['name'] ?></b>
                                                                   </a>
                                                               </span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class=" s-fc3">
-                                                    <?php
-                                                    if($song['duration']>1000){
-                                                        $duration = $song['duration'] / 1000;
-                                                    }else{
-                                                        $duration = $song['duration'];
-                                                    }
-                                                    ?>
-                                                    <span class="u-dur"><?=date('i:s', $duration)?></span>
-                                                    <div class="opt hshow">
-                                                        <a class="u-icn u-icn-81 icn-add" href="javascript:;" title="添加到播放列表" hidefocus="true" data-res-type="18" data-res-id="<?=$song['id']?>" data-res-action="addto" data-res-from="1" data-res-data="42097082"></a>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="fav" class="icn icn-fav" title="收藏"></span>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="share" data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg" class="icn icn-share" title="分享">分享</span>
-                                                        <span data-res-id="<?=$song['id']?>" data-res-type="1" data-res-action="download" class="icn icn-dl" title="下载"></span>
-                                                    </div>
-                                                </td>
-                                                <td class="">
-                                                    <div class="text" title="<?=$song['author']?>">
-                                                          <span title="<?=$song['author']?>">
-                                                            <a class="" href="javascript:void(0);" hidefocus="true"><?=$song['author']?></a>
+                                                        </td>
+                                                        <td class=" s-fc3">
+                                                            <?php
+                                                            if ($song['duration'] > 1000) {
+                                                                $duration = $song['duration'] / 1000;
+                                                            } else {
+                                                                $duration = $song['duration'];
+                                                            }
+                                                            ?>
+                                                            <span class="u-dur"><?= date('i:s', $duration) ?></span>
+                                                            <div class="opt hshow">
+                                                                <a class="u-icn u-icn-81 icn-add" href="javascript:;"
+                                                                   title="添加到播放列表" hidefocus="true" data-res-type="18"
+                                                                   data-res-id="<?= $song['id'] ?>"
+                                                                   data-res-action="addto" data-res-from="1"
+                                                                   data-res-data="42097082"></a>
+                                                                <span data-res-id="<?= $song['id'] ?>" data-res-type="1"
+                                                                      data-res-action="fav" class="icn icn-fav"
+                                                                      title="收藏"></span>
+                                                                <span data-res-id="<?= $song['id'] ?>" data-res-type="1"
+                                                                      data-res-action="share"
+                                                                      data-res-pic="http://p4.music.126.net/i-e5PQtKh_xHl8BkZ-q8hg==/610228953423220.jpg"
+                                                                      class="icn icn-share" title="分享">分享</span>
+                                                                <span data-res-id="<?= $song['id'] ?>" data-res-type="1"
+                                                                      data-res-action="download" class="icn icn-dl"
+                                                                      title="下载"></span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="">
+                                                            <div class="text" title="<?= $song['author'] ?>">
+                                                          <span title="<?= $song['author'] ?>">
+                                                            <a class="" href="javascript:void(0);"
+                                                               hidefocus="true"><?= $song['author'] ?></a>
                                                           </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <?php
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                                <?php
                                             }
                                             ?>
-                                        <?php
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="j-flag"></div>
                                 </div>
-                                <div class="j-flag"></div>
                             </div>
                         </div>
-                    </div>
+                    <?php
+                            $this->endCache();
+                        }
+                    ?>
                     <input type="hidden" name="pid" value="<?=$id?>" />
                     <?php require_once(__DIR__.'/../common/comment.php')?>
                 </div>
@@ -188,7 +220,6 @@ $user = Yii::$app -> user -> identity;
         <div class="g-sd4">
             <div class="g-wrap7">
                 <?php
-                    $playListLogic = new \logic\PlayListLogicImp();
                     $collectUser = $playListLogic -> getCollectUserByPid($data['id']);
 
                 ?>

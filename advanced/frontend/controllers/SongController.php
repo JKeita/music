@@ -35,6 +35,8 @@ class SongController extends Controller
         }
         return parent::beforeAction($action);
     }
+
+
     public function actionInfo(){
         $id = Request::getValue('id');
         $songLogic = new SongLogicImp();
@@ -42,12 +44,11 @@ class SongController extends Controller
         if($songInfo['code'] != 1){
             throw new NotFoundHttpException();
         }
-        $commentLogic = new CommentLogicImp();
-        $commentData = $commentLogic -> getPage(['psid' => $id, 'type' => '1']);
+
         $viewData = [
             'songInfo' => $songInfo['data'],
-            'page' => $commentData['page'],
-            'commentData' => $commentData['data'],
+            'id' => $id,
+            'type' => 1
         ];
         if(\Yii::$app -> request -> isAjax){
             return $this -> renderPartial("song", $viewData);

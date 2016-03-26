@@ -23,7 +23,7 @@ $list = $data['hits']['hits'];
                 ?>
                             <li>
                                 <div class="u-cover u-cover-1">
-                                    <img class="j-flag" src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                    <img class="j-flag" src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=140y140" />
                                     <a title="<?=\yii\helpers\Html::encode($item['name'])?>" href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="msk single"></a>
                                     <div class="bottom">
                                         <a class="icon-play f-fr single" title="播放" href="javascript:;" data-res-type="13" data-res-id="<?=$item['id']?>"

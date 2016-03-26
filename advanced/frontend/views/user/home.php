@@ -35,7 +35,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                                 ?>
                                 <li>
                                     <div class="u-cover u-cover-1">
-                                        <img src="<?= \common\help\UrlHelp::getImgUrl($item['cover']) ?>"/>
+                                        <img src="<?= \common\help\UrlHelp::getImgUrl($item['cover']) ?>?param=140y140"/>
                                         <a href="<?= \yii\helpers\Url::to(['playlist/info', 'id' => $item['id']]) ?>"
                                            class="msk single" title="<?= $item['name'] ?>"></a>
                                         <div class="bottom">
@@ -81,7 +81,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                         ?>
                                     <li>
                                         <div class="u-cover u-cover-1">
-                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=140y140" />
                                             <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="msk single" title="<?=$item['name']?>"></a>
                                             <div class="bottom">
                                                 <a class="icon-play f-fr" href="javascript:;" title="播放" data-res-action="play" data-res-type=""

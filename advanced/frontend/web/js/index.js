@@ -96,7 +96,7 @@ function playListHide(){
 function loadSong(id){
 	$.ajax({
 		type:'get',
-		url:'http://f.music.com/song/getinfo',
+		url:window.GET_SONGINFO_URL,
 		dataType:'json',
 		data:{id:id},
 		success:function(data){
@@ -165,7 +165,7 @@ function loadSongLi(id){
 	}
 	$.ajax({
 		type:'post',
-		url:'http://f.music.com/song/getsongli',
+		url:window.GET_SONGLI_URL,
 		dataType:'text',
 		data:{ids:id},
 		success:function(data){
@@ -201,7 +201,7 @@ function loadSongList(pid){
 	clearPlayList();
 	$.ajax({
 		type:'post',
-		url:'http://f.music.com/song/getsongli',
+		url:window.GET_SONGLI_URL,
 		dataType:'text',
 		async:false,
 		data:{pid:pid},
@@ -358,7 +358,7 @@ function collectSong(sid){
 	$.ajax({
 		type:'get',
 		dataType:'text',
-		url:'http://f.music.com/playlist/select',
+		url:window.PLAYLIST_SELECT_URL,
 		success:function(data){
 			layer.open({
 				type: 1,
@@ -443,7 +443,7 @@ function collectAll(){
 	$.ajax({
 		type:'get',
 		dataType:'text',
-		url:'http://f.music.com/playlist/select',
+		url:window.PLAYLIST_SELECT_URL,
 		success:function(data){
 			layer.open({
 				type: 1,

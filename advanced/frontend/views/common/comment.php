@@ -39,7 +39,7 @@ if($this -> beginCache('comment_'.$id.'_'.$type, ['dependency' => $dependency, '
                         <?php
                             $headimg = !empty(Yii::$app->user->identity->headimg) ? Yii::$app->user->identity->headimg : '';
                         ?>
-                        <img src="<?= \common\help\UrlHelp::getImgUrl($headimg) ?>" />
+                        <img src="<?= \common\help\UrlHelp::getImgUrl($headimg) ?>?param=50y50" />
                     </div>
                     <div class="j-flag">
                         <div>
@@ -71,7 +71,7 @@ if($this -> beginCache('comment_'.$id.'_'.$type, ['dependency' => $dependency, '
                             <div class="itm" data-id="<?= $item['id'] ?>">
                                 <div class="head">
                                     <a href="">
-                                        <img src="<?= \common\help\UrlHelp::getImgUrl($repler->headimg) ?>">
+                                        <img src="<?= \common\help\UrlHelp::getImgUrl($repler->headimg) ?>?param=50y50">
                                     </a>
                                 </div>
                                 <div class="cntwrap">

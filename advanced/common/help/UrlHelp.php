@@ -10,7 +10,7 @@ namespace common\help;
 class UrlHelp
 {
     public static function getImgUrl($path, $default = 'head.jpg'){
-        $host = 'http://img.music.com/';
+        $host = 'http://img2.music.com/';
         $path = trim($path, '/');
         if(empty($path)){
             if(stripos($default, 'http://') === 0){

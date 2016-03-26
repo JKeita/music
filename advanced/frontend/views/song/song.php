@@ -22,7 +22,7 @@ $user = Yii::$app -> user -> identity;
                         <div class="f-cb">
                             <div class="cvrwrap f-cb f-pr">
                                 <div class="u-cover u-cover-6 f-fl">
-                                    <img src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>" class="j-img" data-src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>">
+                                    <img src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>?param=130y130" class="j-img" data-src="<?=\common\help\UrlHelp::getImgUrl($songInfo['cover'])?>">
                                     <span class="msk f-alpha"></span>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@ $user = Yii::$app -> user -> identity;
                                     <li>
                                         <div class="cver u-cover u-cover-3">
                                             <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="single" title="<?=\yii\helpers\Html::encode($item['name'])?>">
-                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=50y50" />
                                             </a>
                                         </div>
                                         <div class="info">

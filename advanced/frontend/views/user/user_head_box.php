@@ -8,7 +8,7 @@
 ?>
 <dl class="m-proifo f-cb" id="head-box">
     <dt class="f-pr" id="ava">
-        <img src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>" />
+        <img src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>?param=188y188" />
     </dt>
     <dd>
         <div class="name f-cb">

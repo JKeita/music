@@ -23,7 +23,7 @@
 ?>
         <div class="m-tophead f-pr j-tflag" id="">
             <div class="head f-fl f-pr">
-                <img src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>">
+                <img src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>?param=30y30">
                 <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="mask"></a>
                 <i class="icn u-icn u-icn-68 f-alpha" style="display:none;"></i>
             </div>

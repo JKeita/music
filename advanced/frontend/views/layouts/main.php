@@ -339,7 +339,7 @@ use yii\helpers\Url;
     <div class="m-top">
         <div class="wrap">
             <h1 class="logo">
-                <a hidefocus="true" href="http://music.163.com/#">网易云音乐</a>
+                <a hidefocus="true" href="/">ACER音乐网</a>
             </h1>
             <ul class="m-nav j-tflag">
                 <li class="fst">
@@ -668,6 +668,8 @@ use yii\helpers\Url;
     window.COLLECT_SONG_URL = '<?=Url::to(['playlist/collect-song'])?>';
     window.COLLECT_ALL_URL = '<?=Url::to(['playlist/collect-all'])?>';
     window.DEL_COLLECT_SONG_URL = '<?=Url::to(['playlist/del-song'])?>';
-
+    window.GET_SONGINFO_URL = '<?=Url::to(['song/getinfo'])?>';
+    window.GET_SONGLI_URL = '<?=Url::to(['song/getsongli'])?>';
+    window.PLAYLIST_SELECT_URL = '<?=Url::to(['playlist/select'])?>';
 </script>
 </html>

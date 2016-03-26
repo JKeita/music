@@ -21,7 +21,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                 <div class="g-wrap6">
                     <div class="m-info f-cb">
                         <div class="cover u-cover u-cover-dj">
-                            <img src="<?=\common\help\UrlHelp::getImgUrl($data['cover'])?>" class="j-img"
+                            <img src="<?=\common\help\UrlHelp::getImgUrl($data['cover'])?>?param=200y200" class="j-img"
                                  data-src="" />
                         </div>
                         <div class="cnt">
@@ -33,7 +33,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                                 </div>
                                 <div class="user f-cb">
                                     <a class="face single" href="<?=\yii\helpers\Url::to(['user/home', 'id' => $data['creator']['id']])?>">
-                                        <img src="<?=\common\help\UrlHelp::getImgUrl($data['creator']['headimg'])?>" />
+                                        <img src="<?=\common\help\UrlHelp::getImgUrl($data['creator']['headimg'])?>?param=35y35" />
                                     </a>
                   <span class="name">
                     <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $data['creator']['id']])?>" class="s-fc7 single"><?=$data['creator']['username']?></a>
@@ -235,7 +235,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                             ?>
                                     <li>
                                         <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $item['id']])?>" class="f-tdn single" title="<?=\yii\helpers\Html::encode($item['username'])?>">
-                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['headimg'])?>" />
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['headimg'])?>?param=40y40" />
                                         </a>
                                     </li>
                             <?php
@@ -262,7 +262,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                                     <li>
                                         <div class="cver u-cover u-cover-3">
                                             <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $item['id']])?>" class="single" title="<?=\yii\helpers\Html::encode($item['name'])?>">
-                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" />
+                                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=50y50" />
                                             </a>
                                         </div>
                                         <div class="info">

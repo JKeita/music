@@ -7,7 +7,7 @@ var playTypeTitle = new Array();
 playTypeTitle[0] = '单曲循环';
 playTypeTitle[1] = '循环';
 playTypeTitle[2] = '随机';
-var pti = 0;
+var pti = 1;
 function closeBar(){
 	$(".m-mask").hide();
 	$(".z-show").hide();

@@ -442,7 +442,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <a href="javascript:;" hidefocus="true" data-action="volume" class="icn icn-vol" id="vol_btn"></a>
-                <a href="javascript:;" hidefocus="true" data-action="mode" class="icn icn-one" title="单曲循环" id="play_type_btn"></a>
+                <a href="javascript:;" hidefocus="true" data-action="mode" class="icn icn-loop" title="循环" id="play_type_btn"></a>
                 <span class="add f-pr">
                       <span class="tip" style="display:none;">已添加到播放列表</span>
                       <a href="javascript:;" title="播放列表" hidefocus="true" data-action="panel" id="play_list_btn"

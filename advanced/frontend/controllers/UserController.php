@@ -187,7 +187,11 @@ class UserController extends Controller{
             if(!empty($playList)){
                 $pid = $playList[0]['id'];
             }else{
-                return $this -> renderPartial("mysong");
+                if(\Yii::$app -> request -> isAjax){
+                    return $this -> renderPartial("mysong");
+                }else{
+                    return $this -> render("mysong");
+                }
             }
 
         }

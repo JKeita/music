@@ -3247,8 +3247,9 @@ div.m-emts {
 	width:157px;
 	height:33px;
 	padding:22px 18px 0 0;
-	background-position:0 15px;
+	#background-position:0 15px;
 	text-indent:-9999px;
+	background:url(../img/banner.gif) no-repeat 100px;
 }
 .m-nav {
 	float:left;

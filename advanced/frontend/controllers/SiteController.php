@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\help\Request;
 use logic\PlayListLogicImp;
 use logic\SearchLogicImp;
+use models\Tag;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -63,13 +64,19 @@ class SiteController extends Controller
     public function actionEsIndex(){
         $condition = [
             'page' => Request::getQueryValue('page'),
-            'pageSize' => 20
+            'pageSize' => 20,
+            't' => Request::getQueryValue('t'),
         ];
         $searchLogic = new SearchLogicImp();
         $playListData = $searchLogic -> searchPlayList($condition);
+        $tag = null;
+        if(!empty(Request::getQueryValue('t'))){
+            $tag = Tag::findOne(Request::getQueryValue('t'));
+        }
         $viewData = [
             'page' => $playListData['page'],
             'data' => $playListData['data'],
+            'tag' =>  $tag,
         ];
         if(Yii::$app -> request -> isAjax){
             return $this -> renderPartial("esindex", $viewData);

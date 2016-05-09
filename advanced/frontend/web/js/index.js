@@ -585,6 +585,14 @@ function share(id, type){
 		}
 	});
 }
+function indexSelect(e){
+	var url= "/?t="+$(e).val()
+	history.pushState({ path: this.path }, '', url);
+	$.get(url, function(data) {
+		$('.container').get(0).outerHTML=data;
+		addNewObjEvent();
+	});
+}
 //===========================================================
 function addCommentEvent(){
 	$(".m-cmmtipt .u-txt").focus(function(){

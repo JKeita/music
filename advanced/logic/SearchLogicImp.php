@@ -9,6 +9,7 @@
 namespace logic;
 
 use Elasticsearch\ClientBuilder;
+use models\Tag;
 use yii\data\Pagination;
 
 class SearchLogicImp implements SearchLogic
@@ -124,6 +125,14 @@ class SearchLogicImp implements SearchLogic
             $page = 1;
         }
         $params['from'] = !empty($page)?($page-1)*$pageSize:0;
+        if(!empty($condition['t'])){
+            $tag = Tag::findOne($condition['t']);
+            if(!empty($tag)){
+                $params['body']['query']['term']['tags'] = $tag -> name;
+            }
+
+        }
+
         if(empty($condition['key'])){
             $params['body']['sort'] = [
                 ['collectnum' => ['order' => 'desc']],

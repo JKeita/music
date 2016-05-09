@@ -493,7 +493,7 @@ use yii\helpers\Url;
        style="display: none;"></audio>
 <div class="m-layer z-show" style="top: 56px; left: 418px;display:none">
     <div class="zbar">
-        <div class="zttl">登录</div>
+        <div class="zttl"></div>
     </div>
     <div class="zcnt">
 
@@ -568,7 +568,8 @@ use yii\helpers\Url;
                     <div class="f-mgt10">
                         <label class="s-fc3">
                             <input name="rememberMe" type="checkbox" checked="checked" class="u-auto" value="1"/>自动登录</label>
-                        <a href="#" class="f-fr s-fc3" data-action="forget">忘记密码？</a></div>
+<!--                        <a href="#" class="f-fr s-fc3" data-action="forget">忘记密码？</a>-->
+                    </div>
                     <div class="f-mgt20">
                         <a class="js-primary u-btn2 u-btn2-2" hidefocus="true" href="#" data-action="login" id="login">
                             <i>登　录</i>
@@ -630,9 +631,16 @@ use yii\helpers\Url;
             addSearchEvent();
         }
     }
+
     $('.single').on('click',function() {
         if(!$(this).attr('href')){
             return false;
+        }
+        if($(this).attr('href').indexOf('user/mysong')>=0){
+            if(!$("#tophead_username").text()){
+                showBar();
+                return false;
+            }
         }
         history.pushState({ path: this.path }, '', $(this).attr('href'));
         $.get($(this).attr('href'), function(data) {

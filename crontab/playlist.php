@@ -22,8 +22,8 @@ $addTagSth = $pdo -> prepare('insert into tag(name) values(:name)');
 $addPlayListTagSth = $pdo -> prepare('insert into playlist_tag(pid,tid) value(:pid,:tid)');
 $getTagIdSth = $pdo -> prepare('select id from tag where name = :name limit 1');
 
-$startId = 108000;
-$endId = $startId + 100000;
+$startId = 30588557;
+$endId = $startId + 1;
 for($id = $startId; $id < $endId; $id++){
     $url = "http://music.163.com/api/playlist/detail?id=" . $id;
     $res = netease_http($url);

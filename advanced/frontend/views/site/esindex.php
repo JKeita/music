@@ -7,9 +7,21 @@ $list = $data['hits']['hits'];
         <div class="g-wrap p-pl f-pr">
             <div class="u-title f-cb">
                 <h3>
-                    <span class="f-ff2 d-flag">全部</span>
+                    <select id="index_select" class="f-ff2 d-flag" style="font-size:20px;" onchange="indexSelect(this);">
+                        <option value="0">全部</option>
+                        <?php
+                        $tagLogic = new \logic\TagLogicImp();
+                        $tagArr = $tagLogic -> getAllTag();
+                        foreach($tagArr as $item){
+                            ?>
+                            <option value="<?=$item['id']?>" <?=!empty($tag)?($tag -> id == $item['id']?'selected':''):''?>><?=$item['name']?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
                 </h3>
-<!--                <div class="u-btn f-fr u-btn-hot d-flag">
+
+<!--            <div class="u-btn f-fr u-btn-hot d-flag">
                     <a href="/discover/playlist/?order=hot" class="a1" data-order="hot">热门</a>
                     <a href="/discover/playlist/?order=new" class="a2" data-order="new">最新</a>
                 </div>-->

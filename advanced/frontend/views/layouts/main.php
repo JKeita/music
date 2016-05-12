@@ -591,16 +591,29 @@ use yii\helpers\Url;
 <script>
     window.LoadTopHeadUrl = "<?=Url::to(['user/tophead'])?>";
     window.LogoutUrl = "<?=Url::to(['user/logout'])?>";
+    window.isLoadPage = false;
     function addNewObjEvent(){
+        $(".single").off('click');
         $(".single").on('click', function(){
             if(!$(this).attr('href')){
                 return false;
             }
-            history.pushState({ path: this.path }, '', $(this).attr('href'));
-            $.get($(this).attr('href'), function(data) {
-                $('.container').get(0).outerHTML=data;
-                addNewObjEvent();
-            });
+
+            if($(this).attr('href').indexOf('user/mysong')>=0){
+                if(!$("#tophead_username").text()){
+                    showBar();
+                    return false;
+                }
+            }
+            if(!window.isLoadPage){
+                window.isLoadPage = true;
+                history.pushState({ path: this.path }, '', $(this).attr('href'));
+                $.get($(this).attr('href'), function(data) {
+                    $('.container').get(0).outerHTML=data;
+                    window.isLoadPage = false;
+                    addNewObjEvent();
+                });
+            }
             return false;
         });
         if(document.location.href.indexOf('user-info')>=0){
@@ -616,6 +629,7 @@ use yii\helpers\Url;
             addEditPlayListEvent();
         }
         if(document.location.href.indexOf('editcover')>=0){
+            addMySongEvent();
             addEditCoverEvent();
         }
         if(document.location.href.indexOf('playlist/info')>=0){
@@ -632,24 +646,8 @@ use yii\helpers\Url;
         }
     }
 
-    $('.single').on('click',function() {
-        if(!$(this).attr('href')){
-            return false;
-        }
-        if($(this).attr('href').indexOf('user/mysong')>=0){
-            if(!$("#tophead_username").text()){
-                showBar();
-                return false;
-            }
-        }
-        history.pushState({ path: this.path }, '', $(this).attr('href'));
-        $.get($(this).attr('href'), function(data) {
-            $('.container').get(0).outerHTML=data;
-            addNewObjEvent();
-        });
+    addNewObjEvent();
 
-        return false;
-    });
     $(window).on('popstate', function() {
         $.get(location.href, function(data) {
             $('.container').get(0).outerHTML=data;

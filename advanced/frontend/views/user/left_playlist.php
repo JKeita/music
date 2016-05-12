@@ -28,7 +28,7 @@ $collectList = $playListLogic -> getUserCollectListByUid($uid);
                                 <div class="item f-cb">
                                     <div class="left">
                                         <a hidefocus="true" class="avatar">
-                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" alt="" />
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=40y40" alt="" />
                                         </a>
                                     </div>
                                     <p class="name f-thide">
@@ -62,7 +62,7 @@ $collectList = $playListLogic -> getUserCollectListByUid($uid);
                                 <div class="item f-cb">
                                     <div class="left">
                                         <a hidefocus="true" class="avatar">
-                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>" alt="" />
+                                            <img src="<?=\common\help\UrlHelp::getImgUrl($item['cover'])?>?param=40y40" alt="" />
                                         </a>
                                     </div>
                                     <p class="name f-thide">
@@ -83,7 +83,7 @@ $collectList = $playListLogic -> getUserCollectListByUid($uid);
         <div style="height:200px;"></div>
         <script>
             $(function(){
-                leftPlayListEvent();
+//                leftPlayListEvent();
             });
         </script>
     </div>

@@ -92,7 +92,7 @@
     </div>
     <script>
         $(function(){
-            addEditPlayListEvent();
+            //addEditPlayListEvent();
         });
     </script>
 </div>

@@ -108,7 +108,7 @@ $playListLogic = new \logic\PlayListLogicImp();
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true" style="display: none;">回到顶部</a>
 <script>
     $(function(){
-        addUserHomeEvent();
+//        addUserHomeEvent();
     });
 </script>
 </div>

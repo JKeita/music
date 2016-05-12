@@ -180,7 +180,7 @@ if(!empty($model)){
                                                                             <div class="tt">
                                                                                 <div class="ttc">
                                                                       <span class="txt">
-                                                                        <a href="<?= \yii\helpers\Url::to(['song/info', 'id' => $song['id']]) ?>">
+                                                                        <a href="<?= \yii\helpers\Url::to(['song/info', 'id' => $song['id']]) ?>" class="single">
                                                                             <b title="<?= $song['name'] ?>"><?= $song['name'] ?></b>
                                                                         </a>
                                                                       </span>
@@ -296,7 +296,7 @@ if(!empty($model)){
     </div>
     <script>
         $(function(){
-            addMySongEvent();
+//            addMySongEvent();
         });
     </script>
 </div>

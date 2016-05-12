@@ -157,6 +157,8 @@ $user = Yii::$app -> user -> identity;
     </div>
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true">回到顶部</a>
     <script>
-        addSongInfoEvent();
+        $(function(){
+            //addSongInfoEvent();
+        });
     </script>
 </div>

@@ -35,8 +35,9 @@ $followLogic = new \logic\FollowLogicImp();
                                                 $user = \models\User::findOne($item['uid']);
                                                 if($item['type'] == 1){
                                                     $model = \models\Song::findOne($item['psid']);
+                                                    if(!empty($model)){
                                                     ?>
-                                                    <li class="itm">
+                                                        <li class="itm">
                                                         <div class="gface">
                                                             <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="ficon single">
                                                                 <img class="j-flag"
@@ -79,52 +80,64 @@ $followLogic = new \logic\FollowLogicImp();
                                                         </div>
                                                     </li>
                                                     <?php
+                                                    }
                                                 }else{
                                                     $model = \models\Playlist::findOne($item['psid']);
-                                                    $creator = \models\User::findOne($model -> uid);
+                                                    if(!empty($model)) {
+                                                        $creator = \models\User::findOne($model -> uid);
                                                     ?>
-                                                    <li class="itm">
-                                                        <div class="gface">
-                                                            <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="ficon single">
-                                                                <img class="j-flag"
-                                                                     src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="gcnt j-flag">
-                                                            <div class="dcntc" id="auto-id-i2HlRue69Mt0cTAO">
-                                                                <div class="type f-pr f-fs1">
-                                                                    <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="s-fc7 single"><?=$user -> username?></a>
-                                                                    <span class="sep s-fc3">分享歌单</span>
-                                                                </div>
-                                                                <div class="time">
-                                                                    <a class="s-fc4" data-action="logdetail" href="javascript:void(0);"><?=$item['ctime']?></a>
-                                                                </div>
-                                                                <div class="text f-fs1 f-brk j-text"></div>
-                                                                <div class="j-flag">
-                                                                    <div id="auto-id-UOPuLh2BduBgD3bh">
-                                                                        <div class="src f-cb">
-                                                                            <div class="cover cover-ply">
+                                                            <li class="itm">
+                                                            <div class="gface">
+                                                                <a href="<?= \yii\helpers\Url::to(['user/home', 'id' => $user->id]) ?>"
+                                                                   class="ficon single">
+                                                                    <img class="j-flag"
+                                                                         src="<?= \common\help\UrlHelp::getImgUrl($user->headimg) ?>"/>
+                                                                </a>
+                                                            </div>
+                                                            <div class="gcnt j-flag">
+                                                                <div class="dcntc" id="auto-id-i2HlRue69Mt0cTAO">
+                                                                    <div class="type f-pr f-fs1">
+                                                                        <a href="<?= \yii\helpers\Url::to(['user/home', 'id' => $user->id]) ?>"
+                                                                           class="s-fc7 single"><?= $user->username ?></a>
+                                                                        <span class="sep s-fc3">分享歌单</span>
+                                                                    </div>
+                                                                    <div class="time">
+                                                                        <a class="s-fc4" data-action="logdetail"
+                                                                           href="javascript:void(0);"><?= $item['ctime'] ?></a>
+                                                                    </div>
+                                                                    <div class="text f-fs1 f-brk j-text"></div>
+                                                                    <div class="j-flag">
+                                                                        <div id="auto-id-UOPuLh2BduBgD3bh">
+                                                                            <div class="src f-cb">
+                                                                                <div class="cover cover-ply">
                                                                                     <span class="lnk">
-                                                                                      <img src="<?=\common\help\UrlHelp::getImgUrl($model -> cover)?>" />
+                                                                                      <img
+                                                                                          src="<?= \common\help\UrlHelp::getImgUrl($model->cover) ?>"/>
                                                                                     </span>
-                                                                            </div>
-                                                                            <div class="scnt">
-                                                                                <h3 class="tit f-thide s-fc1 f-fs1">
-                                                                                    <span class="tag u-dtag">歌单<i class="rt"></i></span>
-                                                                                    <a href="<?=\yii\helpers\Url::to(['playlist/info', 'id' => $model -> id])?>" class="s-fc1 single"><?=$model -> name?></a>
-                                                                                </h3>
-                                                                                <h4 class="from f-thide s-fc3">by <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $creator -> id])?>" class="s-fc3 single"><?=$creator -> username?></a></h4>
+                                                                                </div>
+                                                                                <div class="scnt">
+                                                                                    <h3 class="tit f-thide s-fc1 f-fs1">
+                                                                                        <span class="tag u-dtag">歌单<i
+                                                                                                class="rt"></i></span>
+                                                                                        <a href="<?= \yii\helpers\Url::to(['playlist/info', 'id' => $model->id]) ?>"
+                                                                                           class="s-fc1 single"><?= $model->name ?></a>
+                                                                                    </h3>
+                                                                                    <h4 class="from f-thide s-fc3">by <a
+                                                                                            href="<?= \yii\helpers\Url::to(['user/home', 'id' => $creator->id]) ?>"
+                                                                                            class="s-fc3 single"><?= $creator->username ?></a>
+                                                                                    </h4>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="doper j-flag">
+                                                                    <div class="doper j-flag">
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
+                                                        </li>
                                                     <?php
+                                                    }
                                                 }
                                             }
                                         }else{
@@ -153,7 +166,7 @@ $followLogic = new \logic\FollowLogicImp();
     <a title="回到顶部" class="m-back" href="#" id="g_backtop" hidefocus="true" style="display: none;">回到顶部</a>
     <script>
         $(function(){
-            addUserEventEvent();
+//            addUserEventEvent();
         });
     </script>
 </div>

@@ -52,8 +52,8 @@
     </div>
 <script>
     $(function(){
-        addMySongEvent();
-        addEditCoverEvent();
+        //addMySongEvent();
+        //addEditCoverEvent();
     });
 </script>
 </div>

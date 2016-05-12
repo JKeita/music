@@ -65,7 +65,7 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {
-            file_put_contents("c:\log.txt", var_export($this -> errors, true));
+//            file_put_contents("c:\log.txt", var_export($this -> errors, true));
             return false;
         }
     }

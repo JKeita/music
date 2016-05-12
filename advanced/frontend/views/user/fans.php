@@ -27,7 +27,7 @@ $followLogic = new \logic\FollowLogicImp();
                         ?>
                         <li class="<?=$isOdd?'odd':''?>">
                             <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $item['id']])?>" class="ava f-pr single" title="<?=$item['username']?>">
-                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['headimg'])?>" />
+                                <img src="<?=\common\help\UrlHelp::getImgUrl($item['headimg'])?>?param=60y60" />
                             </a>
                             <div class="info">
                                 <p>

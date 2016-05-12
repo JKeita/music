@@ -89,7 +89,7 @@ $followLogic = new \logic\FollowLogicImp();
                                                             <div class="gface">
                                                                 <a href="<?=\yii\helpers\Url::to(['user/home', 'id' => $user -> id])?>" class="ficon single">
                                                                     <img class="j-flag"
-                                                                         src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>" />
+                                                                         src="<?=\common\help\UrlHelp::getImgUrl($user -> headimg)?>?param=45y45" />
                                                                 </a>
                                                             </div>
                                                             <div class="gcnt j-flag">
@@ -107,7 +107,7 @@ $followLogic = new \logic\FollowLogicImp();
                                                                             <div class="src f-cb">
                                                                                 <div class="cover cover-ply">
                                                                                     <span class="lnk">
-                                                                                      <img src="<?=\common\help\UrlHelp::getImgUrl($model -> cover)?>" />
+                                                                                      <img src="<?=\common\help\UrlHelp::getImgUrl($model -> cover)?>?param=40y40" />
                                                                                     </span>
                                                                                 </div>
                                                                                 <div class="scnt">

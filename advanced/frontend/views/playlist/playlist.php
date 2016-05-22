@@ -55,10 +55,10 @@ $playListLogic = new \logic\PlayListLogicImp();
                                        href="javascript:;">
                                         <i>分享(<?=$data['sharenum']?>)</i>
                                     </a>
-                                    <a data-res-id="<?=$id?>" data-res-type="13" data-res-action="download" class="u-btni u-btni-dl"
+<!--                                    <a data-res-id="<?/*=$id*/?>" data-res-type="13" data-res-action="download" class="u-btni u-btni-dl"
                                        href="javascript:;">
                                         <i>下载</i>
-                                    </a>
+                                    </a>-->
                                     <a data-res-action="comment" href="javascript:;" class="u-btni u-btni-cmmt">
                                         <i>评论</i>
                                     </a>

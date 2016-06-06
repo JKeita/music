@@ -40,7 +40,7 @@ $playListLogic = new \logic\PlayListLogicImp();
                   </span>
                                     <span class="time s-fc4"><?=substr($data['created'],0,10)?>创建</span></div>
                                 <div id="content-operation" class="btns f-cb" data-rid="159240917" data-type="13" data-special="0">
-                                    <a id="flag_play" data-res-action="play" data-res-id="<?=$id?>" data-res-type="13" href="javascript:;"
+                                    <a id="flag_play" data-res-id="<?=$id?>" data-res-type="13" href="javascript:;"
                                        class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true" title="播放">
                                         <i>播放</i>
                                     </a>
